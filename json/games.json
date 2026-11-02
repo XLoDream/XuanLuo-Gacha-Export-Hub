@@ -1,0 +1,134 @@
+{
+  "genshin": {
+    "name": "原神",
+    "act": "祈愿",
+    "sub": "GENSHIN · WISH",
+    "icon": "icon/原神.png",
+    "types": ["角色", "武器"],
+    "pools": [
+      { "key": "char", "label": "角色活动祈愿", "hard": 90 },
+      { "key": "weapon", "label": "武器活动祈愿", "hard": 80 },
+      { "key": "chronicled", "label": "集录祈愿", "hard": 90 },
+      { "key": "standard", "label": "常驻祈愿", "hard": 90 },
+      { "key": "novice", "label": "新手祈愿", "hard": 20 }
+    ],
+    "poolMap": { "301": "char", "400": "char", "302": "weapon", "500": "chronicled", "200": "standard", "100": "novice" },
+    "fetchTypes": [
+      ["301", "角色活动祈愿"],
+      ["400", "角色活动祈愿-2"],
+      ["302", "武器活动祈愿"],
+      ["500", "集录祈愿"],
+      ["200", "常驻祈愿"],
+      ["100", "新手祈愿"]
+    ],
+    "remarks": { "400": "角色活动祈愿-2" }
+  },
+  "hsr": {
+    "name": "崩坏：星穹铁道",
+    "act": "跃迁",
+    "sub": "STAR RAIL · WARP",
+    "icon": "icon/崩铁.png",
+    "types": ["角色", "光锥"],
+    "pools": [
+      { "key": "char", "label": "角色活动跃迁", "hard": 90 },
+      { "key": "lc", "label": "光锥活动跃迁", "hard": 80 },
+      { "key": "collabChar", "label": "角色联动跃迁", "hard": 90 },
+      { "key": "collabLc", "label": "光锥联动跃迁", "hard": 80 },
+      { "key": "standard", "label": "常驻跃迁", "hard": 90 },
+      { "key": "novice", "label": "新手跃迁", "hard": 50 }
+    ],
+    "poolMap": { "11": "char", "12": "lc", "21": "collabChar", "22": "collabLc", "1": "standard", "2": "novice" },
+    "fetchTypes": [
+      ["11", "角色活动跃迁"],
+      ["12", "光锥活动跃迁"],
+      ["21", "角色联动跃迁"],
+      ["22", "光锥联动跃迁"],
+      ["1", "常驻跃迁"],
+      ["2", "新手跃迁"]
+    ],
+    "remarks": {}
+  },
+  "zzz": {
+    "name": "绝区零",
+    "act": "调频",
+    "sub": "ZZZ · SIGNAL SEARCH",
+    "icon": "icon/绝区零.webp",
+    "types": ["代理人", "音擎", "邦布"],
+    "pools": [
+      { "key": "limited", "label": "独家频段", "hard": 90 },
+      { "key": "wengine", "label": "音擎频段", "hard": 80 },
+      { "key": "standard", "label": "常驻频段", "hard": 90 },
+      { "key": "bangboo", "label": "邦布频段", "hard": 80 }
+    ],
+    "poolMap": { "2": "limited", "102": "limited", "3": "wengine", "103": "wengine", "1": "standard", "5": "bangboo" },
+    "rankMap": { "4": 5, "3": 4, "2": 3, "1": 3 },
+    "rankOut": { "5": "4", "4": "3", "3": "2" },
+    "fetchTypes": [
+      ["2", "独家频段"],
+      ["102", "独家重映"],
+      ["3", "音擎频段"],
+      ["103", "音擎回响"],
+      ["1", "常驻频段"],
+      ["5", "邦布频段"]
+    ],
+    "remarks": { "102": "独家重映", "103": "音擎回响" }
+  },
+  "wuwa": {
+    "name": "鸣潮",
+    "act": "唤取",
+    "sub": "WUTHERING · CONVENE",
+    "icon": "icon/鸣潮图标-3.0.png",
+    "types": ["角色", "武器"],
+    "pools": [
+      { "key": "char", "label": "角色活动唤取", "hard": 80 },
+      { "key": "weapon", "label": "武器活动唤取", "hard": 80 },
+      { "key": "stdChar", "label": "角色常驻唤取", "hard": 80 },
+      { "key": "stdWeapon", "label": "武器常驻唤取", "hard": 80 },
+      { "key": "novice", "label": "新手唤取", "hard": 50 },
+      { "key": "noviceSel", "label": "新手自选唤取", "hard": 80 },
+      { "key": "noviceThanks", "label": "感恩定向唤取", "hard": 80 },
+      { "key": "journeyChar", "label": "角色新旅唤取", "hard": 80 },
+      { "key": "journeyWeapon", "label": "武器新旅唤取", "hard": 80 },
+      { "key": "collabChar", "label": "角色联动唤取", "hard": 80 },
+      { "key": "collabWeapon", "label": "武器联动唤取", "hard": 80 },
+      { "key": "memChar", "label": "角色忆旅唤取", "hard": 80 },
+      { "key": "memWeapon", "label": "武器忆旅唤取", "hard": 80 }
+    ],
+    "poolMap": {
+      "1": "char", "2": "weapon", "3": "stdChar", "4": "stdWeapon",
+      "5": "novice", "6": "noviceSel", "7": "noviceThanks",
+      "8": "journeyChar", "9": "journeyWeapon",
+      "10": "collabChar", "11": "collabWeapon",
+      "12": "memChar", "13": "memWeapon"
+    },
+    "fetchTypes": [
+      ["1", "角色活动唤取"],
+      ["2", "武器活动唤取"],
+      ["3", "角色常驻唤取"],
+      ["4", "武器常驻唤取"],
+      ["5", "新手唤取"],
+      ["6", "新手自选唤取"],
+      ["7", "感恩定向唤取"],
+      ["8", "角色新旅唤取"],
+      ["9", "武器新旅唤取"],
+      ["10", "角色联动唤取"],
+      ["11", "武器联动唤取"],
+      ["12", "角色忆旅唤取"],
+      ["13", "武器忆旅唤取"]
+    ],
+    "rawWuwa": true,
+    "noUigf": true,
+    "nameToType": {
+      "角色活动唤取": "1", "角色精准调谐": "1",
+      "武器活动唤取": "2", "武器精准调谐": "2",
+      "角色常驻唤取": "3", "角色调谐（常驻池）": "3",
+      "武器常驻唤取": "4", "武器调谐（常驻池）": "4",
+      "新手唤取": "5", "新手自选唤取": "6",
+      "新手自选唤取（感恩定向唤取）": "7", "感恩定向唤取": "7",
+      "角色新旅唤取": "8", "武器新旅唤取": "9",
+      "角色联动唤取": "10", "武器联动唤取": "11",
+      "角色忆旅唤取": "12", "武器忆旅唤取": "13"
+    },
+    "remarks": {}
+  }
+}

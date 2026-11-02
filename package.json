@@ -1,0 +1,63 @@
+{
+  "name": "gacha-export-hub",
+  "productName": "XuanLuo Gacha Export Hub",
+  "version": "1.0.0",
+  "description": "XuanLuo Gacha Export Hub",
+  "main": "main.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/XLoDream/XuanLuo-Gacha-Export-Hub.git"
+  },
+  "scripts": {
+    "start": "electron .",
+    "pack": "electron-packager . \"XuanLuo Gacha Export Hub\" --platform win32 --arch x64 --out dist --overwrite --icon icon/app.ico",
+    "dist": "electron-builder --win nsis --publish never",
+    "release": "electron-builder --win nsis --publish always"
+  },
+  "build": {
+    "appId": "com.xuanluo.gacha-export-hub",
+    "productName": "XuanLuo Gacha Export Hub",
+    "files": [
+      "main.js",
+      "preload.js",
+      "app.js",
+      "index.html",
+      "styles.css",
+      "icon/**",
+      "json/**"
+    ],
+    "win": {
+      "target": "nsis",
+      "icon": "icon/app.ico"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "XuanLuo Gacha Export Hub"
+    },
+    "directories": {
+      "output": "dist"
+    },
+    "publish": [
+      {
+        "provider": "github",
+        "owner": "XLoDream",
+        "repo": "XuanLuo-Gacha-Export-Hub",
+        "releaseType": "release"
+      }
+    ]
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "45.0.0",
+    "electron-builder": "^26.18.0",
+    "electron-packager": "^17.1.2"
+  },
+  "dependencies": {
+    "electron-updater": "^6.8.11",
+    "exceljs": "^4.4.0"
+  }
+}

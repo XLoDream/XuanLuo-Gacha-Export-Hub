@@ -1,0 +1,1129 @@
+/* ============================================================
+ * XuanLuo Gacha Export Hub
+ * 当前已接入：账号体系（所有游戏）+ 原神 UIGF v4.1 导入
+ * 其余游戏导入 / 更新数据 / 导出 待接入
+ * ============================================================ */
+
+// ---------- 窗口控制 ----------
+document.getElementById('btnMin').addEventListener('click', () => winCtl.min());
+document.getElementById('btnMax').addEventListener('click', () => winCtl.max());
+document.getElementById('btnClose').addEventListener('click', () => winCtl.close());
+
+// ---------- 游戏配置 ----------
+// 游戏卡池配置从 json/games.json 加载（可热更新，无需重新打包）
+let GAMES;
+
+const VIEW_TITLES = {
+  overview: '总览',
+  settings: '设置',
+};
+
+let GAME_ORDER = [];
+
+// ---------- 工具 ----------
+const $ = (sel, root) => (root || document).querySelector(sel);
+const $$ = (sel, root) => Array.from((root || document).querySelectorAll(sel));
+const poolOf = (game, key) => GAMES[game].pools.find((p) => p.key === key);
+const stars = (r) => `<span class="stars s${r}">${'★'.repeat(r)}</span>`;
+
+// ---------- 深浅色模式（持久化在 userdata/app.config.json 的 settings.theme） ----------
+function applyTheme(theme) {
+  const light = theme === 'light';
+  document.documentElement.dataset.theme = light ? 'light' : 'dark';
+  $('#btnTheme').title = light ? '切换为深色模式' : '切换为浅色模式';
+  winCtl.theme(light);
+}
+function readTheme() {
+  try { return api.loadSettingsSync().theme === 'light' ? 'light' : 'dark'; } catch { return 'dark'; }
+}
+applyTheme(readTheme());
+$('#btnTheme').addEventListener('click', () => {
+  const next = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
+  applyTheme(next);
+  api.saveSettings({ theme: next });
+});
+
+function toast(msg) {
+  const el = document.createElement('div');
+  el.className = 'toast';
+  el.textContent = msg;
+  $('#toasts').appendChild(el);
+  setTimeout(() => el.remove(), 3000);
+}
+
+function cmpRec(a, b) {
+  if (a.time !== b.time) return a.time < b.time ? -1 : 1;
+  try { return BigInt(a.id) < BigInt(b.id) ? -1 : 1; } catch { return 0; }
+}
+
+const fmtTime = (ts) => {
+  if (!ts) return '—';
+  const d = new Date(ts);
+  const p = (n) => String(n).padStart(2, '0');
+  return `${p(d.getMonth() + 1)}-${p(d.getDate())} ${p(d.getHours())}:${p(d.getMinutes())}`;
+};
+
+// ---------- 数据存储 ----------
+let store = { active: {}, accounts: {} };
+
+const accountsOf = (g) => store.accounts[g] || (store.accounts[g] = []);
+const activeOf = (g) => accountsOf(g).find((a) => a.uid === store.active[g]) || null;
+const save = () => api.saveStore(store);
+
+// 每卡池保底进度：返回 id → 出 5★ 时已垫抽数
+function pityMap(acc) {
+  const byPool = {};
+  acc.records.forEach((r) => (byPool[r.pool] ||= []).push(r));
+  const map = new Map();
+  Object.values(byPool).forEach((list) => {
+    list.sort(cmpRec);
+    let n = 0;
+    list.forEach((r) => {
+      n += 1;
+      if (r.rank === 5) { map.set(r.id, n); n = 0; }
+    });
+  });
+  return map;
+}
+
+// 逐条已垫数：每卡池内自上个 5★ 起累计垫刀，出 5★ 当条清零
+function padMap(acc) {
+  const byPool = {};
+  acc.records.forEach((r) => (byPool[r.pool] ||= []).push(r));
+  const map = new Map();
+  Object.values(byPool).forEach((list) => {
+    list.sort(cmpRec);
+    let n = 0;
+    list.forEach((r) => {
+      if (r.rank === 5) { map.set(r.id, 0); n = 0; }
+      else { n += 1; map.set(r.id, n); }
+    });
+  });
+  return map;
+}
+
+// ---------- 顶部主导航 ----------
+const navItems = $$('.nav-item');
+const indicator = $('#navIndicator');
+
+function moveIndicator() {
+  const active = $('.nav-item.active');
+  if (!active) return;
+  indicator.style.left = `${active.offsetLeft}px`;
+  indicator.style.width = `${active.offsetWidth}px`;
+}
+
+navItems.forEach((btn) => btn.addEventListener('click', () => switchView(btn.dataset.view)));
+
+function switchView(view) {
+  navItems.forEach((b) => b.classList.toggle('active', b.dataset.view === view));
+  $$('.view').forEach((v) => v.classList.toggle('active', v.id === `view-${view}`));
+  $$('.subgroup').forEach((g) => { g.hidden = g.dataset.sub !== view; });
+  // 总览不需要左侧边栏
+  $('.body').classList.toggle('no-sub', view === 'overview');
+  $('#subTitle').textContent = VIEW_TITLES[view] || '';
+  $('.content').scrollTop = 0;
+  moveIndicator();
+  // 游戏视图可见后重排轮盘（隐藏时无法测量卡片位置）
+  if (viewMode[view] !== undefined) requestAnimationFrame(() => layoutCar(view));
+}
+
+window.addEventListener('resize', () => { moveIndicator(); GAME_ORDER.forEach(layoutCar); });
+
+// ---------- 卡池轮盘：同时显示三张，无限循环 ----------
+// 首尾各克隆 2 张实现无缝循环；carIdx = 当前居中（三张中间）真实卡片的下标
+let carIdx = {};
+let carLock = {};
+
+// 把轨道定位到「leftDom 起连续三张」并在轮盘区居中，同时只高亮这三张
+function applyCar(track, cards, leftDom) {
+  const gap = parseFloat(getComputedStyle(track).columnGap) || 0;
+  const padL = parseFloat(getComputedStyle(track).paddingLeft) || 0;
+  const groupW = 3 * cards[0].offsetWidth + 2 * gap;
+  const sidePad = Math.max(0, (track.parentElement.clientWidth - groupW) / 2);
+  const x = cards[leftDom].offsetLeft - padL - sidePad;
+  track.style.transform = `translateX(${-x}px)`;
+  cards.forEach((c, j) => c.classList.toggle('active', j >= leftDom && j <= leftDom + 2));
+}
+
+function layoutCar(game, animate = true) {
+  const view = $(`#view-${game}`);
+  const track = $('[data-role="poolGrid"]', view);
+  const prev = $('[data-role="carPrev"]', view);
+  const next = $('[data-role="carNext"]', view);
+  const cards = $$('.pool-detail', track);
+  const n = cards.filter((c) => !c.classList.contains('clone')).length;
+  // 轮盘不可见 / 无卡片时收起箭头
+  if (!n || !track.offsetParent) { prev.hidden = next.hidden = true; return; }
+  // 不足 4 张：静态居中展示，无需循环
+  if (n < 4) {
+    prev.hidden = next.hidden = true;
+    track.style.justifyContent = 'center';
+    track.style.transform = 'translateX(0)';
+    cards.forEach((c) => c.classList.add('active'));
+    return;
+  }
+  track.style.justifyContent = 'flex-start';
+  prev.hidden = next.hidden = false;
+  carIdx[game] = ((carIdx[game] % n) + n) % n;
+
+  if (!animate) track.classList.add('noanim');
+  applyCar(track, cards, carIdx[game] + 1);
+  if (!animate) { void track.offsetHeight; track.classList.remove('noanim'); }
+}
+
+function shiftCar(game, d) {
+  if (carLock[game]) return false;
+  const view = $(`#view-${game}`);
+  const track = $('[data-role="poolGrid"]', view);
+  const cards = $$('.pool-detail', track);
+  const n = cards.filter((c) => !c.classList.contains('clone')).length;
+  if (n < 4) return false;
+
+  const v = carIdx[game] + d;          // 目标（虚拟下标，可为 -1 或 n）
+  const jumpTo = v === n ? 0 : v === -1 ? n - 1 : null;
+  applyCar(track, cards, v + 1);
+
+  if (jumpTo === null) {
+    carIdx[game] = v;
+  } else {
+    // 滑入克隆区后，动画结束瞬间无感跳回对应真实位置
+    carLock[game] = true;
+    track.addEventListener('transitionend', function h() {
+      track.removeEventListener('transitionend', h);
+      carIdx[game] = jumpTo;
+      layoutCar(game, false);
+      carLock[game] = false;
+    });
+  }
+  return true;
+}
+
+// ---------- 左侧子选项：概览 / 具体卡池 ----------
+let viewMode = {};
+let recFilter = {};
+let subRefs = {};
+
+function setupGameSubgroups() {
+GAME_ORDER.forEach((game) => {
+  const group = $(`.subgroup[data-sub="${game}"]`);
+  const label = document.createElement('div');
+  label.className = 'sub-label';
+  label.textContent = '卡池';
+  group.appendChild(label);
+
+  const select = (key) => {
+    viewMode[game] = key;
+    recFilter[game].page = 1;
+    renderGame(game);
+  };
+
+  // 概览（固定顶部，显示总记录数）
+  const ovBtn = document.createElement('button');
+  ovBtn.className = 'sub-item active';
+  ovBtn.innerHTML = `<svg class="sub-ico" viewBox="0 0 24 24"><rect x="4" y="4" width="7" height="7" rx="1.5"/><rect x="13" y="4" width="7" height="7" rx="1.5"/><rect x="4" y="13" width="7" height="7" rx="1.5"/><rect x="13" y="13" width="7" height="7" rx="1.5"/></svg><span class="sub-item-label">概览</span><span class="sub-item-count"></span>`;
+  ovBtn.addEventListener('click', () => select('overview'));
+  group.appendChild(ovBtn);
+  subRefs[game].push({ key: 'overview', btn: ovBtn });
+
+  // 卡池：有数据平铺展示；无数据默认折叠进「无数据（N）」分组，点击展开
+  const hasBox = document.createElement('div');
+  hasBox.className = 'sub-pools';
+  const divider = document.createElement('button');
+  divider.className = 'sub-divider';
+  divider.innerHTML = `<span class="sub-divider-label">无数据</span><i class="sub-divider-line"></i><svg class="sub-divider-arrow" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>`;
+  divider.hidden = true;
+  const emptyBox = document.createElement('div');
+  emptyBox.className = 'sub-pools collapsed';
+  divider.addEventListener('click', () => {
+    const collapsed = emptyBox.classList.toggle('collapsed');
+    divider.classList.toggle('open', !collapsed);
+  });
+  group.append(hasBox, divider, emptyBox);
+
+  GAMES[game].pools.forEach((pool) => {
+    const btn = document.createElement('button');
+    btn.className = 'sub-item';
+    btn.innerHTML = `<span class="sub-item-label">${pool.label}</span><span class="sub-item-count"></span>`;
+    btn.addEventListener('click', () => select(pool.key));
+    hasBox.appendChild(btn);
+    subRefs[game].push({ key: pool.key, btn });
+  });
+
+  // 记录筛选：星级 + 类型 + 搜索（多层组合）
+  const view = $(`#view-${game}`);
+  $$('[data-rank]', view).forEach((seg) => {
+    seg.addEventListener('click', () => {
+      $$('[data-rank]', view).forEach((s) => s.classList.toggle('active', s === seg));
+      recFilter[game].rank = Number(seg.dataset.rank);
+      recFilter[game].page = 1;
+      renderRecords(game);
+    });
+  });
+  // 类型筛选按游戏动态生成（原神：角色/武器；崩铁：角色/光锥……）
+  const typeBox = $('[data-role="typeFilter"]', view);
+  ['', ...(GAMES[game].types || [])].forEach((t, i) => {
+    const seg = document.createElement('button');
+    seg.className = `seg${i === 0 ? ' active' : ''}`;
+    seg.dataset.type = t;
+    seg.textContent = t || '全部';
+    seg.addEventListener('click', () => {
+      $$('.seg', typeBox).forEach((s) => s.classList.toggle('active', s === seg));
+      recFilter[game].type = t;
+      recFilter[game].page = 1;
+      renderRecords(game);
+    });
+    typeBox.appendChild(seg);
+  });
+  $('[data-role="recSearch"]', view).addEventListener('input', (e) => {
+    recFilter[game].q = e.target.value.trim().toLowerCase();
+    recFilter[game].page = 1;
+    renderRecords(game);
+  });
+
+  // 分页
+  $('[data-role="prevPage"]', view).addEventListener('click', () => {
+    if (recFilter[game].page > 1) { recFilter[game].page -= 1; renderRecords(game); }
+  });
+  $('[data-role="nextPage"]', view).addEventListener('click', () => {
+    recFilter[game].page += 1; renderRecords(game); // 越界在 renderRecords 内收敛
+  });
+
+  // 卡池轮盘：箭头点击 / 滚轮逐张切换 / 点击侧卡居中
+  const grid = $('[data-role="poolGrid"]', view);
+  $('[data-role="carPrev"]', view).addEventListener('click', () => shiftCar(game, -1));
+  $('[data-role="carNext"]', view).addEventListener('click', () => shiftCar(game, 1));
+
+  let wheelAcc = 0, wheelTs = 0;
+  grid.addEventListener('wheel', (e) => {
+    if (Math.abs(e.deltaY) <= Math.abs(e.deltaX)) return;
+    e.preventDefault(); // 循环无尽头，滚轮完全交给轮盘
+    const now = Date.now();
+    if (now - wheelTs > 180) wheelAcc = 0;
+    wheelTs = now;
+    wheelAcc += e.deltaY;
+    if (Math.abs(wheelAcc) < 30) return;
+    const d = wheelAcc > 0 ? 1 : -1;
+    wheelAcc = 0;
+    shiftCar(game, d);
+  }, { passive: false });
+
+  // 点击两侧卡片：向对应方向拨一张
+  grid.addEventListener('click', (e) => {
+    const card = e.target.closest('.pool-detail');
+    if (!card) return;
+    const cards = $$('.pool-detail', grid);
+    const n = cards.filter((c) => !c.classList.contains('clone')).length;
+    if (n < 4) return;
+    const pos = cards.indexOf(card) - (carIdx[game] + 1); // 相对最左可见卡的位置
+    if (pos === 0) shiftCar(game, -1);
+    else if (pos === 2) shiftCar(game, 1);
+  });
+});
+} // end setupGameSubgroups
+
+$$('.sub-item[data-scroll]').forEach((btn) => {
+  btn.addEventListener('click', () => {
+    $$('.sub-item[data-scroll]', btn.parentElement).forEach((b) => b.classList.toggle('active', b === btn));
+    const target = document.getElementById(btn.dataset.scroll);
+    if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+});
+
+// ---------- 卡池详情块（参考 genshin-wish-export 展示方式） ----------
+// 每个 5★ 物品一个固定配色（按名字哈希），重复出现便于识别
+const NAME_COLORS = [
+  '#73c0de', '#fac858', '#ee6666', '#3ba272', '#fc8452', '#9a60b4', '#ea7ccc',
+  '#2ab7ca', '#8fa8ff', '#ff8b94', '#91cc75', '#d4a265', '#61c8a8', '#ffd166',
+];
+
+function nameColor(name) {
+  let h = 0;
+  for (const ch of String(name)) h = (Math.imul(31, h) + ch.codePointAt(0)) | 0;
+  return NAME_COLORS[Math.abs(h) % NAME_COLORS.length];
+}
+
+// 星级 × 类型 的配色（5★ 金色系 / 4★ 紫色系 / 3★ 蓝色系）
+const RANK_COLORS = {
+  5: ['#f6c344', '#e0873c', '#d4682a'],
+  4: ['#b98cff', '#8a5cf6', '#7a4de0'],
+  3: ['#6ea8ff', '#5470c6', '#4060b0'],
+};
+
+function renderPoolGrid(game, acc) {
+  const view = $(`#view-${game}`);
+  const cfg = GAMES[game];
+  const pity = pityMap(acc);
+  const pct = (n, total) => `${Math.round((n / total) * 10000) / 100}%`;
+
+  $('[data-role="poolGrid"]', view).innerHTML = cfg.pools.map((p) => {
+    const rs = acc.records.filter((r) => r.pool === p.key).sort(cmpRec);
+    if (!rs.length) return ''; // 无记录的卡池直接隐藏
+
+    const total = rs.length;
+    const countRank = (rank) => rs.filter((r) => r.rank === rank).length;
+    const [c5, c4, c3] = [countRank(5), countRank(4), countRank(3)];
+
+    // 已累计 X 抽未出 5★
+    let lastIdx = -1;
+    rs.forEach((r, i) => { if (r.rank === 5) lastIdx = i; });
+    const pityCur = lastIdx === -1 ? total : total - 1 - lastIdx;
+
+    // 分类（稀有度 × 类型）与环形图
+    const cats = [];
+    [5, 4, 3].forEach((rank) => {
+      cfg.types.forEach((t, ti) => {
+        const n = rs.filter((r) => r.rank === rank && r.type === t).length;
+        if (n) cats.push({ label: `${rank}星${t}`, n, color: RANK_COLORS[rank][ti % RANK_COLORS[rank].length] });
+      });
+    });
+
+    let acc25 = 0;
+    const segs = cats.map((c) => {
+      const v = (c.n / total) * 100;
+      const o = 25 - acc25; // 从 12 点方向开始
+      acc25 += v;
+      return `<circle r="15.9155" cx="21" cy="21" fill="transparent" stroke="${c.color}" stroke-width="6" stroke-dasharray="${v.toFixed(2)} ${(100 - v).toFixed(2)}" stroke-dashoffset="${o.toFixed(2)}"></circle>`;
+    }).join('');
+
+    // 5★ 历史记录（名字[出货抽数]）
+    const fiveList = rs.filter((r) => r.rank === 5);
+    const hist = fiveList.map((r) =>
+      `<span class="pd-hist-item${r.gt === '400' ? ' wish2' : ''}" style="color:${nameColor(r.name)}" title="${r.time}${r.gt === '400' ? ' · 角色活动祈愿-2' : ''}">${r.name}[${pity.get(r.id) ?? '?'}]</span>`
+    ).join('');
+    const avg = fiveList.length
+      ? Math.round(fiveList.reduce((s, r) => s + (pity.get(r.id) || 0), 0) / fiveList.length * 100) / 100
+      : null;
+
+    return `<div class="card pool-detail">
+      <div class="pd-title">${p.label}</div>
+      <div class="pd-range">${rs[0].time.slice(0, 10)} - ${rs[total - 1].time.slice(0, 10)}</div>
+      <div class="pd-main">
+        <svg viewBox="0 0 42 42" class="pd-donut">
+          <circle class="pd-ring" r="15.9155" cx="21" cy="21"></circle>
+          ${segs}
+          <text x="21" y="19.5" class="pd-donut-num" text-anchor="middle">${total}</text>
+          <text x="21" y="25.5" class="pd-donut-sub" text-anchor="middle">抽</text>
+        </svg>
+        <div class="pd-legend">
+          ${cats.map((c) => `<div class="pd-lg-item"><i style="background:${c.color}"></i>${c.label}<b>${c.n}</b></div>`).join('')}
+        </div>
+      </div>
+      <div class="pd-stats">
+        <p class="pd-line">一共 <b>${total}</b> 抽 · 已累计 <b class="pd-hot">${pityCur}</b> 抽未出5★</p>
+        <p class="pd-line l5">5★：${c5} [${pct(c5, total)}]</p>
+        <p class="pd-line l4">4★：${c4} [${pct(c4, total)}]</p>
+        <p class="pd-line l3">3★：${c3} [${pct(c3, total)}]</p>
+      </div>
+      ${fiveList.length ? `<div class="pd-history">5★历史记录：${hist}</div>
+      <div class="pd-avg">5★平均出货次数：<b>${avg}</b></div>` : ''}
+    </div>`;
+  }).join('');
+
+  // 无缝循环：>=4 张时首尾各克隆 2 张
+  const grid = $('[data-role="poolGrid"]', view);
+  const cards = $$('.pool-detail', grid);
+  if (cards.length >= 4) {
+    const n = cards.length;
+    const headA = cards[n - 2].cloneNode(true);
+    const headB = cards[n - 1].cloneNode(true);
+    const tailA = cards[0].cloneNode(true);
+    const tailB = cards[1].cloneNode(true);
+    [headA, headB, tailA, tailB].forEach((c) => { c.classList.add('clone'); c.setAttribute('aria-hidden', 'true'); });
+    grid.prepend(headA, headB);
+    grid.append(tailA, tailB);
+  }
+  layoutCar(game, false);
+}
+
+// ---------- 游戏视图渲染 ----------
+function renderGame(game) {
+  const view = $(`#view-${game}`);
+  const acc = activeOf(game);
+  const list = accountsOf(game);
+
+  const sel = $('[data-role="uidSelect"]', view);
+  sel.innerHTML = list.map((a) => `<option value="${a.uid}">${a.uid}</option>`).join('');
+  sel.value = acc ? acc.uid : '';
+  sel.disabled = !list.length;
+  $('[data-role="abHint"]', view).textContent = acc
+    ? `${acc.records.length} 条记录 · 更新于 ${fmtTime(acc.updatedAt)}`
+    : '未导入';
+
+  // 卡池按有无数据归位：有数据显示计数、无数据置底灰显禁用；当前池变空时回退「概览」
+  const countOf = (k) => (acc ? acc.records.filter((r) => r.pool === k).length : 0);
+  if (viewMode[game] !== 'overview' && !countOf(viewMode[game])) viewMode[game] = 'overview';
+  const group = $(`.subgroup[data-sub="${game}"]`);
+  const [hasBox, emptyBox] = group.querySelectorAll('.sub-pools');
+  const divider = group.querySelector('.sub-divider');
+  let emptyCount = 0;
+  subRefs[game].forEach(({ key, btn }) => {
+    btn.classList.toggle('active', key === viewMode[game]);
+    const countEl = btn.querySelector('.sub-item-count');
+    if (key === 'overview') {
+      countEl.textContent = acc && acc.records.length ? acc.records.length : '';
+      return;
+    }
+    const n = countOf(key);
+    countEl.textContent = n || '';
+    btn.disabled = n === 0;
+    btn.classList.toggle('empty', n === 0);
+    (n ? hasBox : emptyBox).appendChild(btn);
+    if (!n) emptyCount++;
+  });
+  divider.hidden = emptyCount === 0;
+  divider.querySelector('.sub-divider-label').textContent = `无数据（${emptyCount}）`;
+  const overview = viewMode[game] === 'overview';
+
+  $('[data-role="accountEmpty"]', view).hidden = !!acc;
+  $('.stat-row', view).style.display = acc && overview ? '' : 'none';
+  $('[data-role="poolGrid"]', view).style.display = acc && overview ? '' : 'none';
+  $('.records-card', view).style.display = acc && !overview ? '' : 'none';
+  if (!overview) layoutCar(game); // 非概览模式收起轮盘箭头
+
+  if (!acc) return;
+
+  // 统计
+  const recs = acc.records;
+  const fives = recs.filter((r) => r.rank === 5);
+  // 已垫数：主卡池（配置里第一个，如「角色活动祈愿」）自上个 5★ 起的垫刀
+  const mainPool = GAMES[game].pools[0];
+  const mainRecs = recs.filter((r) => r.pool === mainPool.key).sort(cmpRec);
+  let lastIdx = -1;
+  mainRecs.forEach((r, i) => { if (r.rank === 5) lastIdx = i; });
+  const mainPad = lastIdx === -1 ? mainRecs.length : mainRecs.length - 1 - lastIdx;
+  $('.stat-row', view).innerHTML = `
+    <div class="stat-card"><span>总抽数</span><b>${recs.length}</b></div>
+    <div class="stat-card"><span>5★ 数量</span><b class="r5">${fives.length}</b></div>
+    <div class="stat-card"><span>${mainPool.label} · 已垫</span><b class="accent">${mainPad}</b></div>
+    <div class="stat-card"><span>平均出金</span><b>${fives.length ? (recs.length / fives.length).toFixed(1) : '—'}</b></div>
+  `;
+
+  if (overview) renderPoolGrid(game, acc); // 概览：卡池详情块
+  else renderRecords(game);                // 具体卡池：记录表
+}
+
+function renderRecords(game) {
+  const view = $(`#view-${game}`);
+  const acc = activeOf(game);
+  if (!acc) return;
+
+  const pad = padMap(acc);
+  const poolKey = viewMode[game];
+  const { rank, type, q } = recFilter[game];
+  const filtered = acc.records
+    .filter((r) => (poolKey === 'overview' || r.pool === poolKey)
+      && (!rank || r.rank === rank)
+      && (!type || r.type === type)
+      && (!q || r.name.toLowerCase().includes(q)))
+    .sort(cmpRec)
+    .reverse();
+
+  // 分页：每页 10 条
+  const PAGE_SIZE = 10;
+  const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
+  recFilter[game].page = Math.min(Math.max(1, recFilter[game].page || 1), totalPages);
+  const page = recFilter[game].page;
+  const recs = filtered.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
+
+  // 具体卡池：统计卡片（复用概览 stat-card 样式，不受筛选影响）
+  const statsBox = $('[data-role="recStats"]', view);
+  const poolRecs = poolKey === 'overview' ? [] : acc.records.filter((r) => r.pool === poolKey).sort(cmpRec);
+  if (!poolRecs.length) {
+    statsBox.hidden = true;
+  } else {
+    const cnt = { 5: 0, 4: 0, 3: 0 };
+    const gap = { 5: 0, 4: 0, 3: 0 };
+    const gaps = { 5: [], 4: [], 3: [] };
+    poolRecs.forEach((r) => {
+      [5, 4, 3].forEach((k) => gap[k]++);
+      cnt[r.rank] += 1;
+      gaps[r.rank].push(gap[r.rank]);
+      gap[r.rank] = 0;
+    });
+    const avg = (k) => gaps[k].length ? (gaps[k].reduce((a, b) => a + b, 0) / gaps[k].length).toFixed(1) : '—';
+    statsBox.innerHTML = `
+      <div class="stat-card"><span>5★ 数量</span><b class="r5">${cnt[5]}</b><i>平均 ${avg(5)} 抽出金</i></div>
+      <div class="stat-card"><span>4★ 数量</span><b class="r4">${cnt[4]}</b><i>平均 ${avg(4)} 抽出紫</i></div>
+      <div class="stat-card"><span>3★ 数量</span><b class="r3">${cnt[3]}</b><i>平均 ${avg(3)} 抽</i></div>
+      <div class="stat-card"><span>总抽数</span><b>${poolRecs.length}</b><i>已垫 ${gap[5]} 抽未出 5★</i></div>
+    `;
+    statsBox.hidden = false;
+  }
+
+  const tbody = $('[data-role="rows"]', view);
+  tbody.innerHTML = recs.map((r) => {
+    const pool = poolOf(game, r.pool);
+    return `<tr>
+      <td class="cell-time">${r.time}</td>
+      <td class="cell-name">${r.name}</td>
+      <td>${stars(r.rank)}</td>
+      <td>${r.type}</td>
+      <td>${pool ? pool.label : r.pool}</td>
+      <td class="cell-pity${r.rank === 5 ? ' gold' : ''}">${pad.get(r.id) ?? '·'}</td>
+    </tr>`;
+  }).join('');
+
+  $('[data-role="empty"]', view).hidden = filtered.length > 0;
+  $('[data-role="poolChip"]', view).textContent =
+    poolKey === 'overview' ? '全部' : poolOf(game, poolKey).label;
+  $('[data-role="count"]', view).textContent =
+    `共 ${filtered.length} 条记录${rank || type || q ? '（已筛选）' : ''}`;
+
+  // 分页器
+  const pager = $('[data-role="pager"]', view);
+  pager.hidden = totalPages <= 1;
+  $('[data-role="pageInfo"]', view).textContent = `${page} / ${totalPages}`;
+  $('[data-role="prevPage"]', view).disabled = page <= 1;
+  $('[data-role="nextPage"]', view).disabled = page >= totalPages;
+}
+
+// ---------- 总览渲染 ----------
+// 各游戏数据完全独立展示，不做跨游戏汇总
+// 保底区间：hard-20 起为高概率区，hard-10 起将近保底，hard 为硬保底
+function pityZone(pad, hard) {
+  if (pad >= hard - 10) return 'near';
+  if (pad >= hard - 20) return 'soft';
+  return 'norm';
+}
+
+function renderOverview() {
+  const grid = $('#ovGames');
+  grid.innerHTML = GAME_ORDER.map((key) => {
+    const g = GAMES[key];
+    const acc = activeOf(key);
+    const head = `<div class="gcard-top">
+        <span class="gcard-icon">${ICONS[key]}</span>
+        <div><div class="gcard-name">${g.name} · ${g.act}</div><div class="gcard-sub">${g.sub}</div></div>
+      </div>`;
+
+    if (!acc || !acc.records.length) {
+      return `<button class="gcard ${key}" data-goto="${key}">
+        ${head}
+        <div class="gcard-empty">未导入数据</div>
+        <div class="gcard-foot">
+          <span class="gcard-time">前往「${g.name}」页导入或更新数据</span>
+          <span class="gcard-go">查看记录 →</span>
+        </div>
+      </button>`;
+    }
+
+    const recs = acc.records;
+    const pity = pityMap(acc);
+    const c5 = recs.filter((r) => r.rank === 5).length;
+    const c4 = recs.filter((r) => r.rank === 4).length;
+    const avg = c5 ? (recs.length / c5).toFixed(1) : '—';
+    const latest = [...recs].sort(cmpRec).at(-1).time.slice(0, 10);
+
+    // 各卡池独立统计：抽数 / 5★数 / 已垫（无记录的卡池不显示）
+    const poolRows = g.pools.map((p) => {
+      const rs = recs.filter((r) => r.pool === p.key).sort(cmpRec);
+      if (!rs.length) return '';
+      let lastIdx = -1;
+      rs.forEach((r, i) => { if (r.rank === 5) lastIdx = i; });
+      const pad = lastIdx === -1 ? rs.length : rs.length - 1 - lastIdx;
+      const pc5 = rs.filter((r) => r.rank === 5).length;
+      const zone = pityZone(pad, p.hard);
+      const tag = zone === 'near' ? '<i class="gp-tag near">将近保底</i>'
+        : zone === 'soft' ? '<i class="gp-tag soft">高概率</i>' : '';
+      return `<div class="gp-row">
+        <span class="gp-name">${p.label}${tag}</span>
+        <span class="gp-val">${rs.length}抽 · <b>5★×${pc5}</b> · 已垫<b class="pad ${zone}">${pad}</b></span>
+      </div>`;
+    }).join('');
+
+    // 最近 3 个 5★：名字着色 + 出货抽数 + 所属卡池 + 日期
+    const fiveRows = recs.filter((r) => r.rank === 5).sort(cmpRec).slice(-3).reverse()
+      .map((r) => {
+        const pool = poolOf(key, r.pool);
+        const poolLabel = pool ? pool.label : r.pool;
+        return `<div class="gf-item" title="${r.time} · ${poolLabel}">
+          <span class="gf-name" style="color:${nameColor(r.name)}">${r.name}[${pity.get(r.id) ?? '?'}]</span>
+          <span class="gf-meta">${poolLabel} · ${r.time.slice(5, 10)}</span>
+        </div>`;
+      }).join('');
+
+    return `<button class="gcard ${key}" data-goto="${key}">
+      ${head}
+      <div class="gcard-stats">
+        <div><span>总抽数</span><b>${recs.length}</b></div>
+        <div><span>5★</span><b class="r5">${c5}</b></div>
+        <div><span>4★</span><b class="r4">${c4}</b></div>
+        <div><span>平均出金</span><b>${avg}</b></div>
+      </div>
+      <div class="gcard-sec">各卡池</div>
+      <div class="gcard-pools">${poolRows}</div>
+      <div class="gcard-sec">最近 5★</div>
+      <div class="gcard-fives">${fiveRows || '<div class="gf-none">暂无 5★ 记录</div>'}</div>
+      <div class="gcard-foot">
+        <span class="gcard-time">最近记录 ${latest}</span>
+        <span class="gcard-go">查看记录 →</span>
+      </div>
+    </button>`;
+  }).join('');
+  $$('.gcard', grid).forEach((card) =>
+    card.addEventListener('click', () => switchView(card.dataset.goto)));
+
+  renderOverviewPity();
+  renderAccounts();
+}
+
+// 保底进度面板：各游戏主卡池（配置首个卡池）的已垫进度条，按保底区间着色
+// 无数据的游戏也渲染占位条（已垫 —，填充 0%），保证四格刻度布局完整
+function renderOverviewPity() {
+  const box = $('#ovPity');
+  const cells = GAME_ORDER.map((key) => {
+    const g = GAMES[key];
+    const acc = activeOf(key);
+    const pool = g.pools[0];
+    const hard = pool.hard;
+    const pct = (v) => ((v / hard) * 100).toFixed(1);
+    const softPct = pct(hard - 20), nearPct = pct(hard - 10);
+
+    let pad = null;
+    if (acc) {
+      const rs = acc.records.filter((r) => r.pool === pool.key).sort(cmpRec);
+      if (rs.length) {
+        let lastIdx = -1;
+        rs.forEach((r, i) => { if (r.rank === 5) lastIdx = i; });
+        pad = lastIdx === -1 ? rs.length : rs.length - 1 - lastIdx;
+      }
+    }
+    const zone = pad === null ? 'norm' : pityZone(pad, hard);
+
+    return `<div class="ovp-cell ${key}">
+      <div class="ovp-head">
+        <span class="ovp-game">${g.name}</span>
+        <span class="ovp-pool">${pool.label}</span>
+        <b class="ovp-pad ${zone}">${pad === null ? '—' : pad}</b><span class="ovp-of">/ ${hard} 抽</span>
+      </div>
+      <div class="ovp-bar">
+        <i class="ovp-zone soft" style="left:${softPct}%;width:${(nearPct - softPct).toFixed(1)}%"></i>
+        <i class="ovp-zone near" style="left:${nearPct}%;width:${(100 - nearPct).toFixed(1)}%"></i>
+        <i class="ovp-fill ${zone}" style="width:${pad === null ? 0 : pct(pad)}%"></i>
+      </div>
+      <div class="ovp-scale">
+        <span class="tk l">0</span>
+        <span class="tk" style="left:${softPct}%">${hard - 20}</span>
+        <span class="tk" style="left:${nearPct}%">${hard - 10}</span>
+        <span class="tk r">${hard}</span>
+      </div>
+    </div>`;
+  }).join('');
+
+  box.hidden = false;
+  box.innerHTML = `<div class="ov-pity-head">
+      <h2>保底进度 · 主卡池已垫</h2>
+      <span class="ovp-legend"><i class="lg soft"></i>高概率区间（保底-20 起）<i class="lg near"></i>将近保底（保底-10 起）· 刻度为抽数</span>
+    </div>
+    <div class="ov-pity-grid">${cells}</div>`;
+}
+
+// ---------- 账号管理（设置）：横向游戏选项卡 + 切换下方账号列表 ----------
+let acctTab = null; // 当前选中的游戏标签
+function renderAccounts() {
+  const wrap = $('#accountList');
+  const groups = GAME_ORDER.map((g) => ({ game: g, list: accountsOf(g) }));
+  const total = groups.reduce((s, x) => s + x.list.length, 0);
+  $('#accountsEmpty').style.display = total ? 'none' : '';
+  if (!total) { wrap.innerHTML = ''; return; }
+
+  // 默认 / 回退选中第一个有账号的游戏
+  if (!acctTab || !accountsOf(acctTab).length) {
+    acctTab = (groups.find((x) => x.list.length) || groups[0]).game;
+  }
+
+  const tabs = groups.map(({ game, list }) => `
+    <button class="acct-tab ${game}${game === acctTab ? ' active' : ''}" data-tab="${game}">
+      <span class="acct-tab-icon">${ICONS[game]}</span>
+      <span class="acct-tab-name">${GAMES[game].name}</span>
+      <span class="acct-tab-count">${list.length}</span>
+    </button>`).join('');
+
+  const list = groups.find((x) => x.game === acctTab).list;
+  const rows = list.length ? list.map((a) => {
+    const current = store.active[acctTab] === a.uid;
+    return `<div class="acct-row ${acctTab}${current ? ' current' : ''}">
+      <div>
+        <div class="acct-uid">${a.uid}</div>
+        <div class="acct-meta">${a.records.length} 条记录 · 更新于 ${fmtTime(a.updatedAt)}</div>
+      </div>
+      ${current ? '<span class="tag-current">当前</span>' : ''}
+      <div class="acct-actions">
+        ${current ? '' : `<button class="btn-sm" data-switch="${acctTab}:${a.uid}">切换</button>`}
+        <button class="btn-sm danger" data-del="${acctTab}:${a.uid}">删除</button>
+      </div>
+    </div>`;
+  }).join('') : '<div class="empty small"><b>该游戏暂无账号</b><p>前往对应游戏页面点击「导入」载入数据文件。</p></div>';
+
+  wrap.innerHTML = `<div class="acct-tabs">${tabs}</div><div class="acct-panel">${rows}</div>`;
+}
+
+$('#accountList').addEventListener('click', async (e) => {
+  const tab = e.target.closest('[data-tab]');
+  if (tab) { acctTab = tab.dataset.tab; renderAccounts(); return; }
+  const sw = e.target.closest('[data-switch]');
+  const del = e.target.closest('[data-del]');
+  if (sw) {
+    const [game, uid] = sw.dataset.switch.split(':');
+    store.active[game] = uid;
+    await save();
+    renderGame(game);
+    renderOverview();
+    toast(`已切换到账号 ${uid}`);
+  } else if (del) {
+    const [game, uid] = del.dataset.del.split(':');
+    store.accounts[game] = accountsOf(game).filter((a) => a.uid !== uid);
+    if (store.active[game] === uid) {
+      store.active[game] = accountsOf(game)[0]?.uid || null;
+    }
+    await save();
+    renderGame(game);
+    renderOverview();
+    toast(`已删除账号 ${uid}`);
+  }
+});
+
+// ---------- 导入 ----------
+function normalize(game, item) {
+  const cfg = GAMES[game];
+  // 鸣潮：API 返回 cardPoolType/qualityLevel/resourceType，id 为主进程合成（时间|名称|池|序号）
+  if (cfg.rawWuwa) {
+    const pool = cfg.poolMap[String(item.cardPoolType)];
+    if (!pool) return null;
+    return {
+      id: String(item.id || `${item.time}|${item.name}|${item.cardPoolType}|0`),
+      time: item.time || '',
+      name: item.name || '',
+      type: item.resourceType || '',
+      rank: Number(item.qualityLevel) || 3,
+      pool,
+      gt: String(item.cardPoolType),
+    };
+  }
+  const code = item.uigf_gacha_type || item.gacha_type;
+  const pool = cfg.poolMap[code];
+  if (!pool) return null;
+  return {
+    id: String(item.id || `${item.time}|${item.name}|${code}`),
+    time: item.time,
+    name: item.name,
+    type: item.item_type || '',
+    rank: cfg.rankMap ? (cfg.rankMap[item.rank_type] || 3) : (Number(item.rank_type) || 3),
+    pool,
+    gt: String(item.gacha_type || ''), // 原始卡池类型（原神 400 = 角色活动祈愿-2；绝区零 102/103 = 重映/回响频段）
+  };
+}
+
+// 合并账号记录（导入/在线获取共用），返回新增条数
+function applyUids(game, uids) {
+  let added = 0;
+  uids.forEach(({ uid, list }) => {
+    uid = uid || '未知UID';
+    let acc = accountsOf(game).find((a) => a.uid === uid);
+    if (!acc) {
+      acc = { uid, records: [], updatedAt: 0 };
+      accountsOf(game).push(acc);
+    }
+    const ids = new Set(acc.records.map((r) => r.id));
+    const fresh = list.map((i) => normalize(game, i)).filter((r) => r && !ids.has(r.id));
+    acc.records.push(...fresh);
+    acc.records.sort(cmpRec);
+    acc.updatedAt = Date.now();
+    added += fresh.length;
+    store.active[game] = uid;
+  });
+  return added;
+}
+
+async function importData(game) {
+  // 鸣潮：无 UIGF 标准，导入走 Excel（工作表名=卡池名，含 UID 工作表）
+  if (game === 'wuwa') {
+    const res = await api.importWuwaExcel();
+    if (!res) return;
+    if (res.error) { toast(res.error); return; }
+    const added = applyUids(game, res.uids);
+    await save();
+    renderGame(game);
+    renderOverview();
+    toast(`导入完成：${res.uids.length} 个账号，新增 ${added} 条记录`);
+    return;
+  }
+  if (GAMES[game].noUigf) {
+    toast(`「${GAMES[game].name}」暂无 UIGF 标准，请使用「更新数据」在线获取`);
+    return;
+  }
+  if (!Object.keys(GAMES[game].poolMap).length) {
+    toast(`「${GAMES[game].name}」导入功能待接入`);
+    return;
+  }
+  const res = await api.importUIGF(game);
+  if (!res) return;
+  if (res.error) { toast(res.error); return; }
+
+  const added = applyUids(game, res.uids);
+  await save();
+  renderGame(game);
+  renderOverview();
+  toast(`导入完成：${res.uids.length} 个账号，新增 ${added} 条记录`);
+}
+
+// 内部卡池 key → API 查询用 gacha_type（按游戏）
+// 由 poolMap 反推：内部卡池 key → 原始 gacha_type（取每个 key 的首个 code）
+let API_KEY_OF = {};
+
+// 各账号各卡池本地最新记录 id（用于在线增量更新；按原始 gacha_type 分组，原神 301/400 分开记）
+function knownLatest(game) {
+  const keyOf = API_KEY_OF[game];
+  const map = {};
+  accountsOf(game).forEach((acc) => {
+    const per = {};
+    acc.records.forEach((r) => {
+      const k = r.gt || keyOf[r.pool];
+      if (!k || !/^\d+$/.test(r.id)) return; // 鸣潮等为合成 id，不参与增量
+      if (!per[k] || BigInt(r.id) > BigInt(per[k])) per[k] = r.id;
+    });
+    map[acc.uid] = per;
+  });
+  return map;
+}
+
+// 在线获取（读取游戏缓存链接，增量拉取）
+const FETCH_API = {
+  genshin: { call: (k) => api.fetchGenshin(k), on: (cb) => api.onFetchProgress(cb) },
+  hsr: { call: (k) => api.fetchHsr(k), on: (cb) => api.onHsrProgress(cb) },
+  zzz: { call: (k) => api.fetchZzz(k), on: (cb) => api.onZzzProgress(cb) },
+  wuwa: { call: () => api.fetchWuwa(), on: (cb) => api.onWuwaProgress(cb) }, // 全量拉取，无需增量参数
+};
+async function fetchOnline(game) {
+  const fetchApi = FETCH_API[game];
+  if (!fetchApi) {
+    toast(`「${GAMES[game].name}」在线获取待接入`);
+    return;
+  }
+  const view = $(`#view-${game}`);
+  const btn = $('[data-act="update"]', view);
+  const hint = $('[data-role="abHint"]', view);
+  btn.disabled = true;
+  hint.textContent = '正在读取游戏缓存…';
+  const off = fetchApi.on((p) => {
+    hint.textContent = `正在获取「${p.label}」第 ${p.page} 页（新增 ${p.total} 条）`;
+  });
+  try {
+    const res = await fetchApi.call(knownLatest(game));
+    if (!res) return;
+    if (res.error) { toast(res.error); return; }
+    const added = applyUids(game, res.uids);
+    await save();
+    renderGame(game);
+    renderOverview();
+    toast(added ? `更新完成：新增 ${added} 条记录` : '数据已是最新');
+  } finally {
+    off();
+    btn.disabled = false;
+    hint.textContent = '';
+  }
+}
+
+// 导出当前账号为 UIGF v4.1
+async function exportData(game) {
+  if (GAMES[game].noUigf || !API_KEY_OF[game]) {
+    toast(`「${GAMES[game].name}」暂无 UIGF 标准，请使用「导出 Excel」`);
+    return;
+  }
+  const acc = activeOf(game);
+  if (!acc || !acc.records.length) { toast('当前账号暂无记录'); return; }
+  const rankOut = GAMES[game].rankOut; // 绝区零：内部 5/4/3 → 原生 4/3/2
+  const records = acc.records.slice().sort(cmpRec).map((r) => {
+    const code = r.gt || API_KEY_OF[game][r.pool] || '';
+    return {
+      uigf_gacha_type: code,
+      gacha_type: code,
+      item_id: '',
+      count: '1',
+      time: r.time,
+      name: r.name,
+      item_type: r.type,
+      rank_type: rankOut ? (rankOut[r.rank] || '3') : String(r.rank),
+      id: r.id,
+    };
+  });
+  const res = await api.exportUIGF({ game, uid: acc.uid, records });
+  if (res?.file) toast(`已导出：${res.file}`);
+}
+
+// 导出当前账号为 Excel（每卡池一个工作表，含保底内计数）
+async function exportExcel(game) {
+  if (!API_KEY_OF[game]) {
+    toast(`「${GAMES[game].name}」Excel 导出待接入`);
+    return;
+  }
+  const acc = activeOf(game);
+  if (!acc || !acc.records.length) { toast('当前账号暂无记录'); return; }
+  const pools = GAMES[game].pools.map((p) => ({
+    label: p.label,
+    list: acc.records.filter((r) => r.pool === p.key).sort(cmpRec),
+  }));
+  const res = await api.exportExcel({ game, uid: acc.uid, pools });
+  if (res?.file) toast(`已导出：${res.file}`);
+}
+
+// 复制抽卡链接 / 打开缓存目录（原神 / 崩铁 / 绝区零 / 鸣潮）
+const GAME_URL_API = {
+  genshin: { copy: () => api.copyGenshinUrl(), dir: () => api.openGenshinCacheDir() },
+  hsr: { copy: () => api.copyHsrUrl(), dir: () => api.openHsrCacheDir() },
+  zzz: { copy: () => api.copyZzzUrl(), dir: () => api.openZzzCacheDir() },
+  wuwa: { copy: () => api.copyWuwaUrl(), dir: () => api.openWuwaCacheDir() },
+};
+async function copyGameUrl(game) {
+  const res = await GAME_URL_API[game].copy();
+  toast(res?.ok ? '链接已复制到剪贴板' : (res?.error || '复制失败'));
+}
+async function openGameCacheDir(game) {
+  const res = await GAME_URL_API[game].dir();
+  if (!res?.ok) toast(res?.error || '打开失败');
+}
+
+// ---------- 操作按钮 ----------
+document.addEventListener('click', (e) => {
+  const btn = e.target.closest('[data-act]');
+  if (!btn) return;
+  const act = btn.dataset.act;
+  const game = btn.closest('[data-game]')?.dataset.game;
+
+  if (act === 'import' && game) return importData(game);
+  if (act === 'update' && game) return fetchOnline(game);
+  if (act === 'export' && game) return exportData(game);
+  if (act === 'exportExcel' && game) return exportExcel(game);
+  if (act === 'copyUrl' && GAME_URL_API[game]) return copyGameUrl(game);
+  if (act === 'cacheDir' && GAME_URL_API[game]) return openGameCacheDir(game);
+  if (act === 'openDir') return api.openDataDir();
+  if (act === 'pickDir') return pickDataDir();
+  if (act === 'addAccount') return toast('请前往对应游戏页面点击「导入」载入数据文件');
+  if (act === 'checkUpdate') return checkUpdate();
+
+  const ACT_TEXT = {
+    update: '更新数据', export: '导出 UIGF', importAll: '批量导入',
+    exportAll: '导出全部', pickDir: '更改数据目录',
+  };
+  toast(`「${ACT_TEXT[act] || '该功能'}」待接入`);
+});
+
+// 账号下拉切换
+function setupUidSelects() {
+  GAME_ORDER.forEach((game) => {
+    $(`#view-${game} [data-role="uidSelect"]`).addEventListener('change', async (e) => {
+      store.active[game] = e.target.value;
+      recFilter[game].page = 1;
+      await save();
+      renderGame(game);
+      renderOverview();
+    });
+  });
+}
+
+// ---------- 图标 ----------
+const ICONS = new Proxy({}, {
+  get: (_, key) => GAMES?.[key]?.icon ? `<img src="${GAMES[key].icon}" alt="" />` : '',
+});
+
+// ---------- 启动 ----------
+(async () => {
+  // 加载游戏卡池配置（json/games.json，可热更新）
+  try {
+    GAMES = await fetch('json/games.json').then((r) => r.json());
+  } catch (e) {
+    toast('加载卡池配置失败：' + e.message);
+    return;
+  }
+  GAME_ORDER = Object.keys(GAMES);
+
+  // 由 poolMap 反推内部 key → 原始 gacha_type（取每个 key 首个 code）
+  API_KEY_OF = {};
+  GAME_ORDER.forEach((g) => {
+    const map = {};
+    for (const [code, key] of Object.entries(GAMES[g].poolMap || {})) {
+      if (!(key in map)) map[key] = code;
+    }
+    API_KEY_OF[g] = map;
+  });
+
+  // 初始化各游戏运行时状态
+  store = { active: {}, accounts: {} };
+  carIdx = {}; carLock = {};
+  viewMode = {}; recFilter = {}; subRefs = {};
+  GAME_ORDER.forEach((g) => {
+    store.active[g] = null;
+    store.accounts[g] = [];
+    carIdx[g] = 0;
+    carLock[g] = false;
+    viewMode[g] = 'overview';
+    recFilter[g] = { rank: 0, type: '', q: '', page: 1 };
+    subRefs[g] = [];
+    VIEW_TITLES[g] = `${GAMES[g].name} · ${GAMES[g].act}`;
+  });
+
+  setupGameSubgroups();
+  setupUidSelects();
+
+  const loaded = await api.loadStore();
+  if (loaded && loaded.accounts) store = loaded;
+
+  // 迁移：鸣潮卡池细分后（新旅/联动/忆旅拆角色+武器、新手拆 5/6/7），旧 pool 键按 gt 重映射
+  let migrated = false;
+  const wuwaValid = new Set(Object.values(GAMES.wuwa.poolMap));
+  (store.accounts.wuwa || []).forEach((acc) => acc.records.forEach((r) => {
+    if (!wuwaValid.has(r.pool)) {
+      const p = GAMES.wuwa.poolMap[r.gt];
+      if (p) { r.pool = p; migrated = true; }
+    }
+  }));
+  if (migrated) save();
+
+  // 兜底：有账号但未选中时，自动选中第一个
+  let needSave = false;
+  GAME_ORDER.forEach((g) => {
+    if (!store.active[g] && store.accounts[g]?.length) {
+      store.active[g] = store.accounts[g][0].uid;
+      needSave = true;
+    }
+  });
+  if (needSave) save();
+
+  GAME_ORDER.forEach(renderGame);
+  renderOverview();
+
+  refreshDataDirInput();
+  if (window.versions) {
+    $('#aboutVersions').textContent =
+      `Electron ${versions.electron} · Chrome ${versions.chrome} · Node ${versions.node}`;
+  }
+  moveIndicator();
+})();
+
+// 数据目录选择与显示
+async function refreshDataDirInput() {
+  $('#dataDirInput').value = await api.dataDir();
+}
+async function pickDataDir() {
+  const dir = await api.pickDir();
+  if (!dir) return;
+  await api.saveSettings({ dataDir: dir });
+  await refreshDataDirInput();
+  toast('数据目录已更改，重启应用后生效');
+}
+
+// 手动检查更新（自动检查在启动时由主进程执行）
+async function checkUpdate() {
+  const btn = $('#checkUpdateBtn');
+  if (btn) btn.disabled = true;
+  try {
+    const r = await api.checkUpdate();
+    if (r.status === 'dev') return toast('开发环境不检查更新');
+    if (r.status === 'error') return toast(`检查更新失败：${r.error}`);
+    if (r.latest && r.latest !== r.current) return toast(`发现新版本 v${r.latest}，正在后台下载…`);
+    toast(`已是最新版本 v${r.current}`);
+  } finally {
+    if (btn) btn.disabled = false;
+  }
+}

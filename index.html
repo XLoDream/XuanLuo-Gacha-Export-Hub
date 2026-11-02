@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self';" />
+  <title>XuanLuo Gacha Export Hub</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app">
+    <!-- ============ 标题栏 ============ -->
+    <header class="titlebar">
+      <div class="tb-left">
+        <svg class="tb-logo" viewBox="0 0 24 24" fill="none"><path fill-rule="evenodd" d="M12 2 L13.3 10.7 L22 12 L13.3 13.3 L12 22 L10.7 13.3 L2 12 L10.7 10.7 Z M12 9 L14.6 12 L12 15 L9.4 12 Z" fill="currentColor"/></svg>
+        <span class="tb-name">XuanLuo Gacha Export Hub</span>
+      </div>
+      <div class="tb-drag"></div>
+      <div class="tb-actions">
+        <button class="win-btn" id="btnMin" title="最小化">
+          <svg viewBox="0 0 12 12"><path d="M2 6h8" /></svg>
+        </button>
+        <button class="win-btn" id="btnMax" title="最大化">
+          <svg viewBox="0 0 12 12"><rect x="2.5" y="2.5" width="7" height="7" rx="0.5" /></svg>
+        </button>
+        <button class="win-btn danger" id="btnClose" title="关闭">
+          <svg viewBox="0 0 12 12"><path d="M3 3l6 6M9 3l-6 6" /></svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- ============ 顶部主选项 ============ -->
+    <nav class="topnav">
+      <div class="topnav-items">
+        <div class="nav-indicator" id="navIndicator"></div>
+        <button class="nav-item active" data-view="overview">
+          <svg viewBox="0 0 24 24"><path d="M3 10.5 12 3l9 7.5V21H3z" /><path d="M9 21v-7h6v7" /></svg>
+          <span>总览</span>
+        </button>
+        <button class="nav-item" data-view="genshin">
+          <img class="nav-ico" src="icon/原神.png" alt="" />
+          <span>原神 · 祈愿</span>
+        </button>
+        <button class="nav-item" data-view="hsr">
+          <img class="nav-ico" src="icon/崩铁.png" alt="" />
+          <span>崩铁 · 跃迁</span>
+        </button>
+        <button class="nav-item" data-view="zzz">
+          <img class="nav-ico" src="icon/绝区零.webp" alt="" />
+          <span>绝区零 · 调频</span>
+        </button>
+        <button class="nav-item" data-view="wuwa">
+          <img class="nav-ico" src="icon/鸣潮图标-3.0.png" alt="" />
+          <span>鸣潮 · 唤取</span>
+        </button>
+        <button class="nav-item" data-view="settings">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3.2" /><path d="M12 2.8v2.6M12 18.6v2.6M4.5 12H2M22 12h-2.5M6.2 6.2 4.4 4.4M19.6 19.6l-1.8-1.8M17.8 6.2l1.8-1.8M4.4 19.6l1.8-1.8" /></svg>
+          <span>设置</span>
+        </button>
+      </div>
+      <div class="topnav-right">
+        <button class="theme-btn" id="btnTheme" title="切换深浅色模式">
+          <svg class="ico-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4" /><path d="M12 2.5v2.2M12 19.3v2.2M4.2 12H2M22 12h-2.2M6.4 6.4 4.9 4.9M19.1 19.1l-1.5-1.5M17.6 6.4l1.5-1.5M4.9 19.1l1.5-1.5" /></svg>
+          <svg class="ico-moon" viewBox="0 0 24 24"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a6.8 6.8 0 0 0 10.5 10.5z" /></svg>
+        </button>
+        <span class="topnav-tag">GACHA // EXPORT</span>
+      </div>
+    </nav>
+
+    <div class="body no-sub">
+      <!-- ============ 左侧子选项 ============ -->
+      <aside class="subpanel">
+        <div class="subpanel-head">
+          <span class="sub-kicker">OPTIONS</span>
+          <b id="subTitle">总览</b>
+        </div>
+
+        <!-- 各游戏的卡池子选项由 app.js 按 GAMES 配置渲染 -->
+        <div class="subgroup" data-sub="genshin" hidden></div>
+        <div class="subgroup" data-sub="hsr" hidden></div>
+        <div class="subgroup" data-sub="zzz" hidden></div>
+        <div class="subgroup" data-sub="wuwa" hidden></div>
+
+        <div class="subgroup" data-sub="settings" hidden>
+          <div class="sub-label">设置分区</div>
+          <button class="sub-item active" data-scroll="setData">数据与存储</button>
+          <button class="sub-item" data-scroll="setAccounts">账号管理</button>
+          <button class="sub-item" data-scroll="setAbout">关于</button>
+        </div>
+      </aside>
+
+      <!-- ============ 内容区 ============ -->
+      <main class="content">
+        <!-- ---------- 总览 ---------- -->
+        <section class="view active" id="view-overview">
+          <!-- 品牌横幅：大标题 + 星空调色 -->
+          <div class="hero">
+            <div class="hero-sky" aria-hidden="true">
+              <div class="hero-stars s1"></div>
+              <div class="hero-stars s2"></div>
+              <div class="hero-nebula n1"></div>
+              <div class="hero-nebula n2"></div>
+              <div class="hero-nebula n3"></div>
+              <div class="hero-shoot s1"></div>
+              <div class="hero-shoot s2"></div>
+              <div class="hero-shoot s3"></div>
+              <div class="hero-shoot s4"></div>
+              <div class="hero-shoot s5"></div>
+              <div class="hero-shoot s6"></div>
+              <div class="hero-horizon"></div>
+              <div class="hero-scan"></div>
+            </div>
+            <div class="hero-content">
+              <div class="hero-brand">
+                <span class="hero-kicker">GACHA · EXPORT · HUB</span>
+                <h1 class="hero-title">抽卡记录总览</h1>
+                <p class="hero-tagline">原神 · 崩坏星穹铁道 · 绝区零 · 鸣潮 —— 四款游戏的抽卡数据，一站汇总</p>
+              </div>
+              <div class="hero-side">
+                <div class="hero-figure">
+                  <span class="hero-orbit"></span>
+                  <span class="hero-orbit o2"></span>
+                  <svg class="hero-logo" viewBox="0 0 24 24" fill="none"><path fill-rule="evenodd" d="M12 2 L13.3 10.7 L22 12 L13.3 13.3 L12 22 L10.7 13.3 L2 12 L10.7 10.7 Z M12 9 L14.6 12 L12 15 L9.4 12 Z" fill="currentColor"/></svg>
+                </div>
+                <div class="hero-actions">
+                  <button class="btn-sm" data-act="importAll">批量导入</button>
+                  <button class="btn-sm primary" data-act="exportAll">导出全部</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="game-grid" id="ovGames"></div>
+
+          <div class="ov-pity" id="ovPity" hidden></div>
+        </section>
+
+        <!-- ---------- 原神 · 祈愿 ---------- -->
+        <section class="view genshin" id="view-genshin" data-game="genshin">
+          <div class="view-head">
+            <div>
+              <h1>原神 · 祈愿记录</h1>
+              <p>角色活动祈愿 / 武器活动祈愿 / 集录祈愿 / 常驻祈愿 / 新手祈愿。</p>
+            </div>
+            <div class="head-actions">
+              <button class="btn-sm" data-act="update">更新数据</button>
+              <button class="btn-sm" data-act="import">导入</button>
+              <button class="btn-sm" data-act="exportExcel">导出 Excel</button>
+              <button class="btn-sm primary" data-act="export">导出 UIGF</button>
+            </div>
+          </div>
+          <div class="account-bar">
+            <span class="ab-label">账号</span>
+            <select class="uid-select" data-role="uidSelect"></select>
+            <button class="btn-sm" data-act="import">＋ 导入账号</button>
+            <button class="btn-sm ghost" data-act="copyUrl" title="复制祈愿链接">复制链接</button>
+            <button class="btn-sm ghost" data-act="cacheDir" title="打开游戏缓存目录">缓存目录</button>
+            <span class="ab-hint" data-role="abHint"></span>
+          </div>
+          <div class="card account-empty" data-role="accountEmpty" hidden>
+            <div class="empty">
+              <b>暂无账号数据</b>
+              <p>点击「导入」载入数据文件；多个账号可在上方下拉框切换。</p>
+            </div>
+          </div>
+          <div class="stat-row"></div>
+          <div class="carousel">
+            <button class="car-btn prev" data-role="carPrev" title="上一个"><svg viewBox="0 0 24 24"><path d="M15 4.5 7.5 12 15 19.5" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+            <div class="pool-detail-grid" data-role="poolGrid"></div>
+            <button class="car-btn next" data-role="carNext" title="下一个"><svg viewBox="0 0 24 24"><path d="M9 4.5 16.5 12 9 19.5" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          </div>
+          <div class="card records-card">
+            <div class="card-head"><h2>祈愿记录</h2><span class="chip" data-role="poolChip">全部记录</span></div>
+            <div class="rec-filter">
+              <div class="segmented" data-role="rankFilter">
+                <button class="seg active" data-rank="0">全部</button>
+                <button class="seg" data-rank="5">5★</button>
+                <button class="seg" data-rank="4">4★</button>
+                <button class="seg" data-rank="3">3★</button>
+              </div>
+              <div class="segmented" data-role="typeFilter"></div>
+              <input class="input rec-search" data-role="recSearch" placeholder="搜索物品名…" />
+            </div>
+            <div class="rec-stats" data-role="recStats" hidden></div>
+            <div class="rec-wrap">
+              <table class="rec-table">
+                <thead>
+                  <tr><th>时间</th><th>物品</th><th>星级</th><th>类型</th><th>卡池</th><th>已垫</th></tr>
+                </thead>
+                <tbody data-role="rows"></tbody>
+              </table>
+              <div class="empty" data-role="empty" hidden>
+                <b>暂无该卡池记录</b>
+                <p>点击「更新数据」从游戏获取，或使用「导入」载入 UIGF 文件。</p>
+              </div>
+            </div>
+            <div class="table-foot">
+              <span data-role="count"></span>
+              <div class="pager" data-role="pager">
+                <button class="btn-sm" data-role="prevPage">‹ 上一页</button>
+                <span data-role="pageInfo"></span>
+                <button class="btn-sm" data-role="nextPage">下一页 ›</button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ---------- 崩铁 · 跃迁 ---------- -->
+        <section class="view hsr" id="view-hsr" data-game="hsr">
+          <div class="view-head">
+            <div>
+              <h1>崩坏：星穹铁道 · 跃迁记录</h1>
+              <p>角色活动跃迁 / 光锥活动跃迁 / 联动跃迁 / 常驻跃迁 / 新手跃迁。</p>
+            </div>
+            <div class="head-actions">
+              <button class="btn-sm" data-act="update">更新数据</button>
+              <button class="btn-sm" data-act="import">导入</button>
+              <button class="btn-sm" data-act="exportExcel">导出 Excel</button>
+              <button class="btn-sm primary" data-act="export">导出 UIGF</button>
+            </div>
+          </div>
+          <div class="account-bar">
+            <span class="ab-label">账号</span>
+            <select class="uid-select" data-role="uidSelect"></select>
+            <button class="btn-sm" data-act="import">＋ 导入账号</button>
+            <button class="btn-sm ghost" data-act="copyUrl" title="复制跃迁链接">复制链接</button>
+            <button class="btn-sm ghost" data-act="cacheDir" title="打开游戏缓存目录">缓存目录</button>
+            <span class="ab-hint" data-role="abHint"></span>
+          </div>
+          <div class="card account-empty" data-role="accountEmpty" hidden>
+            <div class="empty">
+              <b>暂无账号数据</b>
+              <p>点击「导入」载入数据文件；多个账号可在上方下拉框切换。</p>
+            </div>
+          </div>
+          <div class="stat-row"></div>
+          <div class="carousel">
+            <button class="car-btn prev" data-role="carPrev" title="上一个"><svg viewBox="0 0 24 24"><path d="M15 4.5 7.5 12 15 19.5" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+            <div class="pool-detail-grid" data-role="poolGrid"></div>
+            <button class="car-btn next" data-role="carNext" title="下一个"><svg viewBox="0 0 24 24"><path d="M9 4.5 16.5 12 9 19.5" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          </div>
+          <div class="card records-card">
+            <div class="card-head"><h2>跃迁记录</h2><span class="chip" data-role="poolChip">全部记录</span></div>
+            <div class="rec-filter">
+              <div class="segmented" data-role="rankFilter">
+                <button class="seg active" data-rank="0">全部</button>
+                <button class="seg" data-rank="5">5★</button>
+                <button class="seg" data-rank="4">4★</button>
+                <button class="seg" data-rank="3">3★</button>
+              </div>
+              <div class="segmented" data-role="typeFilter"></div>
+              <input class="input rec-search" data-role="recSearch" placeholder="搜索物品名…" />
+            </div>
+            <div class="rec-stats" data-role="recStats" hidden></div>
+            <div class="rec-wrap">
+              <table class="rec-table">
+                <thead>
+                  <tr><th>时间</th><th>物品</th><th>星级</th><th>类型</th><th>卡池</th><th>已垫</th></tr>
+                </thead>
+                <tbody data-role="rows"></tbody>
+              </table>
+              <div class="empty" data-role="empty" hidden>
+                <b>暂无该卡池记录</b>
+                <p>点击「更新数据」从游戏获取，或使用「导入」载入 UIGF 文件。</p>
+              </div>
+            </div>
+            <div class="table-foot">
+              <span data-role="count"></span>
+              <div class="pager" data-role="pager">
+                <button class="btn-sm" data-role="prevPage">‹ 上一页</button>
+                <span data-role="pageInfo"></span>
+                <button class="btn-sm" data-role="nextPage">下一页 ›</button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ---------- 绝区零 · 调频 ---------- -->
+        <section class="view zzz" id="view-zzz" data-game="zzz">
+          <div class="view-head">
+            <div>
+              <h1>绝区零 · 调频记录</h1>
+              <p>独家频段 / 音擎频段 / 常驻频段 / 邦布频段。</p>
+            </div>
+            <div class="head-actions">
+              <button class="btn-sm" data-act="update">更新数据</button>
+              <button class="btn-sm" data-act="import">导入</button>
+              <button class="btn-sm" data-act="exportExcel">导出 Excel</button>
+              <button class="btn-sm primary" data-act="export">导出 UIGF</button>
+            </div>
+          </div>
+          <div class="account-bar">
+            <span class="ab-label">账号</span>
+            <select class="uid-select" data-role="uidSelect"></select>
+            <button class="btn-sm" data-act="import">＋ 导入账号</button>
+            <button class="btn-sm ghost" data-act="copyUrl" title="复制调频链接">复制链接</button>
+            <button class="btn-sm ghost" data-act="cacheDir" title="打开游戏缓存目录">缓存目录</button>
+            <span class="ab-hint" data-role="abHint"></span>
+          </div>
+          <div class="card account-empty" data-role="accountEmpty" hidden>
+            <div class="empty">
+              <b>暂无账号数据</b>
+              <p>点击「导入」载入数据文件；多个账号可在上方下拉框切换。</p>
+            </div>
+          </div>
+          <div class="stat-row"></div>
+          <div class="carousel">
+            <button class="car-btn prev" data-role="carPrev" title="上一个"><svg viewBox="0 0 24 24"><path d="M15 4.5 7.5 12 15 19.5" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+            <div class="pool-detail-grid" data-role="poolGrid"></div>
+            <button class="car-btn next" data-role="carNext" title="下一个"><svg viewBox="0 0 24 24"><path d="M9 4.5 16.5 12 9 19.5" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          </div>
+          <div class="card records-card">
+            <div class="card-head"><h2>调频记录</h2><span class="chip" data-role="poolChip">全部记录</span></div>
+            <div class="rec-filter">
+              <div class="segmented" data-role="rankFilter">
+                <button class="seg active" data-rank="0">全部</button>
+                <button class="seg" data-rank="5">5★</button>
+                <button class="seg" data-rank="4">4★</button>
+                <button class="seg" data-rank="3">3★</button>
+              </div>
+              <div class="segmented" data-role="typeFilter"></div>
+              <input class="input rec-search" data-role="recSearch" placeholder="搜索物品名…" />
+            </div>
+            <div class="rec-stats" data-role="recStats" hidden></div>
+            <div class="rec-wrap">
+              <table class="rec-table">
+                <thead>
+                  <tr><th>时间</th><th>物品</th><th>星级</th><th>类型</th><th>卡池</th><th>已垫</th></tr>
+                </thead>
+                <tbody data-role="rows"></tbody>
+              </table>
+              <div class="empty" data-role="empty" hidden>
+                <b>暂无该卡池记录</b>
+                <p>点击「更新数据」从游戏获取，或使用「导入」载入 UIGF 文件。</p>
+              </div>
+            </div>
+            <div class="table-foot">
+              <span data-role="count"></span>
+              <div class="pager" data-role="pager">
+                <button class="btn-sm" data-role="prevPage">‹ 上一页</button>
+                <span data-role="pageInfo"></span>
+                <button class="btn-sm" data-role="nextPage">下一页 ›</button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ---------- 鸣潮 · 唤取 ---------- -->
+        <section class="view wuwa" id="view-wuwa" data-game="wuwa">
+          <div class="view-head">
+            <div>
+              <h1>鸣潮 · 唤取记录</h1>
+              <p>角色活动唤取 / 武器活动唤取 / 常驻唤取 / 新手唤取 / 新旅 · 联动 · 忆旅唤取。链接约 24 小时有效，过期请重新打开游戏内唤取记录页。</p>
+            </div>
+            <div class="head-actions">
+              <button class="btn-sm" data-act="update">更新数据</button>
+              <button class="btn-sm" data-act="import">导入 Excel</button>
+              <button class="btn-sm" data-act="copyUrl">复制链接</button>
+              <button class="btn-sm" data-act="cacheDir">日志目录</button>
+              <button class="btn-sm primary" data-act="exportExcel">导出 Excel</button>
+            </div>
+          </div>
+          <div class="account-bar">
+            <span class="ab-label">账号</span>
+            <select class="uid-select" data-role="uidSelect"></select>
+            <span class="ab-hint" data-role="abHint"></span>
+          </div>
+          <div class="card account-empty" data-role="accountEmpty" hidden>
+            <div class="empty">
+              <b>暂无账号数据</b>
+              <p>在游戏内打开一次「唤取记录」页面后，点击「更新数据」自动读取。</p>
+            </div>
+          </div>
+          <div class="stat-row"></div>
+          <div class="carousel">
+            <button class="car-btn prev" data-role="carPrev" title="上一个"><svg viewBox="0 0 24 24"><path d="M15 4.5 7.5 12 15 19.5" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+            <div class="pool-detail-grid" data-role="poolGrid"></div>
+            <button class="car-btn next" data-role="carNext" title="下一个"><svg viewBox="0 0 24 24"><path d="M9 4.5 16.5 12 9 19.5" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          </div>
+          <div class="card records-card">
+            <div class="card-head"><h2>唤取记录</h2><span class="chip" data-role="poolChip">全部记录</span></div>
+            <div class="rec-filter">
+              <div class="segmented" data-role="rankFilter">
+                <button class="seg active" data-rank="0">全部</button>
+                <button class="seg" data-rank="5">5★</button>
+                <button class="seg" data-rank="4">4★</button>
+                <button class="seg" data-rank="3">3★</button>
+              </div>
+              <div class="segmented" data-role="typeFilter"></div>
+              <input class="input rec-search" data-role="recSearch" placeholder="搜索物品名…" />
+            </div>
+            <div class="rec-stats" data-role="recStats" hidden></div>
+            <div class="rec-wrap">
+              <table class="rec-table">
+                <thead>
+                  <tr><th>时间</th><th>物品</th><th>星级</th><th>类型</th><th>卡池</th><th>已垫</th></tr>
+                </thead>
+                <tbody data-role="rows"></tbody>
+              </table>
+              <div class="empty" data-role="empty" hidden>
+                <b>暂无该卡池记录</b>
+                <p>点击「更新数据」从游戏获取，或使用「导入」载入 UIGF 文件。</p>
+              </div>
+            </div>
+            <div class="table-foot">
+              <span data-role="count"></span>
+              <div class="pager" data-role="pager">
+                <button class="btn-sm" data-role="prevPage">‹ 上一页</button>
+                <span data-role="pageInfo"></span>
+                <button class="btn-sm" data-role="nextPage">下一页 ›</button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ---------- 设置 ---------- -->
+        <section class="view" id="view-settings">
+          <div class="view-head">
+            <div>
+              <h1>设置</h1>
+              <p>数据目录、导入导出格式与关于信息。</p>
+            </div>
+          </div>
+
+          <div class="settings-wrap">
+            <div class="card" id="setData">
+              <div class="card-head"><h2>数据与存储</h2></div>
+              <div class="field">
+                <label>数据目录</label>
+                <div class="row">
+                  <input class="input" id="dataDirInput" readonly value="加载中…" />
+                  <button class="btn-sm" data-act="pickDir">更改…</button>
+                  <button class="btn-sm" data-act="openDir">打开</button>
+                </div>
+                <p class="hint">抽卡记录与账号信息保存在此目录，不会上传。更改后需重启应用生效。</p>
+              </div>
+            </div>
+
+            <div class="card" id="setAccounts">
+              <div class="card-head"><h2>账号管理</h2><button class="btn-sm" data-act="addAccount">添加账号</button></div>
+              <div id="accountList"></div>
+              <div class="empty small" id="accountsEmpty">
+                <b>还没有任何账号</b>
+                <p>前往对应游戏页面点击「导入」，载入数据文件后会自动创建账号。</p>
+              </div>
+            </div>
+
+            <div class="card about-card" id="setAbout">
+              <div class="card-head"><h2>关于</h2><div class="row"><span class="chip">v1.0.0</span><button class="btn-sm" id="checkUpdateBtn" data-act="checkUpdate">检查更新</button></div></div>
+              <div class="about-body">
+                <svg class="about-logo" viewBox="0 0 24 24" fill="none"><path fill-rule="evenodd" d="M12 2 L13.3 10.7 L22 12 L13.3 13.3 L12 22 L10.7 13.3 L2 12 L10.7 10.7 Z M12 9 L14.6 12 L12 15 L9.4 12 Z" fill="currentColor"/></svg>
+                <div>
+                  <b>XuanLuo Gacha Export Hub <span>1.0.0</span></b>
+                  <p>原神祈愿 · 崩铁跃迁 · 绝区零调频 · 鸣潮唤取的抽卡记录管理与导出工具。</p>
+                  <p class="hint" id="aboutVersions">运行环境检测中…</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <div class="toasts" id="toasts"></div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
