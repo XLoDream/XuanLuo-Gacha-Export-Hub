@@ -21,7 +21,23 @@ jobs:
 
       - run: npm ci
 
-      - name: Build & publish
-        run: npx electron-builder --win nsis --publish always
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Resolve version tag
+        id: meta
+        shell: bash
+        run: echo "tag=v$(node -p "require('./package.json').version")" >> "$GITHUB_OUTPUT"
+
+      # 先打包，不交给 electron-builder 上传：它的 GitHub 发布任务并发时会撞 422
+      - name: Build installer
+        run: npx electron-builder --win nsis --publish never
+
+      - name: Publish release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.meta.outputs.tag }}
+          name: ${{ steps.meta.outputs.tag }}
+          draft: false
+          make_latest: true
+          files: |
+            dist/*.exe
+            dist/*.exe.blockmap
+            dist/latest.yml
