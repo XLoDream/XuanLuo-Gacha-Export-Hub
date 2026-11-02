@@ -1054,7 +1054,19 @@ ipcMain.handle('excel:export', async (e, { game = 'genshin', uid, pools }) => {
   return { file: res.filePath };
 });
 
-// ---------- 自动更新（GitHub Releases） ----------
+// ---------- 自动更新（GitHub Releases + 镜像前缀代理） ----------
+const GH_RELEASE_BASE = 'https://github.com/XLoDream/XuanLuo-Gacha-Export-Hub/releases/latest/download';
+// 镜像只做前缀代理：https://镜像/https://github.com/...
+const UPDATE_SOURCES = [
+  `https://ghfast.top/${GH_RELEASE_BASE}`,
+  `https://gh-proxy.com/${GH_RELEASE_BASE}`,
+  `https://gh.llkk.cc/${GH_RELEASE_BASE}`,
+  GH_RELEASE_BASE,
+];
+
+let sourceIndex = 0;
+let probingUpdate = false;
+let downloadingUpdate = false;
 let downloadedVersion = null;
 
 function sendUpdateEvent(type, payload = {}) {
@@ -1062,10 +1074,40 @@ function sendUpdateEvent(type, payload = {}) {
   if (win && !win.isDestroyed()) win.webContents.send('update:event', { type, ...payload });
 }
 
+function useUpdateSource(i) {
+  sourceIndex = i;
+  autoUpdater.setFeedURL({ provider: 'generic', url: UPDATE_SOURCES[i] });
+  console.log(`[autoUpdate] 使用源：${UPDATE_SOURCES[i]}`);
+}
+
+// 从当前源起依次尝试，每个源最多 2 次（llkk 偶发超时）
+async function checkForUpdatesWithFallback() {
+  let lastError = null;
+  probingUpdate = true;
+  try {
+    for (let i = sourceIndex; i < UPDATE_SOURCES.length; i++) {
+      useUpdateSource(i);
+      for (let attempt = 1; attempt <= 2; attempt++) {
+        try {
+          return await autoUpdater.checkForUpdates();
+        } catch (e) {
+          lastError = e;
+          console.warn(`[autoUpdate] ${UPDATE_SOURCES[i]} 第 ${attempt} 次失败：${e?.message || e}`);
+          if (attempt < 2) await new Promise((r) => setTimeout(r, 1200));
+        }
+      }
+    }
+  } finally {
+    probingUpdate = false;
+  }
+  throw lastError || new Error('所有更新源均不可用');
+}
+
 ipcMain.handle('app:checkUpdate', async () => {
   if (!app.isPackaged) return { status: 'dev', current: app.getVersion() };
   try {
-    const res = await autoUpdater.checkForUpdates();
+    sourceIndex = 0;
+    const res = await checkForUpdatesWithFallback();
     const latest = res?.updateInfo?.version || null;
     return {
       status: 'ok',
@@ -1095,17 +1137,37 @@ function setupAutoUpdate(win) {
   autoUpdater.autoDownload = true;
   autoUpdater.autoInstallOnAppQuit = true;
 
-  autoUpdater.on('update-available', (info) => sendUpdateEvent('available', { version: info.version }));
+  autoUpdater.on('update-available', (info) => {
+    downloadingUpdate = true;
+    sendUpdateEvent('available', { version: info.version });
+  });
+  autoUpdater.on('update-not-available', () => { downloadingUpdate = false; });
   autoUpdater.on('download-progress', (p) => sendUpdateEvent('progress', { percent: Math.round(p.percent || 0) }));
   autoUpdater.on('update-downloaded', (info) => {
+    downloadingUpdate = false;
     downloadedVersion = info.version;
     sendUpdateEvent('downloaded', { version: info.version });
   });
-  autoUpdater.on('error', (err) => sendUpdateEvent('error', { message: err?.message || String(err) }));
+
+  autoUpdater.on('error', (err) => {
+    if (probingUpdate) return; // 探测阶段的失败由回退逻辑处理
+    // 下载阶段出错：切到下一个源重试
+    if (downloadingUpdate && sourceIndex + 1 < UPDATE_SOURCES.length) {
+      downloadingUpdate = false;
+      sourceIndex += 1;
+      setTimeout(() => {
+        checkForUpdatesWithFallback().catch((e) => sendUpdateEvent('error', { message: e?.message || String(e) }));
+      }, 1500);
+      return;
+    }
+    downloadingUpdate = false;
+    sendUpdateEvent('error', { message: err?.message || String(err) });
+  });
 
   // 等页面脚本就绪再检查，避免事件早于渲染进程的监听器
   win.webContents.once('did-finish-load', () => {
-    autoUpdater.checkForUpdates().catch((e) => sendUpdateEvent('error', { message: e?.message || String(e) }));
+    sourceIndex = 0;
+    checkForUpdatesWithFallback().catch((e) => sendUpdateEvent('error', { message: e?.message || String(e) }));
   });
 }
 
