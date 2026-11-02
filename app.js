@@ -84,10 +84,10 @@ function setUpdateState(state, d = {}) {
   }
   if (state === 'downloaded') {
     $('#updateTitle').textContent = `新版本 v${d.version || ''} 已就绪`;
-    $('#updateDesc').textContent = '重启应用即可完成安装，本地数据不会丢失。';
+    $('#updateDesc').textContent = '关闭应用时会自动完成安装，下次启动即为新版本；也可立即重启。';
     $('#updateActions').innerHTML =
       '<button class="btn-sm primary" data-act="restartUpdate">立即重启</button>' +
-      '<button class="btn-sm" data-act="closeUpdate">稍后</button>';
+      '<button class="btn-sm" data-act="closeUpdate">退出时安装</button>';
     return;
   }
   if (state === 'error') {
