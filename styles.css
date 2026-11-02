@@ -244,6 +244,12 @@ svg { fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round
 .btn-sm:hover { border-color: var(--accent); }
 .btn-sm.primary { background: var(--accent); border-color: var(--accent); color: var(--on-accent); font-weight: 600; }
 .btn-sm.primary:hover { filter: brightness(1.1); }
+.btn-sm.icon-btn {
+  padding: 0; width: 28px; height: 28px;
+  display: inline-flex; align-items: center; justify-content: center;
+  color: var(--muted);
+}
+.btn-sm.icon-btn:hover { color: var(--accent); }
 
 .input {
   flex: 1; min-width: 0;
@@ -957,6 +963,27 @@ svg { fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round
 .update-actions { display: flex; gap: 8px; justify-content: center; margin-top: 22px; }
 .update-actions:empty { display: none; }
 .update-actions .btn-sm { min-width: 88px; }
+
+/* 链接更新弹窗 */
+.link-card {
+  width: 520px; max-width: calc(100vw - 48px);
+  padding: 26px 26px 22px;
+  background: linear-gradient(180deg, var(--card-2), var(--card));
+  border: 1px solid var(--line); border-radius: 16px;
+  box-shadow: var(--shadow-lg);
+  animation: upPop 0.26s cubic-bezier(0.2, 0.9, 0.3, 1.2);
+}
+.link-card h3 { font-size: 16px; font-weight: 600; letter-spacing: 0.2px; }
+.link-card p { margin-top: 7px; font-size: 12.5px; line-height: 1.65; color: var(--muted); }
+.link-input {
+  display: block; width: 100%; margin-top: 16px; padding: 10px 12px;
+  background: var(--card-2); border: 1px solid var(--line); border-radius: 10px;
+  color: var(--text); font-family: inherit; font-size: 12.5px; line-height: 1.6;
+  resize: vertical; min-height: 72px; outline: none;
+  transition: border-color 0.15s;
+}
+.link-input:focus { border-color: var(--accent); }
+.link-input::placeholder { color: var(--muted); opacity: 0.6; }
 
 @keyframes upFade { from { opacity: 0; } to { opacity: 1; } }
 @keyframes upPop { from { opacity: 0; transform: translateY(10px) scale(0.97); } to { opacity: 1; transform: none; } }

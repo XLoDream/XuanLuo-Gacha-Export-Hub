@@ -142,6 +142,7 @@
               <p>角色活动祈愿 / 武器活动祈愿 / 集录祈愿 / 常驻祈愿 / 新手祈愿。</p>
             </div>
             <div class="head-actions">
+              <button class="btn-sm icon-btn" data-act="linkUpdate" title="通过链接更新" aria-label="通过链接更新"><svg viewBox="0 0 24 24" width="14" height="14" fill="none"><path d="M9.5 14.5 14.5 9.5M11 6.5l1.6-1.6a3.9 3.9 0 0 1 5.5 5.5L16.5 12M13 17.5l-1.6 1.6a3.9 3.9 0 0 1-5.5-5.5L7.5 12" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></button>
               <button class="btn-sm" data-act="update">更新数据</button>
               <button class="btn-sm" data-act="import">导入</button>
               <button class="btn-sm" data-act="exportExcel">导出 Excel</button>
@@ -212,6 +213,7 @@
               <p>角色活动跃迁 / 光锥活动跃迁 / 联动跃迁 / 常驻跃迁 / 新手跃迁。</p>
             </div>
             <div class="head-actions">
+              <button class="btn-sm icon-btn" data-act="linkUpdate" title="通过链接更新" aria-label="通过链接更新"><svg viewBox="0 0 24 24" width="14" height="14" fill="none"><path d="M9.5 14.5 14.5 9.5M11 6.5l1.6-1.6a3.9 3.9 0 0 1 5.5 5.5L16.5 12M13 17.5l-1.6 1.6a3.9 3.9 0 0 1-5.5-5.5L7.5 12" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></button>
               <button class="btn-sm" data-act="update">更新数据</button>
               <button class="btn-sm" data-act="import">导入</button>
               <button class="btn-sm" data-act="exportExcel">导出 Excel</button>
@@ -282,6 +284,7 @@
               <p>独家频段 / 音擎频段 / 常驻频段 / 邦布频段。</p>
             </div>
             <div class="head-actions">
+              <button class="btn-sm icon-btn" data-act="linkUpdate" title="通过链接更新" aria-label="通过链接更新"><svg viewBox="0 0 24 24" width="14" height="14" fill="none"><path d="M9.5 14.5 14.5 9.5M11 6.5l1.6-1.6a3.9 3.9 0 0 1 5.5 5.5L16.5 12M13 17.5l-1.6 1.6a3.9 3.9 0 0 1-5.5-5.5L7.5 12" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></button>
               <button class="btn-sm" data-act="update">更新数据</button>
               <button class="btn-sm" data-act="import">导入</button>
               <button class="btn-sm" data-act="exportExcel">导出 Excel</button>
@@ -352,6 +355,7 @@
               <p>角色活动唤取 / 武器活动唤取 / 常驻唤取 / 新手唤取 / 新旅 · 联动 · 忆旅唤取。链接约 24 小时有效，过期请重新打开游戏内唤取记录页。</p>
             </div>
             <div class="head-actions">
+              <button class="btn-sm icon-btn" data-act="linkUpdate" title="通过链接更新" aria-label="通过链接更新"><svg viewBox="0 0 24 24" width="14" height="14" fill="none"><path d="M9.5 14.5 14.5 9.5M11 6.5l1.6-1.6a3.9 3.9 0 0 1 5.5 5.5L16.5 12M13 17.5l-1.6 1.6a3.9 3.9 0 0 1-5.5-5.5L7.5 12" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></button>
               <button class="btn-sm" data-act="update">更新数据</button>
               <button class="btn-sm" data-act="import">导入 Excel</button>
               <button class="btn-sm" data-act="copyUrl">复制链接</button>
@@ -449,7 +453,7 @@
               <div class="about-body">
                 <svg class="about-logo" viewBox="0 0 24 24" fill="none"><path fill-rule="evenodd" d="M12 2 L13.3 10.7 L22 12 L13.3 13.3 L12 22 L10.7 13.3 L2 12 L10.7 10.7 Z M12 9 L14.6 12 L12 15 L9.4 12 Z" fill="currentColor"/></svg>
                 <div>
-                  <b>XuanLuo Gacha Export Hub <span class="about-version">v1.1.6</span></b>
+                  <b>XuanLuo Gacha Export Hub <span class="about-version">v1.1.7</span></b>
                   <p>原神祈愿 · 崩铁跃迁 · 绝区零调频 · 鸣潮唤取的抽卡记录管理与导出工具。</p>
                   <button class="gh-link" data-act="openGithub">github.com/XLoDream/XuanLuo-Gacha-Export-Hub<span>↗</span></button>
                   <p class="hint" id="aboutVersions">运行环境检测中…</p>
@@ -459,6 +463,19 @@
           </div>
         </section>
       </main>
+    </div>
+
+    <!-- 链接更新弹窗 -->
+    <div class="update-mask" id="linkMask" hidden>
+      <div class="link-card" role="dialog" aria-modal="true" aria-labelledby="linkTitle">
+        <h3 id="linkTitle">通过链接更新</h3>
+        <p id="linkHint">粘贴包含 authkey 的完整链接</p>
+        <textarea id="linkInput" class="link-input" rows="3" spellcheck="false" placeholder="https://..."></textarea>
+        <div class="update-actions">
+          <button class="btn-sm" data-act="closeLink">取消</button>
+          <button class="btn-sm primary" data-act="submitLink">更新</button>
+        </div>
+      </div>
     </div>
 
     <!-- 更新弹窗 -->

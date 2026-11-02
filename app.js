@@ -988,14 +988,14 @@ function knownLatest(game) {
   return map;
 }
 
-// 在线获取（读取游戏缓存链接，增量拉取）
+// 在线获取（读取游戏缓存链接，增量拉取；link 为空时自动读取缓存）
 const FETCH_API = {
-  genshin: { call: (k) => api.fetchGenshin(k), on: (cb) => api.onFetchProgress(cb) },
-  hsr: { call: (k) => api.fetchHsr(k), on: (cb) => api.onHsrProgress(cb) },
-  zzz: { call: (k) => api.fetchZzz(k), on: (cb) => api.onZzzProgress(cb) },
-  wuwa: { call: () => api.fetchWuwa(), on: (cb) => api.onWuwaProgress(cb) }, // 全量拉取，无需增量参数
+  genshin: { call: (k, link) => api.fetchGenshin(k, link), on: (cb) => api.onFetchProgress(cb) },
+  hsr: { call: (k, link) => api.fetchHsr(k, link), on: (cb) => api.onHsrProgress(cb) },
+  zzz: { call: (k, link) => api.fetchZzz(k, link), on: (cb) => api.onZzzProgress(cb) },
+  wuwa: { call: (k, link) => api.fetchWuwa(link), on: (cb) => api.onWuwaProgress(cb) }, // 全量拉取，无需增量参数
 };
-async function fetchOnline(game) {
+async function fetchOnline(game, link) {
   const fetchApi = FETCH_API[game];
   if (!fetchApi) {
     toast(`「${GAMES[game].name}」在线获取待接入`);
@@ -1005,12 +1005,12 @@ async function fetchOnline(game) {
   const btn = $('[data-act="update"]', view);
   const hint = $('[data-role="abHint"]', view);
   btn.disabled = true;
-  hint.textContent = '正在读取游戏缓存…';
+  hint.textContent = link ? '正在通过链接读取…' : '正在读取游戏缓存…';
   const off = fetchApi.on((p) => {
     hint.textContent = `正在获取「${p.label}」第 ${p.page} 页（新增 ${p.total} 条）`;
   });
   try {
-    const res = await fetchApi.call(knownLatest(game));
+    const res = await fetchApi.call(knownLatest(game), link);
     if (!res) return;
     if (res.error) { toast(res.error); return; }
     const added = applyUids(game, res.uids);
@@ -1084,6 +1084,42 @@ async function openGameCacheDir(game) {
   if (!res?.ok) toast(res?.error || '打开失败');
 }
 
+// ---------- 链接更新 ----------
+const LINK_HINTS = {
+  genshin: '在游戏内打开「祈愿历史记录」，从网页地址栏复制完整链接（需包含 authkey）。',
+  hsr: '在游戏内打开「跃迁记录」，复制包含 authkey 的完整链接。',
+  zzz: '在游戏内打开「调频记录」，复制包含 authkey 的完整链接。',
+  wuwa: '粘贴唤取记录链接（含 player_id、record_id 等参数，约 24 小时有效）。',
+};
+let linkGame = '';
+
+function openLinkUpdate(game) {
+  linkGame = game;
+  $('#linkTitle').textContent = `通过链接更新 · ${GAMES[game].name}`;
+  $('#linkHint').textContent = LINK_HINTS[game] || '';
+  $('#linkInput').value = '';
+  $('#linkMask').hidden = false;
+  $('#linkInput').focus();
+}
+
+function closeLinkUpdate() {
+  $('#linkMask').hidden = true;
+  linkGame = '';
+}
+
+function submitLinkUpdate() {
+  const url = $('#linkInput').value.trim();
+  if (!url) return toast('请先粘贴链接');
+  if (!/^https?:\/\//i.test(url)) return toast('链接需以 http:// 或 https:// 开头');
+  const game = linkGame;
+  closeLinkUpdate();
+  fetchOnline(game, url);
+}
+
+$('#linkMask').addEventListener('mousedown', (e) => {
+  if (e.target.id === 'linkMask') closeLinkUpdate();
+});
+
 // ---------- 操作按钮 ----------
 document.addEventListener('click', (e) => {
   const btn = e.target.closest('[data-act]');
@@ -1093,6 +1129,9 @@ document.addEventListener('click', (e) => {
 
   if (act === 'import' && game) return importData(game);
   if (act === 'update' && game) return fetchOnline(game);
+  if (act === 'linkUpdate' && game) return openLinkUpdate(game);
+  if (act === 'closeLink') return closeLinkUpdate();
+  if (act === 'submitLink') return submitLinkUpdate();
   if (act === 'export' && game) return exportData(game);
   if (act === 'exportExcel' && game) return exportExcel(game);
   if (act === 'copyUrl' && GAME_URL_API[game]) return copyGameUrl(game);

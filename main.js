@@ -297,11 +297,12 @@ ipcMain.handle('genshin:openCacheDir', () => {
 });
 
 // knownLatest: { [uid]: { [gachaType]: 本地最新记录id } }，命中即停止翻页（增量更新）
-ipcMain.handle('genshin:fetch', async (e, knownLatest) => {
-  const found = readGenshinUrl();
+ipcMain.handle('genshin:fetch', async (e, knownLatest, link) => {
+  const found = link ? { url: link } : readGenshinUrl();
   if (found.error) return { error: found.error };
 
-  const url = new URL(fixAuthkey(found.url));
+  let url;
+  try { url = new URL(fixAuthkey(found.url)); } catch { return { error: '链接格式不正确' }; }
   const apiDomain = /webstatic-sea|hk4e-api-os|hoyoverse\.com/.test(url.host)
     ? 'https://public-operation-hk4e-sg.hoyoverse.com'
     : 'https://public-operation-hk4e.mihoyo.com';
@@ -405,11 +406,12 @@ ipcMain.handle('hsr:openCacheDir', () => {
 // 21/22 = 联动跃迁，使用独立接口 getLdGachaLog
 const HSR_TYPES = GAMES.hsr.fetchTypes;
 
-ipcMain.handle('hsr:fetch', async (e, knownLatest) => {
-  const found = readHsrUrl();
+ipcMain.handle('hsr:fetch', async (e, knownLatest, link) => {
+  const found = link ? { url: link } : readHsrUrl();
   if (found.error) return { error: found.error };
 
-  const url = new URL(fixAuthkey(found.url));
+  let url;
+  try { url = new URL(fixAuthkey(found.url)); } catch { return { error: '链接格式不正确' }; }
   const apiDomain = /webstatic-sea|hkrpg-api-os|api-os-takumi|hoyoverse\.com/.test(url.host)
     ? 'https://public-operation-hkrpg-sg.hoyoverse.com'
     : 'https://public-operation-hkrpg.mihoyo.com';
@@ -552,11 +554,12 @@ async function fetchPageZzz(api, retryCount = 5) {
   }
 }
 
-ipcMain.handle('zzz:fetch', async (e, knownLatest) => {
-  const found = readZzzUrl();
+ipcMain.handle('zzz:fetch', async (e, knownLatest, link) => {
+  const found = link ? { url: link } : readZzzUrl();
   if (found.error) return { error: found.error };
 
-  const url = new URL(fixAuthkey(found.url));
+  let url;
+  try { url = new URL(fixAuthkey(found.url)); } catch { return { error: '链接格式不正确' }; }
   const apiDomain = /webstatic-sea|api-os|hoyoverse\.com/.test(url.host)
     ? 'https://public-operation-nap-sg.hoyoverse.com'
     : 'https://public-operation-nap.mihoyo.com';
@@ -726,10 +729,10 @@ async function fetchJsonPost(url, body) {
 // 卡池类型（上游 POOL_NAMES）：1/2 活动 3/4 常驻 5-7 新手系 8/9 新旅 10/11 联动 12/13 忆旅
 const WUWA_TYPES = GAMES.wuwa.fetchTypes;
 
-ipcMain.handle('wuwa:fetch', async (ev) => {
+ipcMain.handle('wuwa:fetch', async (ev, link) => {
   const send = (p) => { if (!ev.sender.isDestroyed()) ev.sender.send('wuwa:progress', p); };
   try {
-    const found = await readWuwaUrl();
+    const found = link ? { url: link } : await readWuwaUrl();
     if (found.error) return { error: found.error };
     const qIdx = found.url.indexOf('?', found.url.indexOf('#'));
     if (qIdx < 0) return { error: '链接格式不正确' };
