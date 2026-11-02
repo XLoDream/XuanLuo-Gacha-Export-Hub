@@ -19,7 +19,7 @@
 
 ## 下载安装
 
-从 Releases 下载 `XuanLuo Gacha Export Hub Setup 1.0.0.exe`，运行安装程序即可（可选安装目录，自动创建桌面与开始菜单快捷方式）。
+从 [Releases](https://github.com/XLoDream/XuanLuo-Gacha-Export-Hub/releases) 下载最新的 `XuanLuo-Gacha-Export-Hub-Setup-<版本号>.exe`，运行安装程序即可（可选安装目录，自动创建桌面与开始菜单快捷方式）。
 
 > 未做代码签名，Windows SmartScreen 可能提示"未知发布者"，选择"仍要运行"即可。
 
