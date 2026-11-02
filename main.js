@@ -1086,7 +1086,8 @@ ipcMain.handle('shell:openExternal', (e, url) => {
   return shell.openExternal(target.href).then(() => ({ ok: true })).catch(() => ({ ok: false }));
 });
 
-ipcMain.on('update:install', () => autoUpdater.quitAndInstall());
+// 静默安装（不显示 NSIS 界面），装完自动重启
+ipcMain.on('update:install', () => autoUpdater.quitAndInstall(true, true));
 
 function setupAutoUpdate(win) {
   if (!app.isPackaged) return; // 开发环境无 latest.yml，跳过
