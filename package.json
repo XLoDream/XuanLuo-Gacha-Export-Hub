@@ -28,7 +28,8 @@
     ],
     "win": {
       "target": "nsis",
-      "icon": "icon/app.ico"
+      "icon": "icon/app.ico",
+      "artifactName": "XuanLuo-Gacha-Export-Hub-Setup-${version}.${ext}"
     },
     "nsis": {
       "oneClick": false,
