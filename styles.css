@@ -726,18 +726,6 @@ svg { fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round
 .about-body b { font-size: 15px; }
 .about-body p { font-size: 12.5px; color: var(--muted); margin-top: 4px; }
 
-/* 版本号徽标：渐变胶囊 + 细描边 */
-.version-pill {
-  display: inline-flex; align-items: baseline; gap: 1px;
-  padding: 3px 10px; border-radius: 999px;
-  font-size: 11.5px; font-weight: 600; letter-spacing: .35px;
-  font-variant-numeric: tabular-nums;
-  color: var(--accent);
-  background: linear-gradient(135deg, var(--accent-soft), transparent 75%);
-  border: 1px solid color-mix(in srgb, var(--accent) 30%, transparent);
-}
-.version-pill .v { font-size: 10px; font-weight: 500; opacity: .55; }
-
 /* 名称后的版本号：渐变文字 */
 .about-version {
   margin-left: 2px;
@@ -868,3 +856,87 @@ svg { fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round
   color: #3f63a8;
   filter: drop-shadow(0 10px 22px rgba(60, 90, 150, 0.25)) drop-shadow(0 0 16px rgba(120, 100, 220, 0.25));
 }
+
+/* ============ 关于：GitHub 链接 ============ */
+.gh-link {
+  display: inline-flex; align-items: center; gap: 4px;
+  margin-top: 8px; padding: 0; border: 0; background: none;
+  font-family: inherit; font-size: 12.5px; color: var(--accent);
+  cursor: pointer; transition: opacity 0.15s;
+}
+.gh-link:hover { opacity: 0.72; }
+.gh-link span { font-size: 11px; opacity: 0.75; }
+
+/* ============ 更新弹窗 ============ */
+.update-mask {
+  position: fixed; inset: 0; z-index: 70;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(8, 10, 18, 0.55);
+  backdrop-filter: blur(12px);
+  animation: upFade 0.2s ease-out;
+}
+.update-mask[hidden] { display: none; }
+
+.update-card {
+  position: relative; width: 400px; max-width: calc(100vw - 48px);
+  padding: 30px 26px 24px; text-align: center;
+  background: linear-gradient(180deg, var(--card-2), var(--card));
+  border: 1px solid var(--line); border-radius: 18px;
+  box-shadow: var(--shadow-lg);
+  overflow: hidden;
+  animation: upPop 0.28s cubic-bezier(0.2, 0.9, 0.3, 1.2);
+}
+.update-glow {
+  position: absolute; top: -70px; left: 50%; transform: translateX(-50%);
+  width: 260px; height: 140px; pointer-events: none;
+  background: radial-gradient(closest-side, var(--accent-soft), transparent);
+}
+
+.update-icon {
+  position: relative;
+  display: flex; align-items: center; justify-content: center;
+  width: 54px; height: 54px; margin: 0 auto 14px;
+  border-radius: 50%; font-size: 23px; font-weight: 700; line-height: 1;
+}
+.update-icon[data-state="checking"] {
+  border: 2px solid var(--line); border-top-color: var(--accent);
+  animation: upSpin 0.9s linear infinite;
+}
+.update-icon[data-state="available"],
+.update-icon[data-state="downloading"] {
+  background: var(--accent-soft); color: var(--accent);
+  box-shadow: 0 0 26px var(--ring);
+}
+.update-icon[data-state="available"]::after,
+.update-icon[data-state="downloading"]::after { content: "↓"; animation: upBob 1.2s ease-in-out infinite; }
+.update-icon[data-state="downloaded"] {
+  background: var(--accent); color: var(--on-accent);
+  box-shadow: 0 0 30px var(--glow);
+}
+.update-icon[data-state="downloaded"]::after { content: "✓"; }
+.update-icon[data-state="latest"] { background: var(--accent-soft); color: var(--accent); }
+.update-icon[data-state="latest"]::after { content: "✓"; }
+.update-icon[data-state="error"] { background: rgba(255, 107, 107, 0.14); color: var(--danger); }
+.update-icon[data-state="error"]::after { content: "!"; }
+
+.update-card h3 { font-size: 16px; font-weight: 600; letter-spacing: 0.2px; }
+.update-card p { margin-top: 7px; font-size: 12.5px; line-height: 1.65; color: var(--muted); }
+
+.update-progress { display: flex; align-items: center; gap: 10px; margin-top: 18px; }
+.update-progress[hidden] { display: none; }
+.update-progress-bar { flex: 1; height: 6px; border-radius: 999px; background: var(--line); overflow: hidden; }
+.update-progress-bar i {
+  display: block; width: 0; height: 100%; border-radius: 999px;
+  background: linear-gradient(90deg, var(--accent), color-mix(in srgb, var(--accent) 55%, #fff));
+  transition: width 0.25s ease;
+}
+.update-progress span { flex: none; font-size: 11.5px; color: var(--muted); font-variant-numeric: tabular-nums; }
+
+.update-actions { display: flex; gap: 8px; justify-content: center; margin-top: 22px; }
+.update-actions:empty { display: none; }
+.update-actions .btn-sm { min-width: 88px; }
+
+@keyframes upFade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes upPop { from { opacity: 0; transform: translateY(10px) scale(0.97); } to { opacity: 1; transform: none; } }
+@keyframes upSpin { to { transform: rotate(360deg); } }
+@keyframes upBob { 0%, 100% { transform: translateY(-1px); } 50% { transform: translateY(3px); } }

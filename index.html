@@ -445,12 +445,13 @@
             </div>
 
             <div class="card about-card" id="setAbout">
-              <div class="card-head"><h2>关于</h2><div class="row"><span class="version-pill"><span class="v">v</span>1.0.1</span><button class="btn-sm" id="checkUpdateBtn" data-act="checkUpdate">检查更新</button></div></div>
+              <div class="card-head"><h2>关于</h2><button class="btn-sm" id="checkUpdateBtn" data-act="checkUpdate">检查更新</button></div>
               <div class="about-body">
                 <svg class="about-logo" viewBox="0 0 24 24" fill="none"><path fill-rule="evenodd" d="M12 2 L13.3 10.7 L22 12 L13.3 13.3 L12 22 L10.7 13.3 L2 12 L10.7 10.7 Z M12 9 L14.6 12 L12 15 L9.4 12 Z" fill="currentColor"/></svg>
                 <div>
-                  <b>XuanLuo Gacha Export Hub <span class="about-version">v1.0.1</span></b>
+                  <b>XuanLuo Gacha Export Hub <span class="about-version">v1.1.0</span></b>
                   <p>原神祈愿 · 崩铁跃迁 · 绝区零调频 · 鸣潮唤取的抽卡记录管理与导出工具。</p>
+                  <button class="gh-link" data-act="openGithub">github.com/XLoDream/XuanLuo-Gacha-Export-Hub<span>↗</span></button>
                   <p class="hint" id="aboutVersions">运行环境检测中…</p>
                 </div>
               </div>
@@ -458,6 +459,21 @@
           </div>
         </section>
       </main>
+    </div>
+
+    <!-- 更新弹窗 -->
+    <div class="update-mask" id="updateMask" hidden>
+      <div class="update-card" role="dialog" aria-modal="true" aria-labelledby="updateTitle">
+        <span class="update-glow" aria-hidden="true"></span>
+        <div class="update-icon" id="updateIcon" data-state="checking" aria-hidden="true"></div>
+        <h3 id="updateTitle">正在检查更新</h3>
+        <p id="updateDesc">正在连接 GitHub Releases…</p>
+        <div class="update-progress" id="updateProgress" hidden>
+          <div class="update-progress-bar"><i id="updateProgressFill"></i></div>
+          <span id="updateProgressText">0%</span>
+        </div>
+        <div class="update-actions" id="updateActions"></div>
+      </div>
     </div>
 
     <div class="toasts" id="toasts"></div>

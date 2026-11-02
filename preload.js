@@ -20,6 +20,13 @@ contextBridge.exposeInMainWorld('api', {
   saveSettings: (patch) => ipcRenderer.invoke('settings:save', patch),
   dataDir: () => ipcRenderer.invoke('app:dataDir'),
   checkUpdate: () => ipcRenderer.invoke('app:checkUpdate'),
+  installUpdate: () => ipcRenderer.send('update:install'),
+  openExternal: (url) => ipcRenderer.invoke('shell:openExternal', url),
+  onUpdate: (cb) => {
+    const listener = (e, p) => cb(p);
+    ipcRenderer.on('update:event', listener);
+    return () => ipcRenderer.removeListener('update:event', listener);
+  },
   openDataDir: () => ipcRenderer.invoke('shell:openDataDir'),
   pickDir: () => ipcRenderer.invoke('dialog:pickDir'),
   importUIGF: (game) => ipcRenderer.invoke('uigf:import', game),

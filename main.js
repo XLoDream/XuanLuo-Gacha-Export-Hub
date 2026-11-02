@@ -1055,15 +1055,38 @@ ipcMain.handle('excel:export', async (e, { game = 'genshin', uid, pools }) => {
 });
 
 // ---------- 自动更新（GitHub Releases） ----------
+let downloadedVersion = null;
+
+function sendUpdateEvent(type, payload = {}) {
+  const win = BrowserWindow.getAllWindows()[0];
+  if (win && !win.isDestroyed()) win.webContents.send('update:event', { type, ...payload });
+}
+
 ipcMain.handle('app:checkUpdate', async () => {
   if (!app.isPackaged) return { status: 'dev', current: app.getVersion() };
   try {
     const res = await autoUpdater.checkForUpdates();
-    return { status: 'ok', current: app.getVersion(), latest: res?.updateInfo?.version || null };
+    const latest = res?.updateInfo?.version || null;
+    return {
+      status: 'ok',
+      current: app.getVersion(),
+      latest,
+      downloaded: !!latest && downloadedVersion === latest,
+    };
   } catch (e) {
     return { status: 'error', error: e?.message || String(e) };
   }
 });
+
+// 只允许 https 外链，交给系统默认浏览器
+ipcMain.handle('shell:openExternal', (e, url) => {
+  let target;
+  try { target = new URL(url); } catch { return { ok: false }; }
+  if (target.protocol !== 'https:') return { ok: false };
+  return shell.openExternal(target.href).then(() => ({ ok: true })).catch(() => ({ ok: false }));
+});
+
+ipcMain.on('update:install', () => autoUpdater.quitAndInstall());
 
 function setupAutoUpdate(win) {
   if (!app.isPackaged) return; // 开发环境无 latest.yml，跳过
@@ -1071,36 +1094,18 @@ function setupAutoUpdate(win) {
   autoUpdater.autoDownload = true;
   autoUpdater.autoInstallOnAppQuit = true;
 
-  autoUpdater.on('update-available', (info) => {
-    dialog.showMessageBox(win, {
-      type: 'info',
-      title: '发现新版本',
-      message: `发现新版本 v${info.version}`,
-      detail: '新版本正在后台下载，完成后会提示重启安装。',
-      buttons: ['知道了'],
-    });
-  });
-
+  autoUpdater.on('update-available', (info) => sendUpdateEvent('available', { version: info.version }));
+  autoUpdater.on('download-progress', (p) => sendUpdateEvent('progress', { percent: Math.round(p.percent || 0) }));
   autoUpdater.on('update-downloaded', (info) => {
-    dialog.showMessageBox(win, {
-      type: 'info',
-      title: '更新已就绪',
-      message: `新版本 v${info.version} 已下载完成`,
-      detail: '重启应用即可完成安装。',
-      buttons: ['立即重启', '稍后'],
-      defaultId: 0,
-      cancelId: 1,
-    }).then(({ response }) => {
-      if (response === 0) autoUpdater.quitAndInstall();
-    });
+    downloadedVersion = info.version;
+    sendUpdateEvent('downloaded', { version: info.version });
   });
+  autoUpdater.on('error', (err) => sendUpdateEvent('error', { message: err?.message || String(err) }));
 
-  autoUpdater.on('error', (err) => {
-    console.warn('[autoUpdate]', err?.message || err);
+  // 等页面脚本就绪再检查，避免事件早于渲染进程的监听器
+  win.webContents.once('did-finish-load', () => {
+    autoUpdater.checkForUpdates().catch((e) => sendUpdateEvent('error', { message: e?.message || String(e) }));
   });
-
-  // 启动后静默检查（不阻塞窗口）
-  autoUpdater.checkForUpdates().catch((e) => console.warn('[autoUpdate]', e?.message || e));
 }
 
 app.whenReady().then(() => {

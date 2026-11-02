@@ -51,6 +51,76 @@ function toast(msg) {
   setTimeout(() => el.remove(), 3000);
 }
 
+// ---------- 更新弹窗 ----------
+let pendingVersion = '';
+
+function setUpdateState(state, d = {}) {
+  const mask = $('#updateMask');
+  mask.hidden = false;
+  $('#updateIcon').dataset.state = state;
+  $('#updateProgress').hidden = true;
+  $('#updateActions').innerHTML = '';
+
+  if (state === 'checking') {
+    $('#updateTitle').textContent = '正在检查更新';
+    $('#updateDesc').textContent = '正在连接 GitHub Releases…';
+    return;
+  }
+  if (state === 'latest') {
+    $('#updateTitle').textContent = '已是最新版本';
+    $('#updateDesc').textContent = `当前版本 v${d.version || ''}`;
+    $('#updateActions').innerHTML = '<button class="btn-sm primary" data-act="closeUpdate">完成</button>';
+    return;
+  }
+  if (state === 'available' || state === 'downloading') {
+    $('#updateTitle').textContent = `发现新版本 v${d.version || ''}`;
+    $('#updateDesc').textContent = '新版本正在后台下载，可以继续使用工具';
+    $('#updateProgress').hidden = false;
+    const pct = Math.max(0, Math.min(100, d.percent || 0));
+    $('#updateProgressFill').style.width = `${pct}%`;
+    $('#updateProgressText').textContent = `${pct}%`;
+    $('#updateActions').innerHTML = '<button class="btn-sm" data-act="closeUpdate">后台下载</button>';
+    return;
+  }
+  if (state === 'downloaded') {
+    $('#updateTitle').textContent = `新版本 v${d.version || ''} 已就绪`;
+    $('#updateDesc').textContent = '重启应用即可完成安装，本地数据不会丢失。';
+    $('#updateActions').innerHTML =
+      '<button class="btn-sm primary" data-act="restartUpdate">立即重启</button>' +
+      '<button class="btn-sm" data-act="closeUpdate">稍后</button>';
+    return;
+  }
+  if (state === 'error') {
+    $('#updateTitle').textContent = '检查更新失败';
+    $('#updateDesc').textContent = d.message || '请稍后重试';
+    $('#updateActions').innerHTML = '<button class="btn-sm" data-act="closeUpdate">关闭</button>';
+  }
+}
+
+function closeUpdateDialog() {
+  $('#updateMask').hidden = true;
+}
+
+if (api?.onUpdate) {
+  api.onUpdate((e) => {
+    if (e.type === 'available') {
+      pendingVersion = e.version;
+      setUpdateState('available', { version: e.version, percent: 0 });
+    } else if (e.type === 'progress') {
+      if (!$('#updateMask').hidden) setUpdateState('downloading', { version: pendingVersion, percent: e.percent });
+    } else if (e.type === 'downloaded') {
+      pendingVersion = e.version;
+      setUpdateState('downloaded', { version: e.version });
+    } else if (e.type === 'error') {
+      if (!$('#updateMask').hidden) setUpdateState('error', { message: e.message });
+    }
+  });
+}
+
+$('#updateMask').addEventListener('click', (e) => {
+  if (e.target.id === 'updateMask') closeUpdateDialog();
+});
+
 function cmpRec(a, b) {
   if (a.time !== b.time) return a.time < b.time ? -1 : 1;
   try { return BigInt(a.id) < BigInt(b.id) ? -1 : 1; } catch { return 0; }
@@ -1001,6 +1071,9 @@ document.addEventListener('click', (e) => {
   if (act === 'pickDir') return pickDataDir();
   if (act === 'addAccount') return toast('请前往对应游戏页面点击「导入」载入数据文件');
   if (act === 'checkUpdate') return checkUpdate();
+  if (act === 'closeUpdate') return closeUpdateDialog();
+  if (act === 'restartUpdate') return api.installUpdate();
+  if (act === 'openGithub') return api.openExternal('https://github.com/XLoDream/XuanLuo-Gacha-Export-Hub');
 
   const ACT_TEXT = {
     update: '更新数据', export: '导出 UIGF', importAll: '批量导入',
@@ -1115,15 +1188,14 @@ async function pickDataDir() {
 
 // 手动检查更新（自动检查在启动时由主进程执行）
 async function checkUpdate() {
-  const btn = $('#checkUpdateBtn');
-  if (btn) btn.disabled = true;
-  try {
-    const r = await api.checkUpdate();
-    if (r.status === 'dev') return toast('开发环境不检查更新');
-    if (r.status === 'error') return toast(`检查更新失败：${r.error}`);
-    if (r.latest && r.latest !== r.current) return toast(`发现新版本 v${r.latest}，正在后台下载…`);
-    toast(`已是最新版本 v${r.current}`);
-  } finally {
-    if (btn) btn.disabled = false;
+  setUpdateState('checking');
+  const r = await api.checkUpdate();
+  if (r.status === 'dev') {
+    closeUpdateDialog();
+    return toast('开发环境不检查更新');
   }
+  if (r.status === 'error') return setUpdateState('error', { message: r.error });
+  if (r.downloaded) return setUpdateState('downloaded', { version: r.latest });
+  if (r.latest && r.latest !== r.current) return setUpdateState('available', { version: r.latest, percent: 0 });
+  setUpdateState('latest', { version: r.current });
 }
