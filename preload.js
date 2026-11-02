@@ -20,7 +20,7 @@ contextBridge.exposeInMainWorld('api', {
   saveSettings: (patch) => ipcRenderer.invoke('settings:save', patch),
   dataDir: () => ipcRenderer.invoke('app:dataDir'),
   checkUpdate: () => ipcRenderer.invoke('app:checkUpdate'),
-  installUpdate: () => ipcRenderer.send('update:install'),
+  startUpdate: (idx) => ipcRenderer.invoke('update:start', idx),
   openExternal: (url) => ipcRenderer.invoke('shell:openExternal', url),
   onUpdate: (cb) => {
     const listener = (e, p) => cb(p);

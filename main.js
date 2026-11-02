@@ -1058,16 +1058,24 @@ ipcMain.handle('excel:export', async (e, { game = 'genshin', uid, pools }) => {
 const GH_RELEASE_BASE = 'https://github.com/XLoDream/XuanLuo-Gacha-Export-Hub/releases/latest/download';
 // 镜像只做前缀代理：https://镜像/https://github.com/...
 const UPDATE_SOURCES = [
-  `https://ghfast.top/${GH_RELEASE_BASE}`,
-  `https://gh-proxy.com/${GH_RELEASE_BASE}`,
-  `https://gh.llkk.cc/${GH_RELEASE_BASE}`,
-  GH_RELEASE_BASE,
+  { name: 'ghfast.top', url: `https://ghfast.top/${GH_RELEASE_BASE}` },
+  { name: 'cdn.gh-proxy.com', url: `https://cdn.gh-proxy.com/${GH_RELEASE_BASE}` },
+  { name: 'gh.ddlc.top', url: `https://gh.ddlc.top/${GH_RELEASE_BASE}` },
+  { name: 'gh-proxy.com', url: `https://gh-proxy.com/${GH_RELEASE_BASE}` },
+  { name: 'ghproxy.felicity.land', url: `https://ghproxy.felicity.land/${GH_RELEASE_BASE}` },
+  { name: 'gh.llkk.cc', url: `https://gh.llkk.cc/${GH_RELEASE_BASE}` },
+  { name: 'GitHub 直连', url: GH_RELEASE_BASE },
 ];
 
 let sourceIndex = 0;
 let probingUpdate = false;
+let startingDownload = false;
 let downloadingUpdate = false;
 let downloadedVersion = null;
+
+function sourceList() {
+  return UPDATE_SOURCES.map((s, i) => ({ index: i, name: s.name }));
+}
 
 function sendUpdateEvent(type, payload = {}) {
   const win = BrowserWindow.getAllWindows()[0];
@@ -1076,8 +1084,8 @@ function sendUpdateEvent(type, payload = {}) {
 
 function useUpdateSource(i) {
   sourceIndex = i;
-  autoUpdater.setFeedURL({ provider: 'generic', url: UPDATE_SOURCES[i] });
-  console.log(`[autoUpdate] 使用源：${UPDATE_SOURCES[i]}`);
+  autoUpdater.setFeedURL({ provider: 'generic', url: UPDATE_SOURCES[i].url });
+  console.log(`[autoUpdate] 使用源：${UPDATE_SOURCES[i].name}`);
 }
 
 // 从当前源起依次尝试，每个源最多 2 次（llkk 偶发超时）
@@ -1092,7 +1100,7 @@ async function checkForUpdatesWithFallback() {
           return await autoUpdater.checkForUpdates();
         } catch (e) {
           lastError = e;
-          console.warn(`[autoUpdate] ${UPDATE_SOURCES[i]} 第 ${attempt} 次失败：${e?.message || e}`);
+          console.warn(`[autoUpdate] ${UPDATE_SOURCES[i].name} 第 ${attempt} 次失败：${e?.message || e}`);
           if (attempt < 2) await new Promise((r) => setTimeout(r, 1200));
         }
       }
@@ -1114,9 +1122,10 @@ ipcMain.handle('app:checkUpdate', async () => {
       current: app.getVersion(),
       latest,
       downloaded: !!latest && downloadedVersion === latest,
+      sources: sourceList(),
     };
   } catch (e) {
-    return { status: 'error', error: e?.message || String(e) };
+    return { status: 'error', error: e?.message || String(e), sources: sourceList() };
   }
 });
 
@@ -1128,18 +1137,54 @@ ipcMain.handle('shell:openExternal', (e, url) => {
   return shell.openExternal(target.href).then(() => ({ ok: true })).catch(() => ({ ok: false }));
 });
 
-// 静默安装（不显示 NSIS 界面），装完自动重启
-ipcMain.on('update:install', () => autoUpdater.quitAndInstall(true, true));
+// 从用户选定的源开始下载，失败则自动回退到后续源
+async function downloadFromSource(startIdx) {
+  let lastError = null;
+  startingDownload = true;
+  try {
+    for (let i = startIdx; i < UPDATE_SOURCES.length; i++) {
+      useUpdateSource(i);
+      sendUpdateEvent('source', { name: UPDATE_SOURCES[i].name });
+      try {
+        const res = await autoUpdater.checkForUpdates();
+        if (!res?.updateInfo) throw new Error('该源未返回更新信息');
+        downloadingUpdate = true;
+        await autoUpdater.downloadUpdate();
+        return { ok: true, source: UPDATE_SOURCES[i].name };
+      } catch (e) {
+        downloadingUpdate = false;
+        lastError = e;
+        console.warn(`[autoUpdate] 下载源 ${UPDATE_SOURCES[i].name} 失败：${e?.message || e}`);
+      }
+    }
+  } finally {
+    startingDownload = false;
+    downloadingUpdate = false;
+  }
+  throw lastError || new Error('所有下载源均失败');
+}
+
+ipcMain.handle('update:start', async (e, idx) => {
+  if (!app.isPackaged) return { ok: false, error: '开发环境不支持更新' };
+  const start = Number.isInteger(idx) ? Math.max(0, Math.min(idx, UPDATE_SOURCES.length - 1)) : 0;
+  try {
+    return await downloadFromSource(start);
+  } catch (err) {
+    sendUpdateEvent('error', { message: err?.message || String(err) });
+    return { ok: false, error: err?.message || String(err) };
+  }
+});
 
 function setupAutoUpdate(win) {
   if (!app.isPackaged) return; // 开发环境无 latest.yml，跳过
 
-  autoUpdater.autoDownload = true;
+  autoUpdater.autoDownload = false; // 由用户确认并选择源后再下载
   autoUpdater.autoInstallOnAppQuit = true;
 
   autoUpdater.on('update-available', (info) => {
-    downloadingUpdate = true;
-    sendUpdateEvent('available', { version: info.version });
+    if (startingDownload) return; // 选源重检时不再弹询问
+    downloadingUpdate = false;
+    sendUpdateEvent('available', { version: info.version, sources: sourceList() });
   });
   autoUpdater.on('update-not-available', () => { downloadingUpdate = false; });
   autoUpdater.on('download-progress', (p) => sendUpdateEvent('progress', { percent: Math.round(p.percent || 0) }));
@@ -1147,19 +1192,12 @@ function setupAutoUpdate(win) {
     downloadingUpdate = false;
     downloadedVersion = info.version;
     sendUpdateEvent('downloaded', { version: info.version });
+    // 下载完成即自动重启安装
+    setTimeout(() => autoUpdater.quitAndInstall(true, true), 1200);
   });
 
   autoUpdater.on('error', (err) => {
-    if (probingUpdate) return; // 探测阶段的失败由回退逻辑处理
-    // 下载阶段出错：切到下一个源重试
-    if (downloadingUpdate && sourceIndex + 1 < UPDATE_SOURCES.length) {
-      downloadingUpdate = false;
-      sourceIndex += 1;
-      setTimeout(() => {
-        checkForUpdatesWithFallback().catch((e) => sendUpdateEvent('error', { message: e?.message || String(e) }));
-      }, 1500);
-      return;
-    }
+    if (probingUpdate || startingDownload) return; // 由回退逻辑处理
     downloadingUpdate = false;
     sendUpdateEvent('error', { message: err?.message || String(err) });
   });

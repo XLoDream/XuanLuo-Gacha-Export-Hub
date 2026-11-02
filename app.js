@@ -53,12 +53,14 @@ function toast(msg) {
 
 // ---------- 更新弹窗 ----------
 let pendingVersion = '';
+let pendingSource = '';
 
 function setUpdateState(state, d = {}) {
   const mask = $('#updateMask');
   mask.hidden = false;
   $('#updateIcon').dataset.state = state;
   $('#updateProgress').hidden = true;
+  $('#updateSources').hidden = true;
   $('#updateActions').innerHTML = '';
 
   if (state === 'checking') {
@@ -72,9 +74,26 @@ function setUpdateState(state, d = {}) {
     $('#updateActions').innerHTML = '<button class="btn-sm primary" data-act="closeUpdate">完成</button>';
     return;
   }
-  if (state === 'available' || state === 'downloading') {
+  if (state === 'available') {
     $('#updateTitle').textContent = `发现新版本 v${d.version || ''}`;
-    $('#updateDesc').textContent = '新版本正在后台下载，可以继续使用工具';
+    $('#updateDesc').textContent = '选择下载源后开始更新，下载完成将自动重启安装';
+    const sources = d.sources || [];
+    if (sources.length) {
+      $('#updateSources').hidden = false;
+      $('#updateSources').innerHTML = sources
+        .map((s, i) => `<label class="update-source"><input type="radio" name="updSource" value="${s.index}"${i === 0 ? ' checked' : ''}><span>${s.name}</span></label>`)
+        .join('');
+    }
+    $('#updateActions').innerHTML =
+      '<button class="btn-sm primary" data-act="startUpdate">立即更新</button>' +
+      '<button class="btn-sm" data-act="closeUpdate">稍后</button>';
+    return;
+  }
+  if (state === 'downloading') {
+    $('#updateTitle').textContent = `正在下载 v${d.version || ''}`;
+    $('#updateDesc').textContent = d.source
+      ? `下载源：${d.source}，完成后将自动重启安装`
+      : '正在下载新版本，完成后将自动重启安装';
     $('#updateProgress').hidden = false;
     const pct = Math.max(0, Math.min(100, d.percent || 0));
     $('#updateProgressFill').style.width = `${pct}%`;
@@ -83,15 +102,13 @@ function setUpdateState(state, d = {}) {
     return;
   }
   if (state === 'downloaded') {
-    $('#updateTitle').textContent = `新版本 v${d.version || ''} 已就绪`;
-    $('#updateDesc').textContent = '关闭应用时会自动完成安装，下次启动即为新版本；也可立即重启。';
-    $('#updateActions').innerHTML =
-      '<button class="btn-sm primary" data-act="restartUpdate">立即重启</button>' +
-      '<button class="btn-sm" data-act="closeUpdate">退出时安装</button>';
+    $('#updateTitle').textContent = `v${d.version || ''} 下载完成`;
+    $('#updateDesc').textContent = '正在自动重启并安装，请稍候…';
+    $('#updateActions').innerHTML = '<button class="btn-sm" data-act="closeUpdate">关闭</button>';
     return;
   }
   if (state === 'error') {
-    $('#updateTitle').textContent = '检查更新失败';
+    $('#updateTitle').textContent = '更新失败';
     $('#updateDesc').textContent = d.message || '请稍后重试';
     $('#updateActions').innerHTML = '<button class="btn-sm" data-act="closeUpdate">关闭</button>';
   }
@@ -101,18 +118,31 @@ function closeUpdateDialog() {
   $('#updateMask').hidden = true;
 }
 
+async function startUpdate() {
+  const picked = $('#updateSources input[name="updSource"]:checked');
+  const idx = picked ? Number(picked.value) : 0;
+  pendingSource = picked ? picked.parentElement.textContent.trim() : '';
+  setUpdateState('downloading', { version: pendingVersion, percent: 0, source: pendingSource });
+  const r = await api.startUpdate(idx);
+  if (!r?.ok) setUpdateState('error', { message: r?.error || '下载失败，请换个下载源重试' });
+}
+
 if (api?.onUpdate) {
   api.onUpdate((e) => {
     if (e.type === 'available') {
       pendingVersion = e.version;
-      setUpdateState('available', { version: e.version, percent: 0 });
+      setUpdateState('available', { version: e.version, sources: e.sources });
+    } else if (e.type === 'source') {
+      pendingSource = e.name || '';
     } else if (e.type === 'progress') {
-      if (!$('#updateMask').hidden) setUpdateState('downloading', { version: pendingVersion, percent: e.percent });
+      if (!$('#updateMask').hidden) {
+        setUpdateState('downloading', { version: pendingVersion, percent: e.percent, source: pendingSource });
+      }
     } else if (e.type === 'downloaded') {
       pendingVersion = e.version;
       setUpdateState('downloaded', { version: e.version });
     } else if (e.type === 'error') {
-      if (!$('#updateMask').hidden) setUpdateState('error', { message: e.message });
+      setUpdateState('error', { message: e.message });
     }
   });
 }
@@ -1071,8 +1101,8 @@ document.addEventListener('click', (e) => {
   if (act === 'pickDir') return pickDataDir();
   if (act === 'addAccount') return toast('请前往对应游戏页面点击「导入」载入数据文件');
   if (act === 'checkUpdate') return checkUpdate();
+  if (act === 'startUpdate') return startUpdate();
   if (act === 'closeUpdate') return closeUpdateDialog();
-  if (act === 'restartUpdate') return api.installUpdate();
   if (act === 'openGithub') return api.openExternal('https://github.com/XLoDream/XuanLuo-Gacha-Export-Hub');
 
   const ACT_TEXT = {
@@ -1196,6 +1226,6 @@ async function checkUpdate() {
   }
   if (r.status === 'error') return setUpdateState('error', { message: r.error });
   if (r.downloaded) return setUpdateState('downloaded', { version: r.latest });
-  if (r.latest && r.latest !== r.current) return setUpdateState('available', { version: r.latest, percent: 0 });
+  if (r.latest && r.latest !== r.current) return setUpdateState('available', { version: r.latest, sources: r.sources });
   setUpdateState('latest', { version: r.current });
 }

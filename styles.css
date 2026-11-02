@@ -922,6 +922,28 @@ svg { fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round
 .update-card h3 { font-size: 16px; font-weight: 600; letter-spacing: 0.2px; }
 .update-card p { margin-top: 7px; font-size: 12.5px; line-height: 1.65; color: var(--muted); }
 
+.update-sources { display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; margin-top: 16px; }
+.update-sources[hidden] { display: none; }
+.update-source { position: relative; }
+.update-source input { position: absolute; opacity: 0; pointer-events: none; }
+.update-source span {
+  display: block;
+  padding: 5px 10px;
+  font-size: 11.5px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  color: var(--muted);
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s, background 0.15s;
+}
+.update-source span:hover { border-color: var(--accent); color: var(--text); }
+.update-source input:checked + span {
+  background: var(--accent-soft);
+  border-color: var(--accent);
+  color: var(--accent);
+  font-weight: 500;
+}
+
 .update-progress { display: flex; align-items: center; gap: 10px; margin-top: 18px; }
 .update-progress[hidden] { display: none; }
 .update-progress-bar { flex: 1; height: 6px; border-radius: 999px; background: var(--line); overflow: hidden; }
