@@ -543,9 +543,16 @@ function renderGame(game) {
   const list = accountsOf(game);
 
   const sel = $('[data-role="uidSelect"]', view);
-  sel.innerHTML = list.map((a) => `<option value="${a.uid}">${a.uid}</option>`).join('');
+  sel.innerHTML = list.map((a) => `<option value="${a.uid}">${a.uid}${a.remark ? ' · ' + a.remark : ''}</option>`).join('');
   sel.value = acc ? acc.uid : '';
   sel.disabled = !list.length;
+  const remarkEl = $('[data-role="abRemark"]', view);
+  if (remarkEl) {
+    const r = acc?.remark || '';
+    remarkEl.textContent = r || '＋ 备注';
+    remarkEl.classList.toggle('has', !!r);
+    remarkEl.title = r ? r : '点击添加账号备注';
+  }
   $('[data-role="abHint"]', view).textContent = acc
     ? `${acc.records.length} 条记录 · 更新于 ${fmtTime(acc.updatedAt)}`
     : '未导入';
@@ -843,9 +850,13 @@ function renderAccounts() {
   const list = groups.find((x) => x.game === acctTab).list;
   const rows = list.length ? list.map((a) => {
     const current = store.active[acctTab] === a.uid;
+    const remark = a.remark || '';
     return `<div class="acct-row ${acctTab}${current ? ' current' : ''}">
       <div>
-        <div class="acct-uid">${a.uid}</div>
+        <div class="acct-uid">
+          ${a.uid}
+          <span class="acct-remark ${remark ? '' : 'empty'}" data-remark-edit="${acctTab}:${a.uid}" title="点击编辑账号备注">${remark || '添加备注'}</span>
+        </div>
         <div class="acct-meta">${a.records.length} 条记录 · 更新于 ${fmtTime(a.updatedAt)}</div>
       </div>
       ${current ? '<span class="tag-current">当前</span>' : ''}
@@ -859,9 +870,62 @@ function renderAccounts() {
   wrap.innerHTML = `<div class="acct-tabs">${tabs}</div><div class="acct-panel">${rows}</div>`;
 }
 
+// ---------- 账号备注行内编辑（contentEditable 原地编辑，避免元素被重建丢失） ----------
+function startRemarkEdit(game, uid, el) {
+  if (el.dataset.editing === '1') return;
+  const acc = accountsOf(game).find((a) => a.uid === uid);
+  if (!acc) return;
+  el.dataset.editing = '1';
+  el.classList.add('editing');
+  el.contentEditable = 'true';
+  el.textContent = acc.remark || '';
+  el.focus();
+  // 全选已有文本，便于直接覆盖
+  const range = document.createRange();
+  range.selectNodeContents(el);
+  const sel = window.getSelection();
+  sel.removeAllRanges();
+  sel.addRange(range);
+
+  let done = false;
+  const commit = async () => {
+    if (done) return;
+    done = true;
+    el.dataset.editing = '';
+    el.classList.remove('editing');
+    el.contentEditable = 'false';
+    acc.remark = el.textContent.replace(/\n/g, ' ').trim();
+    await save();
+    renderGame(game);
+    renderOverview();
+    renderAccounts();
+  };
+  const cancel = () => {
+    if (done) return;
+    done = true;
+    el.dataset.editing = '';
+    el.classList.remove('editing');
+    el.contentEditable = 'false';
+    renderGame(game);
+    renderOverview();
+    renderAccounts();
+  };
+  el.addEventListener('blur', commit, { once: true });
+  el.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') { e.preventDefault(); el.blur(); }
+    else if (e.key === 'Escape') { e.preventDefault(); cancel(); }
+  });
+}
+
 $('#accountList').addEventListener('click', async (e) => {
   const tab = e.target.closest('[data-tab]');
   if (tab) { acctTab = tab.dataset.tab; renderAccounts(); return; }
+  const re = e.target.closest('[data-remark-edit]');
+  if (re) {
+    const [game, uid] = re.dataset.remarkEdit.split(':');
+    startRemarkEdit(game, uid, re);
+    return;
+  }
   const sw = e.target.closest('[data-switch]');
   const del = e.target.closest('[data-del]');
   if (sw) {
@@ -922,7 +986,7 @@ function applyUids(game, uids) {
     uid = uid || '未知UID';
     let acc = accountsOf(game).find((a) => a.uid === uid);
     if (!acc) {
-      acc = { uid, records: [], updatedAt: 0 };
+      acc = { uid, records: [], updatedAt: 0, remark: '' };
       accountsOf(game).push(acc);
     }
     const ids = new Set(acc.records.map((r) => r.id));
@@ -1161,6 +1225,15 @@ function setupUidSelects() {
       renderGame(game);
       renderOverview();
     });
+    // 账号备注点击编辑
+    const abRemark = $(`#view-${game} [data-role="abRemark"]`);
+    if (abRemark) {
+      abRemark.addEventListener('click', () => {
+        const acc = activeOf(game);
+        if (!acc) { toast('请先导入账号'); return; }
+        startRemarkEdit(game, acc.uid, abRemark);
+      });
+    }
   });
 }
 
