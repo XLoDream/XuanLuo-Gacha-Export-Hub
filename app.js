@@ -147,9 +147,6 @@ if (api?.onUpdate) {
   });
 }
 
-$('#updateMask').addEventListener('click', (e) => {
-  if (e.target.id === 'updateMask') closeUpdateDialog();
-});
 
 function cmpRec(a, b) {
   if (a.time !== b.time) return a.time < b.time ? -1 : 1;
@@ -918,9 +915,6 @@ async function saveRemark() {
     remarkSaving = false;
   }
 }
-$('#remarkMask').addEventListener('mousedown', (e) => {
-  if (e.target.id === 'remarkMask') closeRemarkEdit();
-});
 $('#remarkInput').addEventListener('keydown', (e) => {
   if (e.key === 'Enter') { e.preventDefault(); saveRemark(); }
   else if (e.key === 'Escape') { e.preventDefault(); closeRemarkEdit(); }
@@ -1189,14 +1183,7 @@ function submitLinkUpdate() {
   fetchOnline(game, url);
 }
 
-$('#linkMask').addEventListener('mousedown', (e) => {
-  if (e.target.id === 'linkMask') closeLinkUpdate();
-});
-
-// 账号选择弹窗：点击遮罩关闭、点击账号切换
-$('#acctSelectMask').addEventListener('mousedown', (e) => {
-  if (e.target.id === 'acctSelectMask') closeAcctSelect();
-});
+// 账号选择弹窗：点击账号切换
 $('#acctSelectMask').addEventListener('click', async (e) => {
   const pick = e.target.closest('[data-pick]');
   if (!pick) return;
@@ -1256,8 +1243,7 @@ function openAcctSelect(game) {
     const remark = a.remark || '';
     return `<button class="asc-item${current ? ' current' : ''}" data-pick="${game}:${a.uid}">
       <div class="asc-main">
-        <span class="asc-uid">${a.uid}</span>
-        ${remark ? `<span class="asc-remark">${remark}</span>` : ''}
+        <span class="asc-uid">${a.uid}${remark ? ` · ${remark}` : ''}</span>
       </div>
       <div class="asc-meta">${a.records.length} 条记录 · 更新于 ${fmtTime(a.updatedAt)}</div>
       ${current ? '<span class="asc-current-badge">当前</span>' : ''}
