@@ -542,16 +542,24 @@ function renderGame(game) {
   const acc = activeOf(game);
   const list = accountsOf(game);
 
-  const sel = $('[data-role="uidSelect"]', view);
-  sel.innerHTML = list.map((a) => `<option value="${a.uid}">${a.uid}${a.remark ? ' · ' + a.remark : ''}</option>`).join('');
-  sel.value = acc ? acc.uid : '';
-  sel.disabled = !list.length;
+  const selBtn = $('[data-role="uidSelectBtn"]', view);
+  if (selBtn) {
+    const txt = selBtn.querySelector('.usb-text');
+    if (acc) {
+      txt.textContent = acc.remark ? `${acc.uid} · ${acc.remark}` : acc.uid;
+      selBtn.classList.remove('empty');
+    } else {
+      txt.textContent = '选择账号';
+      selBtn.classList.add('empty');
+    }
+    selBtn.disabled = !list.length;
+  }
   const remarkEl = $('[data-role="abRemark"]', view);
   if (remarkEl) {
     const r = acc?.remark || '';
-    remarkEl.textContent = r || '＋ 备注';
+    remarkEl.textContent = r ? '修改备注' : '新增备注';
     remarkEl.classList.toggle('has', !!r);
-    remarkEl.title = r ? r : '点击添加账号备注';
+    remarkEl.title = r ? `当前备注：${r}，点击修改` : '点击添加账号备注';
   }
   $('[data-role="abHint"]', view).textContent = acc
     ? `${acc.records.length} 条记录 · 更新于 ${fmtTime(acc.updatedAt)}`
@@ -870,52 +878,53 @@ function renderAccounts() {
   wrap.innerHTML = `<div class="acct-tabs">${tabs}</div><div class="acct-panel">${rows}</div>`;
 }
 
-// ---------- 账号备注行内编辑（contentEditable 原地编辑，避免元素被重建丢失） ----------
-function startRemarkEdit(game, uid, el) {
-  if (el.dataset.editing === '1') return;
+// ---------- 账号备注弹窗编辑 ----------
+let remarkGame = '';
+let remarkUid = '';
+function openRemarkEdit(game, uid) {
   const acc = accountsOf(game).find((a) => a.uid === uid);
   if (!acc) return;
-  el.dataset.editing = '1';
-  el.classList.add('editing');
-  el.contentEditable = 'true';
-  el.textContent = acc.remark || '';
-  el.focus();
-  // 全选已有文本，便于直接覆盖
-  const range = document.createRange();
-  range.selectNodeContents(el);
-  const sel = window.getSelection();
-  sel.removeAllRanges();
-  sel.addRange(range);
-
-  let done = false;
-  const commit = async () => {
-    if (done) return;
-    done = true;
-    el.dataset.editing = '';
-    el.classList.remove('editing');
-    el.contentEditable = 'false';
-    acc.remark = el.textContent.replace(/\n/g, ' ').trim();
-    await save();
-    renderGame(game);
-    renderOverview();
-    renderAccounts();
-  };
-  const cancel = () => {
-    if (done) return;
-    done = true;
-    el.dataset.editing = '';
-    el.classList.remove('editing');
-    el.contentEditable = 'false';
-    renderGame(game);
-    renderOverview();
-    renderAccounts();
-  };
-  el.addEventListener('blur', commit, { once: true });
-  el.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter') { e.preventDefault(); el.blur(); }
-    else if (e.key === 'Escape') { e.preventDefault(); cancel(); }
-  });
+  remarkGame = game;
+  remarkUid = uid;
+  const has = !!acc.remark;
+  $('#remarkTitle').textContent = has ? '修改备注' : '新增备注';
+  $('#remarkSub').textContent = has ? `当前备注：${acc.remark}` : '为该账号添加备注，方便区分是谁的账号';
+  const input = $('#remarkInput');
+  input.value = acc.remark || '';
+  $('#remarkMask').hidden = false;
+  setTimeout(() => { input.focus(); input.select(); }, 50);
 }
+function closeRemarkEdit() {
+  $('#remarkMask').hidden = true;
+  remarkGame = '';
+  remarkUid = '';
+}
+let remarkSaving = false;
+async function saveRemark() {
+  if (remarkSaving) return;
+  const game = remarkGame;
+  const acc = accountsOf(game).find((a) => a.uid === remarkUid);
+  if (!acc) return;
+  remarkSaving = true;
+  try {
+    acc.remark = $('#remarkInput').value.trim();
+    await save();
+    closeRemarkEdit();
+    renderGame(game);
+    renderOverview();
+    renderAccounts();
+    toast(acc.remark ? '备注已保存' : '备注已清除');
+  } finally {
+    remarkSaving = false;
+  }
+}
+$('#remarkMask').addEventListener('mousedown', (e) => {
+  if (e.target.id === 'remarkMask') closeRemarkEdit();
+});
+$('#remarkInput').addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') { e.preventDefault(); saveRemark(); }
+  else if (e.key === 'Escape') { e.preventDefault(); closeRemarkEdit(); }
+});
 
 $('#accountList').addEventListener('click', async (e) => {
   const tab = e.target.closest('[data-tab]');
@@ -923,7 +932,7 @@ $('#accountList').addEventListener('click', async (e) => {
   const re = e.target.closest('[data-remark-edit]');
   if (re) {
     const [game, uid] = re.dataset.remarkEdit.split(':');
-    startRemarkEdit(game, uid, re);
+    openRemarkEdit(game, uid);
     return;
   }
   const sw = e.target.closest('[data-switch]');
@@ -1184,6 +1193,22 @@ $('#linkMask').addEventListener('mousedown', (e) => {
   if (e.target.id === 'linkMask') closeLinkUpdate();
 });
 
+// 账号选择弹窗：点击遮罩关闭、点击账号切换
+$('#acctSelectMask').addEventListener('mousedown', (e) => {
+  if (e.target.id === 'acctSelectMask') closeAcctSelect();
+});
+$('#acctSelectMask').addEventListener('click', async (e) => {
+  const pick = e.target.closest('[data-pick]');
+  if (!pick) return;
+  const [game, uid] = pick.dataset.pick.split(':');
+  store.active[game] = uid;
+  recFilter[game].page = 1;
+  await save();
+  closeAcctSelect();
+  renderGame(game);
+  renderOverview();
+});
+
 // ---------- 操作按钮 ----------
 document.addEventListener('click', (e) => {
   const btn = e.target.closest('[data-act]');
@@ -1195,6 +1220,9 @@ document.addEventListener('click', (e) => {
   if (act === 'update' && game) return fetchOnline(game);
   if (act === 'linkUpdate' && game) return openLinkUpdate(game);
   if (act === 'closeLink') return closeLinkUpdate();
+  if (act === 'closeAcctSelect') return closeAcctSelect();
+  if (act === 'closeRemark') return closeRemarkEdit();
+  if (act === 'saveRemark') return saveRemark();
   if (act === 'submitLink') return submitLinkUpdate();
   if (act === 'export' && game) return exportData(game);
   if (act === 'exportExcel' && game) return exportExcel(game);
@@ -1215,23 +1243,45 @@ document.addEventListener('click', (e) => {
   toast(`「${ACT_TEXT[act] || '该功能'}」待接入`);
 });
 
-// 账号下拉切换
+// 账号选择弹窗
+let acctSelectGame = '';
+function openAcctSelect(game) {
+  const list = accountsOf(game);
+  if (!list.length) { toast('暂无账号，请先导入'); return; }
+  acctSelectGame = game;
+  const curUid = store.active[game];
+  $('#acctSelectTitle').textContent = `选择账号 · ${GAMES[game].name}`;
+  $('[data-role="acctSelectList"]').innerHTML = list.map((a) => {
+    const current = a.uid === curUid;
+    const remark = a.remark || '';
+    return `<button class="asc-item${current ? ' current' : ''}" data-pick="${game}:${a.uid}">
+      <div class="asc-main">
+        <span class="asc-uid">${a.uid}</span>
+        ${remark ? `<span class="asc-remark">${remark}</span>` : ''}
+      </div>
+      <div class="asc-meta">${a.records.length} 条记录 · 更新于 ${fmtTime(a.updatedAt)}</div>
+      ${current ? '<span class="asc-current-badge">当前</span>' : ''}
+    </button>`;
+  }).join('');
+  $('#acctSelectMask').hidden = false;
+}
+function closeAcctSelect() {
+  $('#acctSelectMask').hidden = true;
+  acctSelectGame = '';
+}
+
+// 账号下拉切换（改为弹窗选择）
 function setupUidSelects() {
   GAME_ORDER.forEach((game) => {
-    $(`#view-${game} [data-role="uidSelect"]`).addEventListener('change', async (e) => {
-      store.active[game] = e.target.value;
-      recFilter[game].page = 1;
-      await save();
-      renderGame(game);
-      renderOverview();
-    });
+    const btn = $(`#view-${game} [data-role="uidSelectBtn"]`);
+    if (btn) btn.addEventListener('click', () => openAcctSelect(game));
     // 账号备注点击编辑
     const abRemark = $(`#view-${game} [data-role="abRemark"]`);
     if (abRemark) {
       abRemark.addEventListener('click', () => {
         const acc = activeOf(game);
         if (!acc) { toast('请先导入账号'); return; }
-        startRemarkEdit(game, acc.uid, abRemark);
+        openRemarkEdit(game, acc.uid);
       });
     }
   });

@@ -760,28 +760,39 @@ svg { fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round
 }
 .uid-select:focus { border-color: var(--accent); }
 .uid-select:disabled { opacity: 0.5; cursor: default; }
+.uid-select-btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--card);
+  border: 1px solid var(--line); border-radius: 8px;
+  color: var(--text); font-size: 13px; font-family: inherit;
+  padding: 7px 12px; min-width: 170px; max-width: 260px;
+  outline: none; cursor: pointer; text-align: left;
+  transition: border-color 0.15s ease;
+}
+.uid-select-btn:hover { border-color: var(--accent); }
+.uid-select-btn.empty { color: var(--muted); }
+.uid-select-btn:disabled { opacity: 0.5; cursor: default; }
+.uid-select-btn .usb-text {
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex: 1;
+}
+.uid-select-btn .usb-chevron {
+  width: 12px; height: 12px; flex: none; color: var(--muted);
+  transition: transform 0.2s ease;
+}
+.uid-select-btn:hover .usb-chevron { color: var(--accent); }
 .ab-hint { font-size: 12px; color: var(--muted); }
 .account-empty { margin-bottom: 16px; }
 
-/* 账号备注胶囊 */
+/* 账号备注（复用 btn-sm ghost 风格） */
 .ab-remark {
   display: inline-flex; align-items: center;
-  font-size: 12px; line-height: 1;
-  padding: 6px 10px; border-radius: 999px;
-  border: 1px dashed var(--line); color: var(--muted);
-  cursor: pointer; user-select: none;
+  padding: 7px 14px; border-radius: 8px; font-size: 13px;
+  background: transparent; border: 1px solid var(--line); color: var(--muted);
+  cursor: pointer; user-select: none; line-height: 1.4;
   max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
-  transition: all 0.15s ease;
+  transition: border-color 0.15s, color 0.15s;
 }
-.ab-remark:hover { border-color: var(--accent); color: var(--accent); }
-.ab-remark.has {
-  border-style: solid; border-color: var(--accent);
-  background: var(--accent-soft); color: var(--accent); font-weight: 600;
-}
-.ab-remark.editing {
-  outline: 2px solid var(--accent); outline-offset: 1px;
-  border-style: solid; min-width: 80px;
-}
+.ab-remark:hover { color: var(--text); border-color: var(--accent); }
 
 /* ============ 账号列表（总览） ============ */
 .acct-row {
@@ -803,7 +814,6 @@ svg { fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round
   border-style: dashed; border-color: var(--line); background: transparent; color: var(--muted);
 }
 .acct-remark.empty:hover { border-color: var(--accent); color: var(--accent); }
-.acct-remark.editing { outline: 2px solid var(--accent); outline-offset: 1px; }
 .acct-meta { font-size: 12px; color: var(--muted); margin-top: 2px; }
 .tag-current {
   font-size: 11px; color: var(--accent); background: var(--accent-soft);
@@ -1017,6 +1027,65 @@ svg { fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round
 }
 .link-input:focus { border-color: var(--accent); }
 .link-input::placeholder { color: var(--muted); opacity: 0.6; }
+
+.remark-input {
+  display: block; width: 100%; margin-top: 16px; padding: 10px 14px;
+  background: var(--card-2); border: 1px solid var(--line); border-radius: 10px;
+  color: var(--text); font-family: inherit; font-size: 14px; line-height: 1.4;
+  outline: none; transition: border-color 0.15s;
+}
+.remark-input:focus { border-color: var(--accent); }
+.remark-input::placeholder { color: var(--muted); opacity: 0.6; }
+
+/* ============ 账号选择弹窗 ============ */
+.acct-select-card {
+  position: relative; width: 420px; max-width: calc(100vw - 48px);
+  max-height: 70vh; display: flex; flex-direction: column;
+  background: var(--card); border: 1px solid var(--line); border-radius: 16px;
+  box-shadow: var(--shadow-lg); overflow: hidden;
+  animation: upPop 0.28s cubic-bezier(0.2, 0.9, 0.3, 1.2);
+}
+.asc-head {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 16px 20px; border-bottom: 1px solid var(--line);
+}
+.asc-head h3 { font-size: 15px; font-weight: 600; }
+.asc-close {
+  width: 28px; height: 28px; border: none; background: transparent;
+  color: var(--muted); font-size: 20px; line-height: 1; cursor: pointer;
+  border-radius: 8px; transition: all 0.15s ease;
+}
+.asc-close:hover { background: var(--card-2); color: var(--text); }
+.asc-list {
+  padding: 10px; overflow-y: auto; display: flex; flex-direction: column; gap: 6px;
+}
+.asc-item {
+  position: relative; display: flex; flex-direction: column; gap: 4px;
+  padding: 12px 14px; text-align: left; cursor: pointer;
+  background: var(--card-2); border: 1px solid var(--line); border-radius: 10px;
+  color: var(--text); font-family: inherit;
+  transition: all 0.15s ease;
+}
+.asc-item:hover { border-color: var(--accent); transform: translateX(2px); }
+.asc-item.current {
+  border-color: var(--accent); background: var(--accent-soft);
+}
+.asc-main { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.asc-uid { font-weight: 600; font-variant-numeric: tabular-nums; font-size: 14px; }
+.asc-remark {
+  font-size: 12px; font-weight: 500; line-height: 1;
+  padding: 2px 8px; border-radius: 999px;
+  background: var(--accent); color: var(--on-accent);
+}
+.asc-remark.empty {
+  background: transparent; color: var(--muted);
+  border: 1px dashed var(--line); padding: 1px 7px;
+}
+.asc-meta { font-size: 11.5px; color: var(--muted); }
+.asc-current-badge {
+  position: absolute; top: 10px; right: 12px;
+  font-size: 11px; color: var(--accent); font-weight: 600;
+}
 
 @keyframes upFade { from { opacity: 0; } to { opacity: 1; } }
 @keyframes upPop { from { opacity: 0; transform: translateY(10px) scale(0.97); } to { opacity: 1; transform: none; } }

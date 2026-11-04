@@ -151,7 +151,7 @@
           </div>
           <div class="account-bar">
             <span class="ab-label">账号</span>
-            <select class="uid-select" data-role="uidSelect"></select>
+            <button class="uid-select-btn" data-role="uidSelectBtn"><span class="usb-text">选择账号</span><svg class="usb-chevron" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
             <span class="ab-remark" data-role="abRemark" title="点击编辑账号备注">＋ 备注</span>
             <button class="btn-sm" data-act="import">＋ 导入账号</button>
             <button class="btn-sm ghost" data-act="copyUrl" title="复制祈愿链接">复制链接</button>
@@ -223,7 +223,7 @@
           </div>
           <div class="account-bar">
             <span class="ab-label">账号</span>
-            <select class="uid-select" data-role="uidSelect"></select>
+            <button class="uid-select-btn" data-role="uidSelectBtn"><span class="usb-text">选择账号</span><svg class="usb-chevron" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
             <span class="ab-remark" data-role="abRemark" title="点击编辑账号备注">＋ 备注</span>
             <button class="btn-sm" data-act="import">＋ 导入账号</button>
             <button class="btn-sm ghost" data-act="copyUrl" title="复制跃迁链接">复制链接</button>
@@ -295,7 +295,7 @@
           </div>
           <div class="account-bar">
             <span class="ab-label">账号</span>
-            <select class="uid-select" data-role="uidSelect"></select>
+            <button class="uid-select-btn" data-role="uidSelectBtn"><span class="usb-text">选择账号</span><svg class="usb-chevron" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
             <span class="ab-remark" data-role="abRemark" title="点击编辑账号备注">＋ 备注</span>
             <button class="btn-sm" data-act="import">＋ 导入账号</button>
             <button class="btn-sm ghost" data-act="copyUrl" title="复制调频链接">复制链接</button>
@@ -368,7 +368,7 @@
           </div>
           <div class="account-bar">
             <span class="ab-label">账号</span>
-            <select class="uid-select" data-role="uidSelect"></select>
+            <button class="uid-select-btn" data-role="uidSelectBtn"><span class="usb-text">选择账号</span><svg class="usb-chevron" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
             <span class="ab-remark" data-role="abRemark" title="点击编辑账号备注">＋ 备注</span>
             <span class="ab-hint" data-role="abHint"></span>
           </div>
@@ -457,7 +457,7 @@
               <div class="about-body">
                 <svg class="about-logo" viewBox="0 0 24 24" fill="none"><path fill-rule="evenodd" d="M12 2 L13.3 10.7 L22 12 L13.3 13.3 L12 22 L10.7 13.3 L2 12 L10.7 10.7 Z M12 9 L14.6 12 L12 15 L9.4 12 Z" fill="currentColor"/></svg>
                 <div>
-                  <b>XuanLuo Gacha Export Hub <span class="about-version">v1.1.8</span></b>
+                  <b>XuanLuo Gacha Export Hub <span class="about-version">v1.1.9</span></b>
                   <p>原神祈愿 · 崩铁跃迁 · 绝区零调频 · 鸣潮唤取的抽卡记录管理与导出工具。</p>
                   <button class="gh-link" data-act="openGithub">github.com/XLoDream/XuanLuo-Gacha-Export-Hub<span>↗</span></button>
                   <p class="hint" id="aboutVersions">运行环境检测中…</p>
@@ -495,6 +495,30 @@
           <span id="updateProgressText">0%</span>
         </div>
         <div class="update-actions" id="updateActions"></div>
+      </div>
+    </div>
+
+    <!-- 账号选择弹窗 -->
+    <div class="update-mask" id="acctSelectMask" hidden>
+      <div class="acct-select-card" role="dialog" aria-modal="true" aria-labelledby="acctSelectTitle">
+        <div class="asc-head">
+          <h3 id="acctSelectTitle">选择账号</h3>
+          <button class="asc-close" data-act="closeAcctSelect" aria-label="关闭">×</button>
+        </div>
+        <div class="asc-list" data-role="acctSelectList"></div>
+      </div>
+    </div>
+
+    <!-- 备注编辑弹窗 -->
+    <div class="update-mask" id="remarkMask" hidden>
+      <div class="link-card" role="dialog" aria-modal="true" aria-labelledby="remarkTitle">
+        <h3 id="remarkTitle">新增备注</h3>
+        <p id="remarkSub">为该账号添加备注，方便区分是谁的账号</p>
+        <input id="remarkInput" class="remark-input" type="text" maxlength="30" placeholder="例如：大号 / 小号 / 朋友的号" />
+        <div class="update-actions">
+          <button class="btn-sm" data-act="closeRemark">取消</button>
+          <button class="btn-sm primary" data-act="saveRemark">保存</button>
+        </div>
       </div>
     </div>
 
