@@ -43,6 +43,44 @@ $('#btnTheme').addEventListener('click', () => {
   api.saveSettings({ theme: next });
 });
 
+// 自动更新记录开关
+let autoUpdateEnabled = true;
+try { autoUpdateEnabled = api.loadSettingsSync().autoUpdate !== false; } catch { autoUpdateEnabled = true; }
+function applyAutoUpdate(on) {
+  autoUpdateEnabled = on;
+  const cb = $('#autoUpdateToggle');
+  const txt = $('#autoUpdateText');
+  if (cb) cb.checked = on;
+  if (txt) txt.textContent = on ? '已开启' : '已关闭';
+}
+$('#autoUpdateToggle').addEventListener('change', (e) => {
+  applyAutoUpdate(e.target.checked);
+  api.saveSettings({ autoUpdate: e.target.checked });
+  // 立即刷新当前游戏视图的提示
+  const active = document.querySelector('.view.active');
+  if (active) {
+    const g = active.id.slice(5);
+    if (GAMES[g]) setAbHint(g);
+  }
+  toast(e.target.checked ? '已开启自动更新记录' : '已关闭自动更新记录');
+});
+
+// 切换视图自动更新开关
+let autoUpdateOnSwitchEnabled = true;
+try { autoUpdateOnSwitchEnabled = api.loadSettingsSync().autoUpdateOnSwitch !== false; } catch { autoUpdateOnSwitchEnabled = true; }
+function applyAutoUpdateOnSwitch(on) {
+  autoUpdateOnSwitchEnabled = on;
+  const cb = $('#autoUpdateOnSwitchToggle');
+  const txt = $('#autoUpdateOnSwitchText');
+  if (cb) cb.checked = on;
+  if (txt) txt.textContent = on ? '已开启' : '已关闭';
+}
+$('#autoUpdateOnSwitchToggle').addEventListener('change', (e) => {
+  applyAutoUpdateOnSwitch(e.target.checked);
+  api.saveSettings({ autoUpdateOnSwitch: e.target.checked });
+  toast(e.target.checked ? '已开启切换视图自动更新' : '已关闭切换视图自动更新');
+});
+
 function toast(msg) {
   const el = document.createElement('div');
   el.className = 'toast';
@@ -163,6 +201,11 @@ const fmtTime = (ts) => {
 // ---------- 数据存储 ----------
 let store = { active: {}, accounts: {} };
 
+// 自动更新：每个游戏上次更新时间（进入视图或执行 fetchOnline 时刷新）
+let lastUpdateTime = {};
+// 防止同一游戏并发拉取
+let fetching = {};
+
 const accountsOf = (g) => store.accounts[g] || (store.accounts[g] = []);
 const activeOf = (g) => accountsOf(g).find((a) => a.uid === store.active[g]) || null;
 const save = () => api.saveStore(store);
@@ -223,6 +266,14 @@ function switchView(view) {
   moveIndicator();
   // 游戏视图可见后重排轮盘（隐藏时无法测量卡片位置）
   if (viewMode[view] !== undefined) requestAnimationFrame(() => layoutCar(view));
+  // 进入游戏视图时开始计时，用于 20 分钟自动更新
+  if (GAMES[view]) {
+    lastUpdateTime[view] = Date.now();
+    // 切换到游戏视图时立即拉取一次最新记录（可在设置中开关）
+    if (autoUpdateOnSwitchEnabled) {
+      setTimeout(() => fetchOnline(view), 300);
+    }
+  }
 }
 
 window.addEventListener('resize', () => { moveIndicator(); GAME_ORDER.forEach(layoutCar); });
@@ -534,6 +585,26 @@ function renderPoolGrid(game, acc) {
 }
 
 // ---------- 游戏视图渲染 ----------
+// 设置账号栏右侧提示：记录数 + 更新时间 + 下次自动更新时间
+function setAbHint(game) {
+  const view = $(`#view-${game}`);
+  const hint = $('[data-role="abHint"]', view);
+  if (!hint) return;
+  const acc = activeOf(game);
+  if (!acc) { hint.textContent = '未导入'; return; }
+  let text = `${acc.records.length} 条记录 · 更新于 ${fmtTime(acc.updatedAt)}`;
+  if (autoUpdateEnabled) {
+    const next = (lastUpdateTime[game] || 0) + 20 * 60 * 1000;
+    const d = new Date(next);
+    const hh = String(d.getHours()).padStart(2, '0');
+    const mm = String(d.getMinutes()).padStart(2, '0');
+    text += ` · 下次自动更新 ${hh}:${mm}`;
+  } else {
+    text += ' · 自动更新已关闭';
+  }
+  hint.textContent = text;
+}
+
 function renderGame(game) {
   const view = $(`#view-${game}`);
   const acc = activeOf(game);
@@ -558,9 +629,7 @@ function renderGame(game) {
     remarkEl.classList.toggle('has', !!r);
     remarkEl.title = r ? `当前备注：${r}，点击修改` : '点击添加账号备注';
   }
-  $('[data-role="abHint"]', view).textContent = acc
-    ? `${acc.records.length} 条记录 · 更新于 ${fmtTime(acc.updatedAt)}`
-    : '未导入';
+  setAbHint(game);
 
   // 卡池按有无数据归位：有数据显示计数、无数据置底灰显禁用；当前池变空时回退「概览」
   const countOf = (k) => (acc ? acc.records.filter((r) => r.pool === k).length : 0);
@@ -707,6 +776,7 @@ function renderOverview() {
     const head = `<div class="gcard-top">
         <span class="gcard-icon">${ICONS[key]}</span>
         <div><div class="gcard-name">${g.name} · ${g.act}</div><div class="gcard-sub">${g.sub}</div></div>
+        <span class="btn-sm gcard-update" data-act="update" data-game="${key}">更新记录</span>
       </div>`;
 
     if (!acc || !acc.records.length) {
@@ -774,7 +844,10 @@ function renderOverview() {
     </button>`;
   }).join('');
   $$('.gcard', grid).forEach((card) =>
-    card.addEventListener('click', () => switchView(card.dataset.goto)));
+    card.addEventListener('click', (e) => {
+      if (e.target.closest('[data-act]')) return;
+      switchView(card.dataset.goto);
+    }));
 
   renderOverviewPity();
   renderAccounts();
@@ -1063,18 +1136,21 @@ const FETCH_API = {
   wuwa: { call: (k, link) => api.fetchWuwa(link), on: (cb) => api.onWuwaProgress(cb) }, // 全量拉取，无需增量参数
 };
 async function fetchOnline(game, link) {
+  if (fetching[game]) return;
   const fetchApi = FETCH_API[game];
   if (!fetchApi) {
     toast(`「${GAMES[game].name}」在线获取待接入`);
     return;
   }
+  fetching[game] = true;
+  lastUpdateTime[game] = Date.now();
   const view = $(`#view-${game}`);
   const btn = $('[data-act="update"]', view);
   const hint = $('[data-role="abHint"]', view);
-  btn.disabled = true;
-  hint.textContent = link ? '正在通过链接读取…' : '正在读取游戏缓存…';
+  if (btn) btn.disabled = true;
+  if (hint) hint.textContent = link ? '正在通过链接读取…' : '正在读取游戏缓存…';
   const off = fetchApi.on((p) => {
-    hint.textContent = `正在获取「${p.label}」第 ${p.page} 页（新增 ${p.total} 条）`;
+    if (hint) hint.textContent = `正在获取「${p.label}」第 ${p.page} 页（新增 ${p.total} 条）`;
   });
   try {
     const res = await fetchApi.call(knownLatest(game), link);
@@ -1087,8 +1163,9 @@ async function fetchOnline(game, link) {
     toast(added ? `更新完成：新增 ${added} 条记录` : '数据已是最新');
   } finally {
     off();
-    btn.disabled = false;
-    hint.textContent = '';
+    if (btn) btn.disabled = false;
+    fetching[game] = false;
+    setAbHint(game);
   }
 }
 
@@ -1344,7 +1421,24 @@ const ICONS = new Proxy({}, {
   GAME_ORDER.forEach(renderGame);
   renderOverview();
 
+  // 当前所在游戏视图每 20 分钟自动更新一次记录（可在设置中开关）
+  const AUTO_UPDATE_INTERVAL = 20 * 60 * 1000;
+  setInterval(() => {
+    const active = document.querySelector('.view.active');
+    if (!active) return;
+    const game = active.id.slice(5); // 'view-xxx' -> 'xxx'
+    if (!GAMES[game]) return;
+    // 刷新下次自动更新时间提示（开关状态或时间变化时同步）
+    setAbHint(game);
+    if (!autoUpdateEnabled || fetching[game]) return;
+    if (Date.now() - (lastUpdateTime[game] || 0) >= AUTO_UPDATE_INTERVAL) {
+      fetchOnline(game);
+    }
+  }, 60 * 1000);
+
   refreshDataDirInput();
+  applyAutoUpdate(autoUpdateEnabled);
+  applyAutoUpdateOnSwitch(autoUpdateOnSwitchEnabled);
   if (window.versions) {
     $('#aboutVersions').textContent =
       `Electron ${versions.electron} · Chrome ${versions.chrome} · Node ${versions.node}`;

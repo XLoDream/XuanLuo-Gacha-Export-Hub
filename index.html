@@ -441,6 +441,28 @@
                 </div>
                 <p class="hint">抽卡记录与账号信息保存在此目录，不会上传。更改后需重启应用生效。</p>
               </div>
+              <div class="field">
+                <label>自动更新记录</label>
+                <div class="row switch-row">
+                  <label class="switch">
+                    <input type="checkbox" id="autoUpdateToggle" />
+                    <span class="slider"></span>
+                  </label>
+                  <span class="switch-text" id="autoUpdateText">已开启</span>
+                </div>
+                <p class="hint">停留在某个游戏的记录页面时，每 20 分钟自动拉取一次最新记录。</p>
+              </div>
+              <div class="field">
+                <label>切换视图自动更新</label>
+                <div class="row switch-row">
+                  <label class="switch">
+                    <input type="checkbox" id="autoUpdateOnSwitchToggle" />
+                    <span class="slider"></span>
+                  </label>
+                  <span class="switch-text" id="autoUpdateOnSwitchText">已开启</span>
+                </div>
+                <p class="hint">切换到某个游戏的记录页面时，立即自动拉取一次最新记录。</p>
+              </div>
             </div>
 
             <div class="card" id="setAccounts">
@@ -457,7 +479,7 @@
               <div class="about-body">
                 <svg class="about-logo" viewBox="0 0 24 24" fill="none"><path fill-rule="evenodd" d="M12 2 L13.3 10.7 L22 12 L13.3 13.3 L12 22 L10.7 13.3 L2 12 L10.7 10.7 Z M12 9 L14.6 12 L12 15 L9.4 12 Z" fill="currentColor"/></svg>
                 <div>
-                  <b>XuanLuo Gacha Export Hub <span class="about-version">v1.2.0</span></b>
+                  <b>XuanLuo Gacha Export Hub <span class="about-version">v1.2.1</span></b>
                   <p>原神祈愿 · 崩铁跃迁 · 绝区零调频 · 鸣潮唤取的抽卡记录管理与导出工具。</p>
                   <button class="gh-link" data-act="openGithub">github.com/XLoDream/XuanLuo-Gacha-Export-Hub<span>↗</span></button>
                   <p class="hint" id="aboutVersions">运行环境检测中…</p>

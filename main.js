@@ -10,7 +10,7 @@ const { autoUpdater } = require('electron-updater');
 const configDir = () => path.join(app.getPath('userData'), 'userdata');
 const builtinDir = () => app.getAppPath(); // asar 内，只读（含 json/ games 配置、icon/ 图标）
 const configFile = () => path.join(configDir(), 'app.config.json');
-const DEFAULT_SETTINGS = { theme: 'dark' };
+const DEFAULT_SETTINGS = { theme: 'dark', autoUpdate: true, autoUpdateOnSwitch: true };
 const LEGACY_CONFIGS = ['state.json', 'app.json'];
 
 // 账号数据目录：优先用用户配置，默认与配置目录相同

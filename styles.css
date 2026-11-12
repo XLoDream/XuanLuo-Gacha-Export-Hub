@@ -264,6 +264,24 @@ svg { fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round
 .field > label { display: block; font-size: 12.5px; color: var(--muted); margin-bottom: 7px; }
 .field > label b { color: var(--text); font-weight: 600; }
 .row { display: flex; gap: 8px; }
+.switch-row { align-items: center; }
+.switch-text { font-size: 13px; color: var(--muted); }
+
+/* 开关 */
+.switch { position: relative; display: inline-block; width: 40px; height: 22px; flex: none; }
+.switch input { opacity: 0; width: 0; height: 0; }
+.switch .slider {
+  position: absolute; inset: 0; cursor: pointer;
+  background: var(--card-2); border: 1px solid var(--line); border-radius: 22px;
+  transition: background 0.2s, border-color 0.2s;
+}
+.switch .slider::before {
+  content: ''; position: absolute; height: 16px; width: 16px; left: 2px; top: 50%;
+  transform: translateY(-50%); background: var(--muted); border-radius: 50%;
+  transition: transform 0.2s, background 0.2s;
+}
+.switch input:checked + .slider { background: var(--accent); border-color: var(--accent); }
+.switch input:checked + .slider::before { transform: translate(18px, -50%); background: #fff; }
 
 .segmented { display: flex; gap: 4px; background: var(--bg); border: 1px solid var(--line); border-radius: 10px; padding: 4px; width: fit-content; }
 .segmented.wide .seg { padding: 7px 16px; }
@@ -504,6 +522,8 @@ svg { fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round
 .gcard-icon img { width: 100%; height: 100%; border-radius: 10px; object-fit: cover; display: block; }
 .gcard-name { font-weight: 600; font-size: 14.5px; }
 .gcard-sub { font-size: 11.5px; color: var(--muted); letter-spacing: 0.5px; }
+.gcard-update { margin-left: auto; cursor: pointer; white-space: nowrap; }
+.gcard-update:active { transform: scale(0.97); }
 .gcard-stats { display: flex; gap: 14px; margin-bottom: 12px; }
 .gcard-stats div span { display: block; font-size: 11px; color: var(--muted); margin-bottom: 2px; }
 .gcard-stats div b { font-size: 16px; }
