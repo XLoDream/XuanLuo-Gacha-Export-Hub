@@ -613,6 +613,14 @@ function renderPoolGrid(game, acc) {
     rs.forEach((r, i) => { if (r.rank === 5) lastIdx = i; });
     const pityCur = lastIdx === -1 ? total : total - 1 - lastIdx;
 
+    // 预计本次出金抽数 = 平均(最近5个五星出金抽数>=70, 0.86×保底)
+    const fiveIdx = rs.map((r, i) => r.rank === 5 ? i : -1).filter((i) => i !== -1);
+    const draws = fiveIdx.map((idx, k) => k === 0 ? idx + 1 : idx - fiveIdx[k - 1]);
+    const fiveDraws = draws.filter((d) => d >= 70).slice(-5);
+    const baseExpect = p.hard * 0.86;
+    const vals = [...fiveDraws, baseExpect];
+    const expectDraw = Math.round(vals.reduce((a, b) => a + b, 0) / vals.length);
+
     // 分类（稀有度 × 类型）与环形图
     const cats = [];
     [5, 4, 3].forEach((rank) => {
@@ -654,7 +662,7 @@ function renderPoolGrid(game, acc) {
         </div>
       </div>
       <div class="pd-stats">
-        <p class="pd-line">一共 <b>${total}</b> 抽 · 已累计 <b class="pd-hot">${pityCur}</b> 抽未出5★</p>
+        <p class="pd-line">已累计 <b class="pd-hot">${pityCur}</b> 抽未出5★ · 预计本次第 <b class="pd-hot">${expectDraw}</b> 抽出金</p>
         <p class="pd-line l5">5★：${c5} [${pct(c5, total)}]</p>
         <p class="pd-line l4">4★：${c4} [${pct(c4, total)}]</p>
         <p class="pd-line l3">3★：${c3} [${pct(c3, total)}]</p>
