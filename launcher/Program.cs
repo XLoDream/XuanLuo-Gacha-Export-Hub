@@ -9,6 +9,7 @@ using System.Threading;
 using System.Windows.Forms;
 using System.Web.Script.Serialization;
 using System.Reflection;
+using Microsoft.Win32;
 
 namespace GachaExportHubLauncher
 {
@@ -29,6 +30,9 @@ namespace GachaExportHubLauncher
         private Label titleLabel;
         private Label statusLabel;
         private Label verLabel;
+        private Label dirLabel;
+        private TextBox dirBox;
+        private Button browseBtn;
         private ProgressBar progressBar;
         private Button actionButton;
         private PictureBox logoBox;
@@ -46,8 +50,8 @@ namespace GachaExportHubLauncher
             ServicePointManager.DefaultConnectionLimit = 10;
 
             Text = "璇洛抽卡祈愿工具 · 下载器";
-            Width = 440;
-            Height = 300;
+            Width = 460;
+            Height = 350;
             StartPosition = FormStartPosition.CenterScreen;
             FormBorderStyle = FormBorderStyle.FixedSingle;
             MaximizeBox = false;
@@ -99,11 +103,58 @@ namespace GachaExportHubLauncher
             statusLabel.Location = new Point((ClientSize.Width - statusLabel.PreferredWidth) / 2, 148);
             Controls.Add(statusLabel);
 
+            // 安装目录：优先读取注册表已安装路径，否则用默认路径
+            string defaultDir = GetInstalledDir();
+            if (string.IsNullOrEmpty(defaultDir))
+            {
+                defaultDir = Path.Combine(
+                    Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+                    "Programs", "XuanLuo-Gacha-Export-Hub");
+            }
+            dirLabel = new Label
+            {
+                Text = "安装目录:",
+                ForeColor = Color.FromArgb(0xb0, 0xb0, 0xc0),
+                Font = new Font("Microsoft YaHei", 9F),
+                AutoSize = true,
+                BackColor = Color.Transparent,
+                Location = new Point(24, 176)
+            };
+            Controls.Add(dirLabel);
+
+            dirBox = new TextBox
+            {
+                Text = defaultDir,
+                Width = 290,
+                Location = new Point(92, 173),
+                BackColor = Color.FromArgb(0x22, 0x22, 0x2c),
+                ForeColor = Color.White,
+                BorderStyle = BorderStyle.FixedSingle,
+                Font = new Font("Microsoft YaHei", 9F)
+            };
+            Controls.Add(dirBox);
+
+            browseBtn = new Button
+            {
+                Text = "浏览…",
+                Width = 60,
+                Height = 24,
+                Location = new Point(388, 172),
+                BackColor = Color.FromArgb(0x3a, 0x3a, 0x48),
+                ForeColor = Color.White,
+                FlatStyle = FlatStyle.Flat,
+                Font = new Font("Microsoft YaHei", 9F),
+                Cursor = Cursors.Hand
+            };
+            browseBtn.FlatAppearance.BorderSize = 0;
+            browseBtn.Click += BrowseBtn_Click;
+            Controls.Add(browseBtn);
+
             progressBar = new ProgressBar
             {
                 Width = 372,
                 Height = 16,
-                Location = new Point(34, 176),
+                Location = new Point(44, 210),
                 Style = ProgressBarStyle.Continuous
             };
             Controls.Add(progressBar);
@@ -113,7 +164,7 @@ namespace GachaExportHubLauncher
                 Text = "检查中…",
                 Width = 130,
                 Height = 34,
-                Location = new Point(155, 206),
+                Location = new Point(165, 240),
                 BackColor = Color.FromArgb(0x6e, 0xa8, 0xff),
                 ForeColor = Color.White,
                 FlatStyle = FlatStyle.Flat,
@@ -299,11 +350,20 @@ namespace GachaExportHubLauncher
 
         private void Install()
         {
+            string installDir = (dirBox.Text ?? "").Trim();
+            if (string.IsNullOrEmpty(installDir))
+            {
+                installDir = Path.Combine(
+                    Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+                    "Programs", "XuanLuo-Gacha-Export-Hub");
+            }
+            // NSIS: /D 必须为最后一个参数且不加引号
+            string args = "/S /D=" + installDir;
             try
             {
                 var psi = new ProcessStartInfo(tempPath)
                 {
-                    Arguments = "/S",
+                    Arguments = args,
                     UseShellExecute = true,
                     Verb = "runas",
                     WorkingDirectory = Path.GetDirectoryName(tempPath)
@@ -322,6 +382,86 @@ namespace GachaExportHubLauncher
                 catch { }
                 Invoke(new Action(() => { actionButton.Enabled = true; actionButton.Text = "打开安装包"; }));
             }
+        }
+
+        private void BrowseBtn_Click(object sender, EventArgs e)
+        {
+            using (var fbd = new FolderBrowserDialog())
+            {
+                fbd.Description = "选择安装目录";
+                fbd.ShowNewFolderButton = true;
+                if (!string.IsNullOrEmpty(dirBox.Text) && Directory.Exists(dirBox.Text))
+                    fbd.SelectedPath = dirBox.Text;
+                if (fbd.ShowDialog() == DialogResult.OK)
+                {
+                    dirBox.Text = fbd.SelectedPath;
+                }
+            }
+        }
+
+        private static string GetInstalledDir()
+        {
+            const string displayName = "XuanLuo Gacha Export Hub";
+            string[] uninstallRoots = new[]
+            {
+                @"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall",
+                @"SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall"
+            };
+            RegistryKey[] hives = new[] { Registry.CurrentUser, Registry.LocalMachine };
+            foreach (var hive in hives)
+            {
+                foreach (var root in uninstallRoots)
+                {
+                    RegistryKey baseKey = null;
+                    try { baseKey = hive.OpenSubKey(root); } catch { continue; }
+                    if (baseKey == null) continue;
+                    try
+                    {
+                        foreach (string subName in baseKey.GetSubKeyNames())
+                        {
+                            RegistryKey sk = null;
+                            try { sk = baseKey.OpenSubKey(subName); } catch { continue; }
+                            if (sk == null) continue;
+                            try
+                            {
+                                object dn = sk.GetValue("DisplayName");
+                                if (dn != null && dn.ToString().IndexOf(displayName, StringComparison.OrdinalIgnoreCase) >= 0)
+                                {
+                                    object loc = sk.GetValue("InstallLocation");
+                                    if (loc != null && !string.IsNullOrEmpty(loc.ToString().Trim()))
+                                        return loc.ToString().Trim().TrimEnd('\\', '/');
+                                    // 兜底：从 UninstallString 解析安装目录
+                                    object us = sk.GetValue("UninstallString");
+                                    if (us != null)
+                                    {
+                                        string raw = us.ToString().Trim();
+                                        string exePath;
+                                        if (raw.StartsWith("\""))
+                                        {
+                                            int endQuote = raw.IndexOf('"', 1);
+                                            exePath = endQuote > 0 ? raw.Substring(1, endQuote - 1) : raw.Trim('"');
+                                        }
+                                        else
+                                        {
+                                            int sp = raw.IndexOf(' ');
+                                            exePath = sp > 0 ? raw.Substring(0, sp) : raw;
+                                        }
+                                        if (!string.IsNullOrEmpty(exePath))
+                                        {
+                                            string dir = Path.GetDirectoryName(exePath);
+                                            if (!string.IsNullOrEmpty(dir) && Directory.Exists(dir))
+                                                return dir.TrimEnd('\\', '/');
+                                        }
+                                    }
+                                }
+                            }
+                            finally { sk.Close(); }
+                        }
+                    }
+                    finally { baseKey.Close(); }
+                }
+            }
+            return null;
         }
     }
 
