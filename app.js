@@ -203,6 +203,8 @@ let store = { active: {}, accounts: {} };
 
 // 自动更新：每个游戏上次更新时间（进入视图或执行 fetchOnline 时刷新）
 let lastUpdateTime = {};
+// 切换视图自动更新的冷却计时（5 分钟内不重复触发）
+let lastSwitchFetchTime = {};
 // 防止同一游戏并发拉取
 let fetching = {};
 
@@ -269,9 +271,13 @@ function switchView(view) {
   // 进入游戏视图时开始计时，用于 20 分钟自动更新
   if (GAMES[view]) {
     lastUpdateTime[view] = Date.now();
-    // 切换到游戏视图时立即拉取一次最新记录（可在设置中开关）
+    // 切换到游戏视图时立即拉取一次最新记录（可在设置中开关，内置 5 分钟冷却）
     if (autoUpdateOnSwitchEnabled) {
-      setTimeout(() => fetchOnline(view), 300);
+      const SWITCH_COOLDOWN = 5 * 60 * 1000;
+      if (Date.now() - (lastSwitchFetchTime[view] || 0) >= SWITCH_COOLDOWN) {
+        lastSwitchFetchTime[view] = Date.now();
+        setTimeout(() => fetchOnline(view), 300);
+      }
     }
   }
 }
@@ -1144,6 +1150,7 @@ async function fetchOnline(game, link) {
   }
   fetching[game] = true;
   lastUpdateTime[game] = Date.now();
+  lastSwitchFetchTime[game] = Date.now(); // 手动/自动更新均重置切换冷却
   const view = $(`#view-${game}`);
   const btn = $('[data-act="update"]', view);
   const hint = $('[data-role="abHint"]', view);
