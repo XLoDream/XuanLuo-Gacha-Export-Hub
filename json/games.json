@@ -1,15 +1,18 @@
 {
   "genshin": {
     "name": "原神",
+    "shortName": "原神",
     "act": "祈愿",
     "sub": "GENSHIN · WISH",
     "icon": "icon/原神.png",
+    "currency": "原石",
+    "pullCost": 160,
     "types": ["角色", "武器"],
     "pools": [
-      { "key": "standard", "label": "常驻祈愿", "hard": 90 },
       { "key": "char", "label": "角色活动祈愿", "hard": 90 },
       { "key": "weapon", "label": "武器活动祈愿", "hard": 80 },
       { "key": "chronicled", "label": "集录祈愿", "hard": 90 },
+      { "key": "standard", "label": "常驻祈愿", "hard": 90 },
       { "key": "novice", "label": "新手祈愿", "hard": 20 }
     ],
     "poolMap": { "301": "char", "400": "char", "302": "weapon", "500": "chronicled", "200": "standard", "100": "novice" },
@@ -25,9 +28,12 @@
   },
   "hsr": {
     "name": "崩坏：星穹铁道",
+    "shortName": "崩铁",
     "act": "跃迁",
     "sub": "STAR RAIL · WARP",
     "icon": "icon/崩铁.png",
+    "currency": "星穹",
+    "pullCost": 160,
     "types": ["角色", "光锥"],
     "pools": [
       { "key": "char", "label": "角色活动跃迁", "hard": 90 },
@@ -50,9 +56,12 @@
   },
   "zzz": {
     "name": "绝区零",
+    "shortName": "绝区零",
     "act": "调频",
     "sub": "ZZZ · SIGNAL SEARCH",
     "icon": "icon/绝区零.webp",
+    "currency": "菲林",
+    "pullCost": 160,
     "types": ["代理人", "音擎", "邦布"],
     "pools": [
       { "key": "limited", "label": "独家频段", "hard": 90 },
@@ -75,9 +84,12 @@
   },
   "wuwa": {
     "name": "鸣潮",
+    "shortName": "鸣潮",
     "act": "唤取",
     "sub": "WUTHERING · CONVENE",
     "icon": "icon/鸣潮图标-3.0.png",
+    "currency": "星声",
+    "pullCost": 160,
     "types": ["角色", "武器"],
     "pools": [
       { "key": "char", "label": "角色活动唤取", "hard": 80 },

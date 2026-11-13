@@ -1368,21 +1368,36 @@ function renderOverviewPity() {
     const softPct = pct(hard - 20), nearPct = pct(hard - 10);
 
     let pad = null;
+    let fiveDraws = []; // 最近5个五星的出金抽数（>=70）
     if (acc) {
       const rs = acc.records.filter((r) => r.pool === pool.key).sort(cmpRec);
       if (rs.length) {
         let lastIdx = -1;
         rs.forEach((r, i) => { if (r.rank === 5) lastIdx = i; });
         pad = lastIdx === -1 ? rs.length : rs.length - 1 - lastIdx;
+
+        // 收集每个五星的出金抽数（距上个五星/开头的抽数）
+        const fiveIdx = rs.map((r, i) => r.rank === 5 ? i : -1).filter((i) => i !== -1);
+        const draws = fiveIdx.map((idx, k) => k === 0 ? idx + 1 : idx - fiveIdx[k - 1]);
+        // 取最近的，筛选 >=70，最多5个
+        fiveDraws = draws.filter((d) => d >= 70).slice(-5);
       }
     }
     const zone = pad === null ? 'norm' : pityZone(pad, hard);
+    const pullCost = g.pullCost || 160;
+    const currency = g.currency || '';
+    // 预计出金抽数 = 平均(最近5个五星出金抽数(>=70), 0.86×保底)
+    const baseExpect = hard * 0.86;
+    const vals = [...fiveDraws, baseExpect];
+    const expectDraw = Math.round(vals.reduce((a, b) => a + b, 0) / vals.length);
+    const remain = pad === null ? expectDraw : Math.max(0, expectDraw - pad);
+    const costText = currency ? `<span class="ovp-cost" title="预计 ${expectDraw} 抽出金，还需 ${remain} 抽 × ${pullCost} ${currency}">预计还需 ${remain} 抽 · ${(remain * pullCost).toLocaleString()} ${currency}</span>` : '';
 
     return `<div class="ovp-cell ${key}">
       <div class="ovp-head">
-        <span class="ovp-game">${g.name}</span>
+        <span class="ovp-game">${g.shortName || g.name}</span>
         <span class="ovp-pool">${pool.label}</span>
-        <b class="ovp-pad ${zone}">${pad === null ? '—' : pad}</b><span class="ovp-of">/ ${hard} 抽</span>
+        ${costText}<b class="ovp-pad ${zone}">${pad === null ? '—' : pad}</b><span class="ovp-of">/ ${hard} 抽</span>
       </div>
       <div class="ovp-bar">
         <i class="ovp-zone soft" style="left:${softPct}%;width:${(nearPct - softPct).toFixed(1)}%"></i>
@@ -1403,6 +1418,7 @@ function renderOverviewPity() {
       <h2>保底进度 · 主卡池已垫</h2>
       <span class="ovp-legend"><i class="lg soft"></i>高概率区间（保底-20 起）<i class="lg near"></i>将近保底（保底-10 起）· 刻度为抽数</span>
     </div>
+    <p class="ovp-note">预计出金由软件动态计算，非实际出金数，如有偏差属正常。</p>
     <div class="ov-pity-grid">${cells}</div>`;
 }
 

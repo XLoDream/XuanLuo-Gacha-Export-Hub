@@ -724,11 +724,13 @@ svg { fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round
 .ovp-head { display: flex; align-items: baseline; gap: 8px; margin-bottom: 8px; font-size: 12.5px; }
 .ovp-game { font-weight: 600; color: var(--accent); }
 .ovp-pool { color: var(--muted); }
-.ovp-pad { margin-left: auto; font-size: 19px; font-weight: 700; }
+.ovp-cost { margin-left: auto; color: var(--accent); font-size: 12px; font-weight: 600; white-space: nowrap; cursor: help; }
+.ovp-pad { font-size: 19px; font-weight: 700; margin-left: 8px; }
 .ovp-pad.norm { color: var(--text); }
 .ovp-pad.soft { color: var(--soft); }
 .ovp-pad.near { color: var(--near); }
 .ovp-of { color: var(--muted); font-size: 11px; }
+.ovp-note { margin: 10px 2px 0; color: var(--muted); font-size: 11px; opacity: 0.7; }
 .ovp-bar { position: relative; height: 10px; border-radius: 5px; background: var(--card-2); overflow: hidden; }
 .ovp-zone { position: absolute; top: 0; bottom: 0; }
 .ovp-zone.soft { background: rgba(240, 179, 94, 0.18); }
