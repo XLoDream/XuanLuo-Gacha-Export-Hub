@@ -6,3 +6,5 @@ userdata/
 .DS_Store
 Thumbs.db
 launcher/*.exe
+launcher/*.pdb
+.trae-html-share-packages/
