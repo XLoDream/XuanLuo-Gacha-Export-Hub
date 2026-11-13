@@ -192,7 +192,7 @@ namespace GachaExportHubLauncher
                 var ser = new JavaScriptSerializer();
                 var data = ser.Deserialize<Dictionary<string, object>>(json);
                 string tag = data.ContainsKey("tag_name") ? data["tag_name"].ToString() : "";
-                var assets = (object[])data["assets"];
+                var assets = (System.Collections.IList)data["assets"];
                 string dlUrl = null;
                 string name = null;
                 foreach (var a in assets)

@@ -6,10 +6,10 @@
     "icon": "icon/原神.png",
     "types": ["角色", "武器"],
     "pools": [
+      { "key": "standard", "label": "常驻祈愿", "hard": 90 },
       { "key": "char", "label": "角色活动祈愿", "hard": 90 },
       { "key": "weapon", "label": "武器活动祈愿", "hard": 80 },
       { "key": "chronicled", "label": "集录祈愿", "hard": 90 },
-      { "key": "standard", "label": "常驻祈愿", "hard": 90 },
       { "key": "novice", "label": "新手祈愿", "hard": 20 }
     ],
     "poolMap": { "301": "char", "400": "char", "302": "weapon", "500": "chronicled", "200": "standard", "100": "novice" },
