@@ -32,6 +32,8 @@ contextBridge.exposeInMainWorld('api', {
   importUIGF: (game) => ipcRenderer.invoke('uigf:import', game),
   exportUIGF: (payload) => ipcRenderer.invoke('uigf:export', payload),
   exportExcel: (payload) => ipcRenderer.invoke('excel:export', payload),
+  batchExport: (accounts) => ipcRenderer.invoke('data:batchExport', accounts),
+  batchImport: () => ipcRenderer.invoke('data:batchImport'),
   copyGenshinUrl: () => ipcRenderer.invoke('genshin:copyUrl'),
   openGenshinCacheDir: () => ipcRenderer.invoke('genshin:openCacheDir'),
   fetchGenshin: (knownLatest, link) => ipcRenderer.invoke('genshin:fetch', knownLatest, link),

@@ -1721,6 +1721,55 @@ async function exportExcel(game) {
   if (res?.file) toast(`已导出：${res.file}`);
 }
 
+// 批量导出：所有游戏的全部账号（含备注），本工具自有格式
+async function exportAll() {
+  const hasAny = GAME_ORDER.some((g) => accountsOf(g).length);
+  if (!hasAny) { toast('暂无任何账号数据'); return; }
+  const res = await api.batchExport(store.accounts);
+  if (!res) return;
+  if (res.error) { toast(res.error); return; }
+  toast(`已导出 ${res.accounts} 个账号、${res.records} 条记录`);
+}
+
+// 批量导入：合并到现有数据，按 uid 去重，备注不丢失，导入后自动选中账号
+async function importAll() {
+  const res = await api.batchImport();
+  if (!res) return;
+  if (res.error) { toast(res.error); return; }
+
+  let addedAcc = 0, addedRec = 0;
+  const selectedGames = [];
+  for (const [game, list] of Object.entries(res.accounts)) {
+    if (!GAMES[game] || !list.length) continue;
+    for (const imp of list) {
+      let acc = accountsOf(game).find((a) => a.uid === imp.uid);
+      if (!acc) {
+        acc = { uid: imp.uid, records: [], updatedAt: 0, remark: '' };
+        accountsOf(game).push(acc);
+        addedAcc += 1;
+      }
+      // 备注：仅当导入备注非空时覆盖
+      if (imp.remark) acc.remark = imp.remark;
+      const ids = new Set(acc.records.map((r) => r.id));
+      const fresh = imp.records.filter((r) => r && r.id && !ids.has(r.id));
+      acc.records.push(...fresh);
+      acc.records.sort(cmpRec);
+      if (imp.updatedAt > acc.updatedAt) acc.updatedAt = imp.updatedAt;
+      addedRec += fresh.length;
+    }
+    // 自动选中该游戏导入的第一个账号
+    store.active[game] = list[0].uid;
+    selectedGames.push(GAMES[game].name);
+  }
+  await save();
+  GAME_ORDER.forEach((g) => renderGame(g));
+  renderOverview();
+  if (accountsOf('hsr').length) renderHsrTeam();
+  renderAccounts();
+  const sel = selectedGames.length ? `已选中：${selectedGames.join('、')} 的首个账号` : '';
+  toast(`导入完成：共 ${res.totalAcc} 个账号，新增 ${addedAcc} 个账号、${addedRec} 条记录${sel ? '；' + sel : ''}`);
+}
+
 // 复制抽卡链接 / 打开缓存目录（原神 / 崩铁 / 绝区零 / 鸣潮）
 const GAME_URL_API = {
   genshin: { copy: () => api.copyGenshinUrl(), dir: () => api.openGenshinCacheDir() },
@@ -1802,6 +1851,8 @@ document.addEventListener('click', (e) => {
   if (act === 'submitLink') return submitLinkUpdate();
   if (act === 'export' && game) return exportData(game);
   if (act === 'exportExcel' && game) return exportExcel(game);
+  if (act === 'exportAll') return exportAll();
+  if (act === 'importAll') return importAll();
   if (act === 'copyUrl' && GAME_URL_API[game]) return copyGameUrl(game);
   if (act === 'cacheDir' && GAME_URL_API[game]) return openGameCacheDir(game);
   if (act === 'openDir') return api.openDataDir();

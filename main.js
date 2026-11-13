@@ -1057,6 +1057,100 @@ ipcMain.handle('excel:export', async (e, { game = 'genshin', uid, pools }) => {
   return { file: res.filePath };
 });
 
+// ---------- 批量导出 / 导入（本工具自有格式） ----------
+const BATCH_FORMAT = 'xle-batch-v1';
+
+ipcMain.handle('data:batchExport', async (e, accounts) => {
+  // accounts: { genshin: [...], hsr: [...], ... }，只导出有数据的游戏
+  const out = { accounts: {} };
+  let totalAcc = 0, totalRec = 0;
+  for (const [game, list] of Object.entries(accounts || {})) {
+    if (Array.isArray(list) && list.length) {
+      out.accounts[game] = list.map((a) => ({
+        uid: a.uid,
+        remark: a.remark || '',
+        updatedAt: a.updatedAt || 0,
+        records: Array.isArray(a.records) ? a.records : [],
+      }));
+      totalAcc += list.length;
+      list.forEach((a) => { totalRec += (a.records || []).length; });
+    }
+  }
+  if (!totalAcc) return { error: '暂无账号数据可导出' };
+
+  const d = new Date();
+  const p2 = (n) => String(n).padStart(2, '0');
+  const res = await dialog.showSaveDialog({
+    title: '批量导出全部数据',
+    defaultPath: `XuanLuoGacha_Backup_${d.getFullYear()}${p2(d.getMonth() + 1)}${p2(d.getDate())}_${p2(d.getHours())}${p2(d.getMinutes())}.json`,
+    filters: [{ name: '璇洛抽卡备份', extensions: ['json'] }],
+  });
+  if (res.canceled || !res.filePath) return null;
+
+  const json = {
+    info: {
+      app: 'XuanLuo Gacha Export Hub',
+      app_version: app.getVersion(),
+      format: BATCH_FORMAT,
+      export_time: `${d.getFullYear()}-${p2(d.getMonth() + 1)}-${p2(d.getDate())} ${p2(d.getHours())}:${p2(d.getMinutes())}:${p2(d.getSeconds())}`,
+      accounts: totalAcc,
+      records: totalRec,
+    },
+    ...out,
+  };
+  fs.writeFileSync(res.filePath, JSON.stringify(json, null, 2), 'utf8');
+  return { file: res.filePath, accounts: totalAcc, records: totalRec };
+});
+
+ipcMain.handle('data:batchImport', async () => {
+  const res = await dialog.showOpenDialog({
+    title: '选择璇洛抽卡备份文件',
+    filters: [{ name: '璇洛抽卡备份', extensions: ['json'] }],
+    properties: ['openFile'],
+  });
+  if (res.canceled || !res.filePaths.length) return null;
+
+  const file = res.filePaths[0];
+  let json;
+  try {
+    const text = fs.readFileSync(file, 'utf8');
+    json = JSON.parse(text.charCodeAt(0) === 0xfeff ? text.slice(1) : text);
+  } catch {
+    return { error: '文件不是有效的 JSON' };
+  }
+
+  if (!json || json.info?.format !== BATCH_FORMAT) {
+    return { error: '文件格式不匹配，仅支持本工具导出的备份文件' };
+  }
+  if (!json.accounts || typeof json.accounts !== 'object') {
+    return { error: '备份文件缺少账号数据' };
+  }
+
+  // 校验并规范化每个账号
+  const validGames = new Set(['genshin', 'hsr', 'zzz', 'wuwa']);
+  const accounts = {};
+  let totalAcc = 0, totalRec = 0;
+  for (const [game, list] of Object.entries(json.accounts)) {
+    if (!validGames.has(game) || !Array.isArray(list)) continue;
+    const arr = [];
+    for (const a of list) {
+      if (!a || !a.uid || !Array.isArray(a.records)) continue;
+      arr.push({
+        uid: String(a.uid),
+        remark: typeof a.remark === 'string' ? a.remark : '',
+        updatedAt: Number(a.updatedAt) || 0,
+        records: a.records,
+      });
+      totalAcc += 1;
+      totalRec += a.records.length;
+    }
+    if (arr.length) accounts[game] = arr;
+  }
+  if (!totalAcc) return { error: '备份文件中没有有效账号' };
+
+  return { ok: true, file, accounts, totalAcc, totalRec };
+});
+
 // ---------- 自动更新（GitHub Releases + 镜像前缀代理） ----------
 const GH_RELEASE_BASE = 'https://github.com/XLoDream/XuanLuo-Gacha-Export-Hub/releases/latest/download';
 // 镜像只做前缀代理：https://镜像/https://github.com/...
