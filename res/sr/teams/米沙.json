@@ -1,0 +1,50 @@
+{
+  "id": 1312,
+  "name": "米沙",
+  "property": "冰",
+  "path": "毁灭",
+  "star": "4",
+  "teams": [
+    {
+      "rank": "724",
+      "usage": "0.01%",
+      "cycles": [
+        {
+          "e": 1,
+          "l": "1 命+",
+          "v": 0
+        }
+      ],
+      "mate": [
+        {
+          "id": 1312,
+          "name": "米沙",
+          "property": "冰",
+          "path": "毁灭",
+          "star": "4"
+        },
+        {
+          "id": 1508,
+          "name": "远坂凛",
+          "property": "量子",
+          "path": "智识",
+          "star": "5"
+        },
+        {
+          "id": 1015,
+          "name": "Archer",
+          "property": "量子",
+          "path": "巡猎",
+          "star": "5"
+        },
+        {
+          "id": 1306,
+          "name": "花火",
+          "property": "量子",
+          "path": "同谐",
+          "star": "5"
+        }
+      ]
+    }
+  ]
+}

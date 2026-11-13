@@ -1,0 +1,20 @@
+{
+  "app": "1.0.0",
+  "resource": "4e4865ffbe",
+  "ver": "3.8",
+  "avatar": [
+    1512
+  ],
+  "weapon": [
+    21030076
+  ],
+  "echo": [],
+  "counts": {
+    "avatar": 65,
+    "weapon": 125,
+    "monster": 259,
+    "item": 2276
+  },
+  "img": "3504401e5a",
+  "updatedAt": "2026-11-12T07:14:17.997Z"
+}

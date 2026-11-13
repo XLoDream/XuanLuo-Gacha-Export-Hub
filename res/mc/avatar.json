@@ -1,0 +1,3384 @@
+[
+  {
+    "name": "莉莉",
+    "id": 1512,
+    "icon": "T_IconRoleHead256_77_UI",
+    "star": 5,
+    "tag": [
+      {
+        "name": "生存治疗",
+        "des": "可以提升队伍的生存能力",
+        "color": "77ffb7",
+        "icon": "SP_RoleLabelA1"
+      },
+      {
+        "name": "牵引",
+        "des": "可以将一定范围内的目标牵引至特定位置",
+        "color": "77adff",
+        "icon": "SP_RoleLabelC1"
+      },
+      {
+        "name": "伤害加深",
+        "des": "可以使队伍中特定角色伤害加深",
+        "color": "ff7777",
+        "icon": "SP_RoleLabelC7"
+      }
+    ],
+    "weaponType": [
+      "佩枪",
+      "SP_IconNorGun"
+    ],
+    "iconhalf": "T_IconRole_Pile_Lili_UI",
+    "iconbig": "T_ActivityRoleLili",
+    "type": "衍射",
+    "typeIcon": "T_IconElementLight",
+    "en": "Lily",
+    "birthday": "未知",
+    "sex": "女",
+    "country": "<s>联邦城</s>",
+    "influence": "<s>克洛瑞德医师联盟</s>",
+    "prop": {
+      "hp": 1337,
+      "att": 23,
+      "def": 90,
+      "cc%": 5,
+      "cd%": 150,
+      "ee%": 100,
+      "em": 175
+    },
+    "talentName": "绮梦织香",
+    "since": "3.8"
+  },
+  {
+    "name": "心",
+    "id": 1311,
+    "icon": "T_IconRoleHead256_75_UI",
+    "star": 5,
+    "tag": [
+      {
+        "name": "主力输出",
+        "des": "拥有较强的输出能力",
+        "color": "ff8441",
+        "icon": "SP_RoleLabelA2"
+      },
+      {
+        "name": "共鸣技能伤害",
+        "des": "共鸣技能伤害较高",
+        "color": "ffde73",
+        "icon": "SP_RoleLabelB3"
+      },
+      {
+        "name": "同奏",
+        "des": "可以配合队伍内特定角色触发同奏相关效果",
+        "color": "ff7777",
+        "icon": "SP_RoleLabelI8"
+      },
+      {
+        "name": "电磁",
+        "des": "可以运用电磁效应",
+        "color": "dd77ff",
+        "icon": "SP_RoleLabelE6"
+      },
+      {
+        "name": "协同攻击",
+        "des": "拥有较强的协同攻击能力",
+        "color": "77adff",
+        "icon": "SP_RoleLabelC2"
+      }
+    ],
+    "weaponType": [
+      "音感仪",
+      "SP_IconNorMagic"
+    ],
+    "iconhalf": "T_IconRole_Pile_xin_UI",
+    "iconbig": "T_ActivityRoleXin",
+    "type": "导电",
+    "typeIcon": "T_IconElementThunder",
+    "en": "Hsin",
+    "birthday": "未知",
+    "sex": "女",
+    "country": "未知",
+    "influence": "梦州边庭",
+    "prop": {
+      "hp": 824,
+      "att": 37,
+      "def": 91,
+      "cc%": 5,
+      "cd%": 150,
+      "ee%": 100,
+      "em": 125
+    },
+    "talentName": "万相分形",
+    "since": "3.7"
+  },
+  {
+    "name": "锁暝",
+    "id": 1312,
+    "icon": "T_IconRoleHead256_76_UI",
+    "star": 5,
+    "tag": [
+      {
+        "name": "快速协奏",
+        "des": "拥有较高的协奏效率",
+        "color": "ff4040",
+        "icon": "SP_RoleLabelA3"
+      },
+      {
+        "name": "普攻伤害",
+        "des": "普攻伤害较高",
+        "color": "ffde73",
+        "icon": "SP_RoleLabelB1"
+      },
+      {
+        "name": "同奏",
+        "des": "可以配合队伍内特定角色触发同奏相关效果",
+        "color": "ff7777",
+        "icon": "SP_RoleLabelI8"
+      },
+      {
+        "name": "导电伤害加深",
+        "des": "可以使队伍中特定角色导电伤害加深",
+        "color": "ff7777",
+        "icon": "SP_RoleLabelD2"
+      },
+      {
+        "name": "共鸣技能伤害加深",
+        "des": "可以使队伍中特定角色共鸣技能伤害加深",
+        "color": "ff7777",
+        "icon": "SP_RoleLabelD9"
+      }
+    ],
+    "weaponType": [
+      "迅刀",
+      "SP_IconNorKnife"
+    ],
+    "iconhalf": "T_IconRole_Pile_suoming_UI",
+    "iconbig": "T_ActivityRoleSuoming",
+    "type": "导电",
+    "typeIcon": "T_IconElementThunder",
+    "en": "Suoming",
+    "birthday": "未知",
+    "sex": "女",
+    "country": "梦州",
+    "influence": "禁锁十契、梦州·谛天鉴",
+    "prop": {
+      "hp": 824,
+      "att": 37,
+      "def": 91,
+      "cc%": 5,
+      "cd%": 150,
+      "ee%": 100,
+      "em": 125
+    },
+    "talentName": "十重契",
+    "since": "3.7"
+  },
+  {
+    "name": "景燃",
+    "id": 1212,
+    "icon": "T_IconRoleHead256_74_UI",
+    "star": 5,
+    "tag": [
+      {
+        "name": "主力输出",
+        "des": "拥有较强的输出能力",
+        "color": "ff8441",
+        "icon": "SP_RoleLabelA2"
+      },
+      {
+        "name": "重击伤害",
+        "des": "重击伤害较高",
+        "color": "ffde73",
+        "icon": "SP_RoleLabelB2"
+      }
+    ],
+    "weaponType": [
+      "长刃",
+      "SP_IconNorSword"
+    ],
+    "iconhalf": "T_IconRole_Pile_jingran_UI",
+    "iconbig": "T_ActivityRoleJingran",
+    "type": "热熔",
+    "typeIcon": "T_IconElementFire",
+    "en": "Jingran",
+    "birthday": "未知",
+    "sex": "男",
+    "country": "瑝珑",
+    "influence": "寻幽客",
+    "prop": {
+      "hp": 1230,
+      "att": 25,
+      "def": 0,
+      "cc%": 5,
+      "cd%": 150,
+      "ee%": 100,
+      "em": 125
+    },
+    "talentName": "幽炁诀",
+    "since": "3.6"
+  },
+  {
+    "name": "清宵",
+    "id": 1413,
+    "icon": "T_IconRoleHead256_73_UI",
+    "star": 5,
+    "tag": [
+      {
+        "name": "主力输出",
+        "des": "拥有较强的输出能力",
+        "color": "ff8441",
+        "icon": "SP_RoleLabelA2"
+      },
+      {
+        "name": "集谐响应",
+        "des": "根据自身谐度破坏增幅对目标造成最终伤害提升",
+        "color": "ff7777",
+        "icon": "SP_RoleLabelH1"
+      }
+    ],
+    "weaponType": [
+      "迅刀",
+      "SP_IconNorKnife"
+    ],
+    "iconhalf": "T_IconRole_Pile_qingxiao_UI",
+    "iconbig": "T_ActivityRoleQingxiao",
+    "type": "气动",
+    "typeIcon": "T_IconElementWind",
+    "en": "Qingxiao",
+    "birthday": "未知",
+    "sex": "女",
+    "country": "瑝珑",
+    "influence": "军策府",
+    "prop": {
+      "hp": 824,
+      "att": 37,
+      "def": 91,
+      "cc%": 5,
+      "cd%": 150,
+      "ee%": 100,
+      "em": 125
+    },
+    "talentName": "天地弦心剑",
+    "since": "3.6"
+  },
+  {
+    "name": "秧秧·玄翎",
+    "id": 1610,
+    "icon": "T_IconRoleHead256_70_UI",
+    "star": 5,
+    "tag": [
+      {
+        "name": "主力输出",
+        "des": "拥有较强的输出能力",
+        "color": "ff8441",
+        "icon": "SP_RoleLabelA2"
+      },
+      {
+        "name": "重击伤害",
+        "des": "重击伤害较高",
+        "color": "ffde73",
+        "icon": "SP_RoleLabelB2"
+      },
+      {
+        "name": "虚湮",
+        "des": "可以运用虚湮效应",
+        "color": "dd77ff",
+        "icon": "SP_RoleLabelE1"
+      },
+      {
+        "name": "牵引",
+        "des": "可以将一定范围内的目标牵引至特定位置",
+        "color": "77adff",
+        "icon": "SP_RoleLabelC1"
+      }
+    ],
+    "weaponType": [
+      "迅刀",
+      "SP_IconNorKnife"
+    ],
+    "iconhalf": "T_IconRole_Pile_Xuanling_UI",
+    "iconbig": "T_ActivityRoleXuanling",
+    "type": "湮灭",
+    "typeIcon": "T_IconElementDark",
+    "en": "Yangyang: Xuanling",
+    "birthday": "未知",
+    "sex": "女",
+    "country": "瑝珑",
+    "influence": "军策府",
+    "prop": {
+      "hp": 882,
+      "att": 34,
+      "def": 94,
+      "cc%": 5,
+      "cd%": 150,
+      "ee%": 100,
+      "em": 125
+    },
+    "talentName": "苍翎响远音",
+    "since": "3.5"
+  },
+  {
+    "name": "穗穗",
+    "id": 1110,
+    "icon": "T_IconRoleHead256_71_UI",
+    "star": 5,
+    "tag": [
+      {
+        "name": "生存治疗",
+        "des": "可以提升队伍的生存能力",
+        "color": "77ffb7",
+        "icon": "SP_RoleLabelA1"
+      },
+      {
+        "name": "伤害加深",
+        "des": "可以使队伍中特定角色伤害加深",
+        "color": "ff7777",
+        "icon": "SP_RoleLabelC7"
+      },
+      {
+        "name": "霜渐",
+        "des": "可以运用霜渐效应",
+        "color": "dd77ff",
+        "icon": "SP_RoleLabelE2"
+      }
+    ],
+    "weaponType": [
+      "音感仪",
+      "SP_IconNorMagic"
+    ],
+    "iconhalf": "T_IconRole_Pile_Suisui_UI",
+    "iconbig": "T_ActivityRoleSuisui",
+    "type": "冷凝",
+    "typeIcon": "T_IconElementIce",
+    "en": "Suisui",
+    "birthday": "未知",
+    "sex": "女",
+    "country": "瑝珑",
+    "influence": "昭明商会",
+    "prop": {
+      "hp": 1337,
+      "att": 23,
+      "def": 90,
+      "cc%": 5,
+      "cd%": 150,
+      "ee%": 100,
+      "em": 175
+    },
+    "talentName": "宴江山",
+    "since": "3.5"
+  },
+  {
+    "name": "漂泊者·导电",
+    "id": 1309,
+    "icon": "T_IconRoleHead256_4_UI",
+    "star": 5,
+    "tag": [
+      {
+        "name": "快速协奏",
+        "des": "拥有较高的协奏效率",
+        "color": "ff4040",
+        "icon": "SP_RoleLabelA3"
+      },
+      {
+        "name": "共鸣技能伤害",
+        "des": "共鸣技能伤害较高",
+        "color": "ffde73",
+        "icon": "SP_RoleLabelB3"
+      },
+      {
+        "name": "电磁",
+        "des": "可以运用电磁效应",
+        "color": "dd77ff",
+        "icon": "SP_RoleLabelE6"
+      }
+    ],
+    "weaponType": [
+      "迅刀",
+      "SP_IconNorKnife"
+    ],
+    "iconhalf": "T_IconRole_Pile_zhujuenan_UI",
+    "iconbig": "ActivityRoleNanzhu",
+    "type": "导电",
+    "typeIcon": "T_IconElementThunder",
+    "en": "Rover: Electro",
+    "birthday": "未知",
+    "sex": "男",
+    "country": "未知",
+    "influence": "未知",
+    "prop": {
+      "hp": 862,
+      "att": 35,
+      "def": 93,
+      "cc%": 5,
+      "cd%": 150,
+      "ee%": 100,
+      "em": 125
+    },
+    "talentName": "声之容器",
+    "since": "3.5"
+  },
+  {
+    "name": "漂泊者·导电",
+    "id": 1310,
+    "icon": "T_IconRoleHead256_5_UI",
+    "star": 5,
+    "tag": [
+      {
+        "name": "快速协奏",
+        "des": "拥有较高的协奏效率",
+        "color": "ff4040",
+        "icon": "SP_RoleLabelA3"
+      },
+      {
+        "name": "共鸣技能伤害",
+        "des": "共鸣技能伤害较高",
+        "color": "ffde73",
+        "icon": "SP_RoleLabelB3"
+      },
+      {
+        "name": "电磁",
+        "des": "可以运用电磁效应",
+        "color": "dd77ff",
+        "icon": "SP_RoleLabelE6"
+      }
+    ],
+    "weaponType": [
+      "迅刀",
+      "SP_IconNorKnife"
+    ],
+    "iconhalf": "T_IconRole_Pile_zhujue_UI",
+    "iconbig": "T_ActivityRoleNvzhu",
+    "type": "导电",
+    "typeIcon": "T_IconElementThunder",
+    "en": "Rover: Electro",
+    "birthday": "未知",
+    "sex": "女",
+    "country": "未知",
+    "influence": "未知",
+    "prop": {
+      "hp": 862,
+      "att": 35,
+      "def": 93,
+      "cc%": 5,
+      "cd%": 150,
+      "ee%": 100,
+      "em": 125
+    },
+    "talentName": "声之容器",
+    "since": "3.5"
+  },
+  {
+    "name": "洛瑟菈",
+    "id": 1109,
+    "icon": "T_IconRoleHead256_66_UI",
+    "star": 5,
+    "tag": [
+      {
+        "name": "快速协奏",
+        "des": "拥有较高的协奏效率",
+        "color": "ff4040",
+        "icon": "SP_RoleLabelA3"
+      },
+      {
+        "name": "普攻伤害",
+        "des": "普攻伤害较高",
+        "color": "ffde73",
+        "icon": "SP_RoleLabelB1"
+      },
+      {
+        "name": "声骸技能伤害",
+        "des": "声骸技能伤害较高",
+        "color": "ffde73",
+        "icon": "SP_RoleLabelI4"
+      },
+      {
+        "name": "霜渐",
+        "des": "可以运用霜渐效应",
+        "color": "dd77ff",
+        "icon": "SP_RoleLabelE2"
+      },
+      {
+        "name": "声骸技能伤害加深",
+        "des": "可以使队伍中特定角色声骸技能伤害加深",
+        "color": "ff7777",
+        "icon": "SP_RoleLabelD12"
+      }
+    ],
+    "weaponType": [
+      "音感仪",
+      "SP_IconNorMagic"
+    ],
+    "iconhalf": "T_IconRole_Pile_Luosela_UI",
+    "iconbig": "T_ActivityRoleLuosela",
+    "type": "冷凝",
+    "typeIcon": "T_IconElementIce",
+    "en": "Lucilla",
+    "birthday": "未知",
+    "sex": "女",
+    "country": "新联邦",
+    "influence": "星炬学院",
+    "prop": {
+      "hp": 979,
+      "att": 30,
+      "def": 98,
+      "cc%": 5,
+      "cd%": 150,
+      "ee%": 100,
+      "em": 0
+    },
+    "talentName": "记忆宫殿",
+    "since": "3.4"
+  },
+  {
+    "name": "露西",
+    "id": 1511,
+    "icon": "T_IconRoleHead256_68_UI",
+    "star": 5,
+    "tag": [
+      {
+        "name": "主力输出",
+        "des": "拥有较强的输出能力",
+        "color": "ff8441",
+        "icon": "SP_RoleLabelA2"
+      },
+      {
+        "name": "重击伤害",
+        "des": "重击伤害较高",
+        "color": "ffde73",
+        "icon": "SP_RoleLabelB2"
+      },
+      {
+        "name": "普攻伤害加深",
+        "des": "可以使队伍中特定角色普攻伤害加深",
+        "color": "ff7777",
+        "icon": "SP_RoleLabelD7"
+      },
+      {
+        "name": "骇破响应",
+        "des": "可以对目标造成骇破伤害",
+        "color": "ff7777",
+        "icon": "SP_RoleLabelI7"
+      }
+    ],
+    "weaponType": [
+      "佩枪",
+      "SP_IconNorGun"
+    ],
+    "iconhalf": "T_IconRole_Pile_Luxi_UI",
+    "iconbig": "T_ActivityRoleLuxi",
+    "type": "衍射",
+    "typeIcon": "T_IconElementLight",
+    "en": "Lucy",
+    "birthday": "未知",
+    "sex": "女",
+    "country": "未知",
+    "influence": "拉海洛",
+    "prop": {
+      "hp": 882,
+      "att": 34,
+      "def": 94,
+      "cc%": 5,
+      "cd%": 150,
+      "ee%": 100,
+      "em": 125
+    },
+    "talentName": "异域骇入",
+    "since": "3.4"
+  },
+  {
+    "name": "丽贝卡",
+    "id": 1308,
+    "icon": "T_IconRoleHead256_69_UI",
+    "star": 5,
+    "tag": [
+      {
+        "name": "快速协奏",
+        "des": "拥有较高的协奏效率",
+        "color": "ff4040",
+        "icon": "SP_RoleLabelA3"
+      },
+      {
+        "name": "普攻伤害",
+        "des": "普攻伤害较高",
+        "color": "ffde73",
+        "icon": "SP_RoleLabelB1"
+      },
+      {
+        "name": "重击伤害加深",
+        "des": "可以使队伍中特定角色重击伤害加深",
+        "color": "ff7777",
+        "icon": "SP_RoleLabelD8"
+      },
+      {
+        "name": "谐度破坏增幅",
+        "des": "可以提升队伍内特定角色的谐度破坏增幅",
+        "color": "ff7777",
+        "icon": "SP_RoleLabelG2"
+      },
+      {
+        "name": "骇破响应",
+        "des": "可以对目标造成骇破伤害",
+        "color": "ff7777",
+        "icon": "SP_RoleLabelI7"
+      }
+    ],
+    "weaponType": [
+      "佩枪",
+      "SP_IconNorGun"
+    ],
+    "iconhalf": "T_IconRole_Pile_Libeika_UI",
+    "iconbig": "T_ActivityRoleLibeika",
+    "type": "导电",
+    "typeIcon": "T_IconElementThunder",
+    "en": "Rebecca",
+    "birthday": "未知",
+    "sex": "女",
+    "country": "未知",
+    "influence": "未知",
+    "prop": {
+      "hp": 928,
+      "att": 32,
+      "def": 96,
+      "cc%": 5,
+      "cd%": 150,
+      "ee%": 100,
+      "em": 125
+    },
+    "talentName": "怒枪破魇",
+    "since": "3.4"
+  },
+  {
+    "name": "达妮娅",
+    "id": 1211,
+    "icon": "T_IconRoleHead256_64_UI",
+    "star": 5,
+    "tag": [
+      {
+        "name": "快速协奏",
+        "des": "拥有较高的协奏效率",
+        "color": "ff4040",
+        "icon": "SP_RoleLabelA3"
+      },
+      {
+        "name": "共鸣解放伤害",
+        "des": "共鸣解放伤害较高",
+        "color": "ffde73",
+        "icon": "SP_RoleLabelB4"
+      },
+      {
+        "name": "牵引",
+        "des": "可以将一定范围内的目标牵引至特定位置",
+        "color": "77adff",
+        "icon": "SP_RoleLabelC1"
+      },
+      {
+        "name": "聚爆",
+        "des": "可以运用聚爆效应",
+        "color": "dd77ff",
+        "icon": "SP_RoleLabelE5"
+      },
+      {
+        "name": "谐度破坏增幅",
+        "des": "可以提升队伍内特定角色的谐度破坏增幅",
+        "color": "ff7777",
+        "icon": "SP_RoleLabelG2"
+      },
+      {
+        "name": "集谐响应",
+        "des": "根据自身谐度破坏增幅对目标造成最终伤害提升",
+        "color": "ff7777",
+        "icon": "SP_RoleLabelH1"
+      }
+    ],
+    "weaponType": [
+      "音感仪",
+      "SP_IconNorMagic"
+    ],
+    "iconhalf": "T_IconRole_Pile_daniya_UI",
+    "iconbig": "T_ActivityRoleDaniya",
+    "type": "热熔",
+    "typeIcon": "T_IconElementFire",
+    "en": "Denia",
+    "birthday": "未知",
+    "sex": "女",
+    "country": "▉█",
+    "influence": "<s>残星会</s>",
+    "prop": {
+      "hp": 882,
+      "att": 34,
+      "def": 94,
+      "cc%": 5,
+      "cd%": 150,
+      "ee%": 100,
+      "em": 125
+    },
+    "talentName": "泡影视阈",
+    "since": "3.3"
+  },
+  {
+    "name": "绯雪",
+    "id": 1108,
+    "icon": "T_IconRoleHead256_67_UI",
+    "star": 5,
+    "tag": [
+      {
+        "name": "主力输出",
+        "des": "拥有较强的输出能力",
+        "color": "ff8441",
+        "icon": "SP_RoleLabelA2"
+      },
+      {
+        "name": "共鸣解放伤害",
+        "des": "共鸣解放伤害较高",
+        "color": "ffde73",
+        "icon": "SP_RoleLabelB4"
+      },
+      {
+        "name": "霜渐",
+        "des": "可以运用霜渐效应",
+        "color": "dd77ff",
+        "icon": "SP_RoleLabelE2"
+      }
+    ],
+    "weaponType": [
+      "迅刀",
+      "SP_IconNorKnife"
+    ],
+    "iconhalf": "T_IconRole_Pile_Feixue_UI",
+    "iconbig": "T_ActivityRoleFeixue",
+    "type": "冷凝",
+    "typeIcon": "T_IconElementIce",
+    "en": "Hiyuki",
+    "birthday": "未知",
+    "sex": "女",
+    "country": "苇原",
+    "influence": "灼樱巫女",
+    "prop": {
+      "hp": 824,
+      "att": 37,
+      "def": 91,
+      "cc%": 5,
+      "cd%": 150,
+      "ee%": 100,
+      "em": 125
+    },
+    "talentName": "预求身",
+    "since": "3.3"
+  },
+  {
+    "name": "西格莉卡",
+    "id": 1412,
+    "icon": "T_IconRoleHead256_65_UI",
+    "star": 5,
+    "tag": [
+      {
+        "name": "主力输出",
+        "des": "拥有较强的输出能力",
+        "color": "ff8441",
+        "icon": "SP_RoleLabelA2"
+      },
+      {
+        "name": "牵引",
+        "des": "可以将一定范围内的目标牵引至特定位置",
+        "color": "77adff",
+        "icon": "SP_RoleLabelC1"
+      },
+      {
+        "name": "声骸技能伤害",
+        "des": "声骸技能伤害较高",
+        "color": "ffde73",
+        "icon": "SP_RoleLabelI4"
+      }
+    ],
+    "weaponType": [
+      "臂铠",
+      "SP_IconNorFist"
+    ],
+    "iconhalf": "T_IconRole_Pile_Xigelika_UI",
+    "iconbig": "T_ActivityRoleXigelika",
+    "type": "气动",
+    "typeIcon": "T_IconElementWind",
+    "en": "Sigrika",
+    "birthday": "未知",
+    "sex": "女",
+    "country": "拉海洛",
+    "influence": "罗伊族",
+    "prop": {
+      "hp": 862,
+      "att": 35,
+      "def": 93,
+      "cc%": 5,
+      "cd%": 150,
+      "ee%": 100,
+      "em": 125
+    },
+    "talentName": "语义解现",
+    "since": "3.2"
+  },
+  {
+    "name": "爱弥斯",
+    "id": 1210,
+    "icon": "T_IconRoleHead256_53_UI",
+    "star": 5,
+    "tag": [
+      {
+        "name": "主力输出",
+        "des": "拥有较强的输出能力",
+        "color": "ff8441",
+        "icon": "SP_RoleLabelA2"
+      },
+      {
+        "name": "共鸣解放伤害",
+        "des": "共鸣解放伤害较高",
+        "color": "ffde73",
+        "icon": "SP_RoleLabelB4"
+      },
+      {
+        "name": "震谐响应",
+        "des": "可以对目标造成震谐伤害",
+        "color": "ff7777",
+        "icon": "SP_RoleLabelI2"
+      },
+      {
+        "name": "聚爆",
+        "des": "可以运用聚爆效应",
+        "color": "dd77ff",
+        "icon": "SP_RoleLabelE5"
+      },
+      {
+        "name": "伤害加深",
+        "des": "可以使队伍中特定角色伤害加深",
+        "color": "ff7777",
+        "icon": "SP_RoleLabelC7"
+      }
+    ],
+    "weaponType": [
+      "迅刀",
+      "SP_IconNorKnife"
+    ],
+    "iconhalf": "T_IconRole_Pile_Aimisi_UI",
+    "iconbig": "T_ActivityRoleAimisi",
+    "type": "热熔",
+    "typeIcon": "T_IconElementFire",
+    "en": "Aemeath",
+    "birthday": "未知",
+    "sex": "女",
+    "country": "拉海洛",
+    "influence": "星炬学院",
+    "prop": {
+      "hp": 882,
+      "att": 34,
+      "def": 94,
+      "cc%": 5,
+      "cd%": 150,
+      "ee%": 100,
+      "em": 125
+    },
+    "talentName": "长航的星辉",
+    "since": "3.1"
+  },
+  {
+    "name": "陆·赫斯",
+    "id": 1510,
+    "icon": "T_IconRoleHead256_54_UI",
+    "star": 5,
+    "tag": [
+      {
+        "name": "主力输出",
+        "des": "拥有较强的输出能力",
+        "color": "ff8441",
+        "icon": "SP_RoleLabelA2"
+      },
+      {
+        "name": "普攻伤害",
+        "des": "普攻伤害较高",
+        "color": "ffde73",
+        "icon": "SP_RoleLabelB1"
+      },
+      {
+        "name": "集谐响应",
+        "des": "根据自身谐度破坏增幅对目标造成最终伤害提升",
+        "color": "ff7777",
+        "icon": "SP_RoleLabelH1"
+      }
+    ],
+    "weaponType": [
+      "臂铠",
+      "SP_IconNorFist"
+    ],
+    "iconhalf": "T_IconRole_Pile_Luhesi_UI",
+    "iconbig": "T_ActivityRoleLuhesi",
+    "type": "衍射",
+    "typeIcon": "T_IconElementLight",
+    "en": "Luuk Herssen",
+    "birthday": "未知",
+    "sex": "男",
+    "country": "新联邦",
+    "influence": "星炬学院",
+    "prop": {
+      "hp": 824,
+      "att": 37,
+      "def": 91,
+      "cc%": 5,
+      "cd%": 150,
+      "ee%": 100,
+      "em": 125
+    },
+    "talentName": "相态转化",
+    "since": "3.1"
+  },
+  {
+    "name": "莫宁",
+    "id": 1209,
+    "icon": "T_IconRoleHead256_61_UI",
+    "star": 5,
+    "tag": [
+      {
+        "name": "生存治疗",
+        "des": "可以提升队伍的生存能力",
+        "color": "77ffb7",
+        "icon": "SP_RoleLabelA1"
+      },
+      {
+        "name": "伤害加深",
+        "des": "可以使队伍中特定角色伤害加深",
+        "color": "ff7777",
+        "icon": "SP_RoleLabelC7"
+      },
+      {
+        "name": "震谐响应",
+        "des": "可以对目标造成震谐伤害",
+        "color": "ff7777",
+        "icon": "SP_RoleLabelI2"
+      },
+      {
+        "name": "集谐响应",
+        "des": "根据自身谐度破坏增幅对目标造成最终伤害提升",
+        "color": "ff7777",
+        "icon": "SP_RoleLabelH1"
+      },
+      {
+        "name": "偏谐值累积效率",
+        "des": "可以提升队伍内特定角色的偏谐值累积效率",
+        "color": "ff7777",
+        "icon": "SP_RoleLabelG1"
+      }
+    ],
+    "weaponType": [
+      "长刃",
+      "SP_IconNorSword"
+    ],
+    "iconhalf": "T_IconRole_Pile_Moning_UI",
+    "iconbig": "T_ActivityRoleMoning",
+    "type": "热熔",
+    "typeIcon": "T_IconElementFire",
+    "en": "Mornye",
+    "birthday": "未知",
+    "sex": "女",
+    "country": "新联邦",
+    "influence": "深空联合",
+    "prop": {
+      "hp": 1230,
+      "att": 23,
+      "def": 111,
+      "cc%": 5,
+      "cd%": 150,
+      "ee%": 100,
+      "em": 175
+    },
+    "talentName": "星枢演构",
+    "since": "3.0"
+  },
+  {
+    "name": "琳奈",
+    "id": 1509,
+    "icon": "T_IconRoleHead256_60_UI",
+    "star": 5,
+    "tag": [
+      {
+        "name": "快速协奏",
+        "des": "拥有较高的协奏效率",
+        "color": "ff4040",
+        "icon": "SP_RoleLabelA3"
+      },
+      {
+        "name": "普攻伤害",
+        "des": "普攻伤害较高",
+        "color": "ffde73",
+        "icon": "SP_RoleLabelB1"
+      },
+      {
+        "name": "伤害加深",
+        "des": "可以使队伍中特定角色伤害加深",
+        "color": "ff7777",
+        "icon": "SP_RoleLabelC7"
+      },
+      {
+        "name": "共鸣解放伤害加深",
+        "des": "可以使队伍中特定角色共鸣解放伤害加深",
+        "color": "ff7777",
+        "icon": "SP_RoleLabelD10"
+      },
+      {
+        "name": "震谐响应",
+        "des": "可以对目标造成震谐伤害",
+        "color": "ff7777",
+        "icon": "SP_RoleLabelI2"
+      },
+      {
+        "name": "集谐响应",
+        "des": "根据自身谐度破坏增幅对目标造成最终伤害提升",
+        "color": "ff7777",
+        "icon": "SP_RoleLabelH1"
+      },
+      {
+        "name": "谐度破坏增幅",
+        "des": "可以提升队伍内特定角色的谐度破坏增幅",
+        "color": "ff7777",
+        "icon": "SP_RoleLabelG2"
+      }
+    ],
+    "weaponType": [
+      "佩枪",
+      "SP_IconNorGun"
+    ],
+    "iconhalf": "T_IconRole_Pile_Linnai_UI",
+    "iconbig": "T_ActivityRoleLinnai",
+    "type": "衍射",
+    "typeIcon": "T_IconElementLight",
+    "en": "Lynae",
+    "birthday": "未知",
+    "sex": "女",
+    "country": "新联邦",
+    "influence": "星炬学院",
+    "prop": {
+      "hp": 979,
+      "att": 30,
+      "def": 98,
+      "cc%": 5,
+      "cd%": 150,
+      "ee%": 100,
+      "em": 125
+    },
+    "talentName": "折光溢彩",
+    "since": "3.0"
+  },
+  {
+    "name": "千咲",
+    "id": 1508,
+    "icon": "T_IconRoleHead256_57_UI",
+    "star": 5,
+    "tag": [
+      {
+        "name": "生存治疗",
+        "des": "可以提升队伍的生存能力",
+        "color": "77ffb7",
+        "icon": "SP_RoleLabelA1"
+      },
+      {
+        "name": "共鸣解放伤害",
+        "des": "共鸣解放伤害较高",
+        "color": "ffde73",
+        "icon": "SP_RoleLabelB4"
+      },
+      {
+        "name": "虚湮",
+        "des": "可以运用虚湮效应",
+        "color": "dd77ff",
+        "icon": "SP_RoleLabelE1"
+      }
+    ],
+    "weaponType": [
+      "长刃",
+      "SP_IconNorSword"
+    ],
+    "iconhalf": "T_IconRole_Pile_Qianxiao_UI",
+    "iconbig": "T_ActivityRoleQianxiao",
+    "type": "湮灭",
+    "typeIcon": "T_IconElementDark",
+    "en": "Chisa",
+    "birthday": "未知",
+    "sex": "女",
+    "country": "苇原",
+    "influence": "星炬学院",
+    "prop": {
+      "hp": 862,
+      "att": 35,
+      "def": 93,
+      "cc%": 5,
+      "cd%": 150,
+      "ee%": 100,
+      "em": 125
+    },
+    "talentName": "解弦之眼",
+    "since": "2.8"
+  },
+  {
+    "name": "卜灵",
+    "id": 1307,
+    "icon": "T_IconRoleHead256_58_UI",
+    "star": 4,
+    "tag": [
+      {
+        "name": "生存治疗",
+        "des": "可以提升队伍的生存能力",
+        "color": "77ffb7",
+        "icon": "SP_RoleLabelA1"
+      },
+      {
+        "name": "伤害加深",
+        "des": "可以使队伍中特定角色伤害加深",
+        "color": "ff7777",
+        "icon": "SP_RoleLabelC7"
+      },
+      {
+        "name": "电磁",
+        "des": "可以运用电磁效应",
+        "color": "dd77ff",
+        "icon": "SP_RoleLabelE6"
+      }
+    ],
+    "weaponType": [
+      "音感仪",
+      "SP_IconNorMagic"
+    ],
+    "iconhalf": "T_IconRole_Pile_Buling_UI",
+    "iconbig": "T_ActivityRoleBuling",
+    "type": "导电",
+    "typeIcon": "T_IconElementThunder",
+    "en": "Buling",
+    "birthday": "未知",
+    "sex": "女",
+    "country": "瑝珑",
+    "influence": "黑海岸",
+    "prop": {
+      "hp": 850,
+      "att": 18,
+      "def": 103,
+      "cc%": 5,
+      "cd%": 150,
+      "ee%": 100,
+      "em": 150
+    },
+    "talentName": "妙算神听",
+    "since": "2.8"
+  },
+  {
+    "name": "嘉贝莉娜",
+    "id": 1208,
+    "icon": "T_IconRoleHead256_55_UI",
+    "star": 5,
+    "tag": [
+      {
+        "name": "主力输出",
+        "des": "拥有较强的输出能力",
+        "color": "ff8441",
+        "icon": "SP_RoleLabelA2"
+      },
+      {
+        "name": "重击伤害",
+        "des": "重击伤害较高",
+        "color": "ffde73",
+        "icon": "SP_RoleLabelB2"
+      }
+    ],
+    "weaponType": [
+      "佩枪",
+      "SP_IconNorGun"
+    ],
+    "iconhalf": "T_IconRole_Pile_jiabeilina_UI",
+    "iconbig": "T_ActivityRolejiabeilina",
+    "type": "热熔",
+    "typeIcon": "T_IconElementFire",
+    "en": "Galbrena",
+    "birthday": "未知",
+    "sex": "女",
+    "country": "黎那汐塔",
+    "influence": "黑海岸",
+    "prop": {
+      "hp": 824,
+      "att": 37,
+      "def": 91,
+      "cc%": 5,
+      "cd%": 150,
+      "ee%": 100,
+      "em": 125
+    },
+    "talentName": "炼狱",
+    "since": "2.7"
+  },
+  {
+    "name": "仇远",
+    "id": 1411,
+    "icon": "T_IconRoleHead256_56_UI",
+    "star": 5,
+    "tag": [
+      {
+        "name": "快速协奏",
+        "des": "拥有较高的协奏效率",
+        "color": "ff4040",
+        "icon": "SP_RoleLabelA3"
+      },
+      {
+        "name": "重击伤害",
+        "des": "重击伤害较高",
+        "color": "ffde73",
+        "icon": "SP_RoleLabelB2"
+      },
+      {
+        "name": "声骸技能伤害加深",
+        "des": "可以使队伍中特定角色声骸技能伤害加深",
+        "color": "ff7777",
+        "icon": "SP_RoleLabelD12"
+      }
+    ],
+    "weaponType": [
+      "迅刀",
+      "SP_IconNorKnife"
+    ],
+    "iconhalf": "T_IconRole_Pile_qiuyuan_UI",
+    "iconbig": "T_ActivityRoleQiuyuan",
+    "type": "气动",
+    "typeIcon": "T_IconElementWind",
+    "en": "Qiuyuan",
+    "birthday": "未知",
+    "sex": "男",
+    "country": "瑝珑",
+    "influence": "明庭",
+    "prop": {
+      "hp": 979,
+      "att": 30,
+      "def": 98,
+      "cc%": 5,
+      "cd%": 150,
+      "ee%": 100,
+      "em": 125
+    },
+    "talentName": "藏锋于竹",
+    "since": "2.7"
+  },
+  {
+    "name": "奥古斯塔",
+    "id": 1306,
+    "icon": "T_IconRoleHead256_51_UI",
+    "star": 5,
+    "tag": [
+      {
+        "name": "主力输出",
+        "des": "拥有较强的输出能力",
+        "color": "ff8441",
+        "icon": "SP_RoleLabelA2"
+      },
+      {
+        "name": "重击伤害",
+        "des": "重击伤害较高",
+        "color": "ffde73",
+        "icon": "SP_RoleLabelB2"
+      },
+      {
+        "name": "伤害加深",
+        "des": "可以使队伍中特定角色伤害加深",
+        "color": "ff7777",
+        "icon": "SP_RoleLabelC7"
+      }
+    ],
+    "weaponType": [
+      "长刃",
+      "SP_IconNorSword"
+    ],
+    "iconhalf": "T_IconRole_Pile_aogusita_UI",
+    "iconbig": "T_ActivityRoleAogusita",
+    "type": "导电",
+    "typeIcon": "T_IconElementThunder",
+    "en": "Augusta",
+    "birthday": "未知",
+    "sex": "女",
+    "country": "黎那汐塔",
+    "influence": "七丘",
+    "prop": {
+      "hp": 824,
+      "att": 37,
+      "def": 91,
+      "cc%": 5,
+      "cd%": 150,
+      "ee%": 100,
+      "em": 125
+    },
+    "talentName": "未曜的磁律",
+    "since": "2.6"
+  },
+  {
+    "name": "尤诺",
+    "id": 1410,
+    "icon": "T_IconRoleHead256_48_UI",
+    "star": 5,
+    "tag": [
+      {
+        "name": "生存治疗",
+        "des": "可以提升队伍的生存能力",
+        "color": "77ffb7",
+        "icon": "SP_RoleLabelA1"
+      },
+      {
+        "name": "快速协奏",
+        "des": "拥有较高的协奏效率",
+        "color": "ff4040",
+        "icon": "SP_RoleLabelA3"
+      },
+      {
+        "name": "共鸣解放伤害",
+        "des": "共鸣解放伤害较高",
+        "color": "ffde73",
+        "icon": "SP_RoleLabelB4"
+      },
+      {
+        "name": "重击伤害加深",
+        "des": "可以使队伍中特定角色重击伤害加深",
+        "color": "ff7777",
+        "icon": "SP_RoleLabelD8"
+      }
+    ],
+    "weaponType": [
+      "臂铠",
+      "SP_IconNorFist"
+    ],
+    "iconhalf": "T_IconRole_Pile_younuo_UI",
+    "iconbig": "T_ActivityRoleYounuo",
+    "type": "气动",
+    "typeIcon": "T_IconElementWind",
+    "en": "Iuno",
+    "birthday": "未知",
+    "sex": "女",
+    "country": "黎那汐塔",
+    "influence": "七丘",
+    "prop": {
+      "hp": 842,
+      "att": 36,
+      "def": 92,
+      "cc%": 5,
+      "cd%": 150,
+      "ee%": 100,
+      "em": 125
+    },
+    "talentName": "静滞、回环与更迭",
+    "since": "2.6"
+  },
+  {
+    "name": "弗洛洛",
+    "id": 1608,
+    "icon": "T_IconRoleHead256_41_UI",
+    "star": 5,
+    "tag": [
+      {
+        "name": "主力输出",
+        "des": "拥有较强的输出能力",
+        "color": "ff8441",
+        "icon": "SP_RoleLabelA2"
+      },
+      {
+        "name": "共鸣技能伤害",
+        "des": "共鸣技能伤害较高",
+        "color": "ffde73",
+        "icon": "SP_RoleLabelB3"
+      },
+      {
+        "name": "湮灭伤害加深",
+        "des": "可以使队伍中特定角色湮灭伤害加深",
+        "color": "ff7777",
+        "icon": "SP_RoleLabelD4"
+      },
+      {
+        "name": "重击伤害加深",
+        "des": "可以使队伍中特定角色重击伤害加深",
+        "color": "ff7777",
+        "icon": "SP_RoleLabelD8"
+      }
+    ],
+    "weaponType": [
+      "音感仪",
+      "SP_IconNorMagic"
+    ],
+    "iconhalf": "T_IconRole_Pile_fuluoluo_UI",
+    "iconbig": "T_ActivityRoleFuluoluo",
+    "type": "湮灭",
+    "typeIcon": "T_IconElementDark",
+    "en": "Phrolova",
+    "birthday": "未知",
+    "sex": "女",
+    "country": "未知",
+    "influence": "残星会",
+    "prop": {
+      "hp": 862,
+      "att": 35,
+      "def": 93,
+      "cc%": 5,
+      "cd%": 150,
+      "ee%": 100,
+      "em": 0
+    },
+    "talentName": "重世的交响乐",
+    "since": "2.5"
+  },
+  {
+    "name": "卡提希娅",
+    "id": 1409,
+    "icon": "T_IconRoleHead256_40_UI",
+    "star": 5,
+    "tag": [
+      {
+        "name": "主力输出",
+        "des": "拥有较强的输出能力",
+        "color": "ff8441",
+        "icon": "SP_RoleLabelA2"
+      },
+      {
+        "name": "风蚀",
+        "des": "可以运用风蚀效应",
+        "color": "dd77ff",
+        "icon": "SP_RoleLabelE3"
+      },
+      {
+        "name": "气动伤害加深",
+        "des": "可以使队伍中特定角色气动伤害加深",
+        "color": "ff7777",
+        "icon": "SP_RoleLabelD1"
+      },
+      {
+        "name": "牵引",
+        "des": "可以将一定范围内的目标牵引至特定位置",
+        "color": "77adff",
+        "icon": "SP_RoleLabelC1"
+      }
+    ],
+    "weaponType": [
+      "迅刀",
+      "SP_IconNorKnife"
+    ],
+    "iconhalf": "T_IconRole_Pile_katixiya_UI",
+    "iconbig": "T_ActivityRoleKatixiya",
+    "type": "气动",
+    "typeIcon": "T_IconElementWind",
+    "en": "Cartethyia",
+    "birthday": "未知",
+    "sex": "女",
+    "country": "黎那汐塔",
+    "influence": "拉古那",
+    "prop": {
+      "hp": 1184,
+      "att": 25,
+      "def": 50,
+      "cc%": 5,
+      "cd%": 150,
+      "ee%": 100,
+      "em": 125
+    },
+    "talentName": "暴风雨",
+    "since": "2.4"
+  },
+  {
+    "name": "露帕",
+    "id": 1207,
+    "icon": "T_IconRoleHead256_46_UI",
+    "star": 5,
+    "tag": [
+      {
+        "name": "快速协奏",
+        "des": "拥有较高的协奏效率",
+        "color": "ff4040",
+        "icon": "SP_RoleLabelA3"
+      },
+      {
+        "name": "共鸣解放伤害",
+        "des": "共鸣解放伤害较高",
+        "color": "ffde73",
+        "icon": "SP_RoleLabelB4"
+      },
+      {
+        "name": "热熔伤害加深",
+        "des": "可以使队伍中特定角色热熔伤害加深",
+        "color": "ff7777",
+        "icon": "SP_RoleLabelD6"
+      },
+      {
+        "name": "普攻伤害加深",
+        "des": "可以使队伍中特定角色普攻伤害加深",
+        "color": "ff7777",
+        "icon": "SP_RoleLabelD7"
+      }
+    ],
+    "weaponType": [
+      "长刃",
+      "SP_IconNorSword"
+    ],
+    "iconhalf": "T_IconRole_Pile_lupa_UI",
+    "iconbig": "T_ActivityRoleLupa",
+    "type": "热熔",
+    "typeIcon": "T_IconElementFire",
+    "en": "Lupa",
+    "birthday": "未知",
+    "sex": "女",
+    "country": "黎那汐塔",
+    "influence": "七丘",
+    "prop": {
+      "hp": 953,
+      "att": 31,
+      "def": 97,
+      "cc%": 5,
+      "cd%": 150,
+      "ee%": 100,
+      "em": 125
+    },
+    "talentName": "噬火凶啸",
+    "since": "2.4"
+  },
+  {
+    "name": "夏空",
+    "id": 1407,
+    "icon": "T_IconRoleHead256_37_UI",
+    "star": 5,
+    "tag": [
+      {
+        "name": "快速协奏",
+        "des": "拥有较高的协奏效率",
+        "color": "ff4040",
+        "icon": "SP_RoleLabelA3"
+      },
+      {
+        "name": "牵引",
+        "des": "可以将一定范围内的目标牵引至特定位置",
+        "color": "77adff",
+        "icon": "SP_RoleLabelC1"
+      },
+      {
+        "name": "风蚀",
+        "des": "可以运用风蚀效应",
+        "color": "dd77ff",
+        "icon": "SP_RoleLabelE3"
+      }
+    ],
+    "weaponType": [
+      "佩枪",
+      "SP_IconNorGun"
+    ],
+    "iconhalf": "T_IconRole_Pile_xiakong_UI",
+    "iconbig": "T_ActivityRoleXiakong",
+    "type": "气动",
+    "typeIcon": "T_IconElementWind",
+    "en": "Ciaccona",
+    "birthday": "未知",
+    "sex": "女",
+    "country": "黎那汐塔",
+    "influence": "拉古那",
+    "prop": {
+      "hp": 979,
+      "att": 30,
+      "def": 98,
+      "cc%": 5,
+      "cd%": 150,
+      "ee%": 100,
+      "em": 125
+    },
+    "talentName": "律绘之诗",
+    "since": "2.3"
+  },
+  {
+    "name": "赞妮",
+    "id": 1507,
+    "icon": "T_IconRoleHead256_38_UI",
+    "star": 5,
+    "tag": [
+      {
+        "name": "主力输出",
+        "des": "拥有较强的输出能力",
+        "color": "ff8441",
+        "icon": "SP_RoleLabelA2"
+      },
+      {
+        "name": "重击伤害",
+        "des": "重击伤害较高",
+        "color": "ffde73",
+        "icon": "SP_RoleLabelB2"
+      },
+      {
+        "name": "衍射伤害加深",
+        "des": "可以使队伍中特定角色衍射伤害加深",
+        "color": "ff7777",
+        "icon": "SP_RoleLabelD5"
+      },
+      {
+        "name": "光噪",
+        "des": "可以运用光噪效应",
+        "color": "dd77ff",
+        "icon": "SP_RoleLabelE4"
+      }
+    ],
+    "weaponType": [
+      "臂铠",
+      "SP_IconNorFist"
+    ],
+    "iconhalf": "T_IconRole_Pile_zanni_UI",
+    "iconbig": "T_ActivityRoleZanni",
+    "type": "衍射",
+    "typeIcon": "T_IconElementLight",
+    "en": "Zani",
+    "birthday": "未知",
+    "sex": "女",
+    "country": "黎那汐塔",
+    "influence": "莫塔里家族",
+    "prop": {
+      "hp": 862,
+      "att": 35,
+      "def": 93,
+      "cc%": 5,
+      "cd%": 150,
+      "ee%": 100,
+      "em": 125
+    },
+    "talentName": "光耀灼痕",
+    "since": "2.3"
+  },
+  {
+    "name": "坎特蕾拉",
+    "id": 1607,
+    "icon": "T_IconRoleHead256_34_UI",
+    "star": 5,
+    "tag": [
+      {
+        "name": "生存治疗",
+        "des": "可以提升队伍的生存能力",
+        "color": "77ffb7",
+        "icon": "SP_RoleLabelA1"
+      },
+      {
+        "name": "快速协奏",
+        "des": "拥有较高的协奏效率",
+        "color": "ff4040",
+        "icon": "SP_RoleLabelA3"
+      },
+      {
+        "name": "普攻伤害",
+        "des": "普攻伤害较高",
+        "color": "ffde73",
+        "icon": "SP_RoleLabelB1"
+      },
+      {
+        "name": "协同攻击",
+        "des": "拥有较强的协同攻击能力",
+        "color": "77adff",
+        "icon": "SP_RoleLabelC2"
+      },
+      {
+        "name": "湮灭伤害加深",
+        "des": "可以使队伍中特定角色湮灭伤害加深",
+        "color": "ff7777",
+        "icon": "SP_RoleLabelD4"
+      },
+      {
+        "name": "共鸣技能伤害加深",
+        "des": "可以使队伍中特定角色共鸣技能伤害加深",
+        "color": "ff7777",
+        "icon": "SP_RoleLabelD9"
+      }
+    ],
+    "weaponType": [
+      "音感仪",
+      "SP_IconNorMagic"
+    ],
+    "iconhalf": "T_IconRole_Pile_kanteleila_UI",
+    "iconbig": "T_ActivityRoleKanteleila",
+    "type": "湮灭",
+    "typeIcon": "T_IconElementDark",
+    "en": "Cantarella",
+    "birthday": "6月18日",
+    "sex": "女",
+    "country": "黎那汐塔",
+    "influence": "翡萨烈家族",
+    "prop": {
+      "hp": 928,
+      "att": 32,
+      "def": 90,
+      "cc%": 5,
+      "cd%": 150,
+      "ee%": 100,
+      "em": 125
+    },
+    "talentName": "海中梦",
+    "since": "2.2"
+  },
+  {
+    "name": "漂泊者·气动",
+    "id": 1406,
+    "icon": "T_IconRoleHead256_4_UI",
+    "star": 5,
+    "tag": [
+      {
+        "name": "生存治疗",
+        "des": "可以提升队伍的生存能力",
+        "color": "77ffb7",
+        "icon": "SP_RoleLabelA1"
+      },
+      {
+        "name": "共鸣技能伤害",
+        "des": "共鸣技能伤害较高",
+        "color": "ffde73",
+        "icon": "SP_RoleLabelB3"
+      },
+      {
+        "name": "风蚀",
+        "des": "可以运用风蚀效应",
+        "color": "dd77ff",
+        "icon": "SP_RoleLabelE3"
+      }
+    ],
+    "weaponType": [
+      "迅刀",
+      "SP_IconNorKnife"
+    ],
+    "iconhalf": "T_IconRole_Pile_zhujuenan_UI",
+    "iconbig": "ActivityRoleNanzhu",
+    "type": "气动",
+    "typeIcon": "T_IconElementWind",
+    "en": "Rover: Aero",
+    "birthday": "未知",
+    "sex": "男",
+    "country": "未知",
+    "influence": "未知",
+    "prop": {
+      "hp": 862,
+      "att": 35,
+      "def": 93,
+      "cc%": 5,
+      "cd%": 150,
+      "ee%": 100,
+      "em": 150
+    },
+    "talentName": "声之容器",
+    "since": "2.2"
+  },
+  {
+    "name": "漂泊者·气动",
+    "id": 1408,
+    "icon": "T_IconRoleHead256_5_UI",
+    "star": 5,
+    "tag": [
+      {
+        "name": "生存治疗",
+        "des": "可以提升队伍的生存能力",
+        "color": "77ffb7",
+        "icon": "SP_RoleLabelA1"
+      },
+      {
+        "name": "共鸣技能伤害",
+        "des": "共鸣技能伤害较高",
+        "color": "ffde73",
+        "icon": "SP_RoleLabelB3"
+      },
+      {
+        "name": "风蚀",
+        "des": "可以运用风蚀效应",
+        "color": "dd77ff",
+        "icon": "SP_RoleLabelE3"
+      }
+    ],
+    "weaponType": [
+      "迅刀",
+      "SP_IconNorKnife"
+    ],
+    "iconhalf": "T_IconRole_Pile_zhujue_UI",
+    "iconbig": "T_ActivityRoleNvzhu",
+    "type": "气动",
+    "typeIcon": "T_IconElementWind",
+    "en": "Rover: Aero",
+    "birthday": "未知",
+    "sex": "女",
+    "country": "未知",
+    "influence": "未知",
+    "prop": {
+      "hp": 862,
+      "att": 35,
+      "def": 93,
+      "cc%": 5,
+      "cd%": 150,
+      "ee%": 100,
+      "em": 150
+    },
+    "talentName": "声之容器",
+    "since": "2.2"
+  },
+  {
+    "name": "布兰特",
+    "id": 1206,
+    "icon": "T_IconRoleHead256_44_UI",
+    "star": 5,
+    "tag": [
+      {
+        "name": "生存治疗",
+        "des": "可以提升队伍的生存能力",
+        "color": "77ffb7",
+        "icon": "SP_RoleLabelA1"
+      },
+      {
+        "name": "普攻伤害",
+        "des": "普攻伤害较高",
+        "color": "ffde73",
+        "icon": "SP_RoleLabelB1"
+      },
+      {
+        "name": "热熔伤害加深",
+        "des": "可以使队伍中特定角色热熔伤害加深",
+        "color": "ff7777",
+        "icon": "SP_RoleLabelD6"
+      },
+      {
+        "name": "共鸣技能伤害加深",
+        "des": "可以使队伍中特定角色共鸣技能伤害加深",
+        "color": "ff7777",
+        "icon": "SP_RoleLabelD9"
+      }
+    ],
+    "weaponType": [
+      "迅刀",
+      "SP_IconNorKnife"
+    ],
+    "iconhalf": "T_IconRole_Pile_Bulante_UI",
+    "iconbig": "T_ActivityRoleBulante",
+    "type": "热熔",
+    "typeIcon": "T_IconElementFire",
+    "en": "Brant",
+    "birthday": "未知",
+    "sex": "男",
+    "country": "黎那汐塔",
+    "influence": "愚人剧团",
+    "prop": {
+      "hp": 934,
+      "att": 30,
+      "def": 107,
+      "cc%": 5,
+      "cd%": 150,
+      "ee%": 100,
+      "em": 175
+    },
+    "talentName": "戏焰领航",
+    "since": "2.1"
+  },
+  {
+    "name": "菲比",
+    "id": 1506,
+    "icon": "T_IconRoleHead256_45_UI",
+    "star": 5,
+    "tag": [
+      {
+        "name": "主力输出",
+        "des": "拥有较强的输出能力",
+        "color": "ff8441",
+        "icon": "SP_RoleLabelA2"
+      },
+      {
+        "name": "快速协奏",
+        "des": "拥有较高的协奏效率",
+        "color": "ff4040",
+        "icon": "SP_RoleLabelA3"
+      },
+      {
+        "name": "光噪",
+        "des": "可以运用光噪效应",
+        "color": "dd77ff",
+        "icon": "SP_RoleLabelE4"
+      }
+    ],
+    "weaponType": [
+      "音感仪",
+      "SP_IconNorMagic"
+    ],
+    "iconhalf": "T_IconRole_Pile_Feibi_UI",
+    "iconbig": "T_ActivityRoleFeibi",
+    "type": "衍射",
+    "typeIcon": "T_IconElementLight",
+    "en": "Phoebe",
+    "birthday": "未知",
+    "sex": "女",
+    "country": "黎那汐塔",
+    "influence": "隐海修会",
+    "prop": {
+      "hp": 866,
+      "att": 33,
+      "def": 103,
+      "cc%": 5,
+      "cd%": 150,
+      "ee%": 100,
+      "em": 125
+    },
+    "talentName": "圣祈凝辉",
+    "since": "2.1"
+  },
+  {
+    "name": "洛可可",
+    "id": 1606,
+    "icon": "T_IconRoleHead256_33_UI",
+    "star": 5,
+    "tag": [
+      {
+        "name": "快速协奏",
+        "des": "拥有较高的协奏效率",
+        "color": "ff4040",
+        "icon": "SP_RoleLabelA3"
+      },
+      {
+        "name": "重击伤害",
+        "des": "重击伤害较高",
+        "color": "ffde73",
+        "icon": "SP_RoleLabelB2"
+      },
+      {
+        "name": "牵引",
+        "des": "可以将一定范围内的目标牵引至特定位置",
+        "color": "77adff",
+        "icon": "SP_RoleLabelC1"
+      },
+      {
+        "name": "湮灭伤害加深",
+        "des": "可以使队伍中特定角色湮灭伤害加深",
+        "color": "ff7777",
+        "icon": "SP_RoleLabelD4"
+      },
+      {
+        "name": "普攻伤害加深",
+        "des": "可以使队伍中特定角色普攻伤害加深",
+        "color": "ff7777",
+        "icon": "SP_RoleLabelD7"
+      }
+    ],
+    "weaponType": [
+      "臂铠",
+      "SP_IconNorFist"
+    ],
+    "iconhalf": "T_IconRole_Pile_luokeke_UI",
+    "iconbig": "T_ActivityRoleLuokeke",
+    "type": "湮灭",
+    "typeIcon": "T_IconElementDark",
+    "en": "Roccia",
+    "birthday": "1月31日",
+    "sex": "女",
+    "country": "黎那汐塔",
+    "influence": "愚人剧团",
+    "prop": {
+      "hp": 980,
+      "att": 30,
+      "def": 98,
+      "cc%": 5,
+      "cd%": 150,
+      "ee%": 100,
+      "em": 125
+    },
+    "talentName": "箱中舞台",
+    "since": "2.0"
+  },
+  {
+    "name": "珂莱塔",
+    "id": 1107,
+    "icon": "T_IconRoleHead256_32_UI",
+    "star": 5,
+    "tag": [
+      {
+        "name": "主力输出",
+        "des": "拥有较强的输出能力",
+        "color": "ff8441",
+        "icon": "SP_RoleLabelA2"
+      },
+      {
+        "name": "共鸣技能伤害",
+        "des": "共鸣技能伤害较高",
+        "color": "ffde73",
+        "icon": "SP_RoleLabelB3"
+      }
+    ],
+    "weaponType": [
+      "佩枪",
+      "SP_IconNorGun"
+    ],
+    "iconhalf": "T_IconRole_Pile_kelaita_UI",
+    "iconbig": "T_ActivityRoleKelaita",
+    "type": "冷凝",
+    "typeIcon": "T_IconElementIce",
+    "en": "Carlotta",
+    "birthday": "未知",
+    "sex": "女",
+    "country": "黎那汐塔",
+    "influence": "莫塔里家族",
+    "prop": {
+      "hp": 996,
+      "att": 37,
+      "def": 98,
+      "cc%": 5,
+      "cd%": 150,
+      "ee%": 100,
+      "em": 125
+    },
+    "talentName": "向度重塑",
+    "since": "2.0"
+  },
+  {
+    "name": "椿",
+    "id": 1603,
+    "icon": "T_IconRoleHead256_29_UI",
+    "star": 5,
+    "tag": [
+      {
+        "name": "主力输出",
+        "des": "拥有较强的输出能力",
+        "color": "ff8441",
+        "icon": "SP_RoleLabelA2"
+      },
+      {
+        "name": "快速协奏",
+        "des": "拥有较高的协奏效率",
+        "color": "ff4040",
+        "icon": "SP_RoleLabelA3"
+      },
+      {
+        "name": "普攻伤害",
+        "des": "普攻伤害较高",
+        "color": "ffde73",
+        "icon": "SP_RoleLabelB1"
+      }
+    ],
+    "weaponType": [
+      "迅刀",
+      "SP_IconNorKnife"
+    ],
+    "iconhalf": "T_IconRole_Pile_chun_UI",
+    "iconbig": "T_ActivityRoleChun",
+    "type": "湮灭",
+    "typeIcon": "T_IconElementDark",
+    "en": "Camellya",
+    "birthday": "未知",
+    "sex": "女",
+    "country": "未知",
+    "influence": "黑海岸",
+    "prop": {
+      "hp": 826,
+      "att": 36,
+      "def": 95,
+      "cc%": 5,
+      "cd%": 150,
+      "ee%": 100,
+      "em": 125
+    },
+    "talentName": "红椿盛放",
+    "since": "1.4"
+  },
+  {
+    "name": "灯灯",
+    "id": 1504,
+    "icon": "T_IconRoleHead256_30_UI",
+    "star": 4,
+    "tag": [
+      {
+        "name": "主力输出",
+        "des": "拥有较强的输出能力",
+        "color": "ff8441",
+        "icon": "SP_RoleLabelA2"
+      },
+      {
+        "name": "普攻伤害",
+        "des": "普攻伤害较高",
+        "color": "ffde73",
+        "icon": "SP_RoleLabelB1"
+      },
+      {
+        "name": "共鸣技能伤害加深",
+        "des": "可以使队伍中特定角色共鸣技能伤害加深",
+        "color": "ff7777",
+        "icon": "SP_RoleLabelD9"
+      }
+    ],
+    "weaponType": [
+      "长刃",
+      "SP_IconNorSword"
+    ],
+    "iconhalf": "T_IconRole_Pile_dengdeng_UI",
+    "iconbig": "T_ActivityRoleDengdeng",
+    "type": "导电",
+    "typeIcon": "T_IconElementThunder",
+    "en": "Lumi",
+    "birthday": "未知",
+    "sex": "女",
+    "country": "瑝珑",
+    "influence": "呜呜物流",
+    "prop": {
+      "hp": 680,
+      "att": 27,
+      "def": 72,
+      "cc%": 5,
+      "cd%": 150,
+      "ee%": 100,
+      "em": 125
+    },
+    "talentName": "光彩流离",
+    "since": "1.4"
+  },
+  {
+    "name": "守岸人",
+    "id": 1505,
+    "icon": "T_IconRoleHead256_28_UI",
+    "star": 5,
+    "tag": [
+      {
+        "name": "生存治疗",
+        "des": "可以提升队伍的生存能力",
+        "color": "77ffb7",
+        "icon": "SP_RoleLabelA1"
+      },
+      {
+        "name": "牵引",
+        "des": "可以将一定范围内的目标牵引至特定位置",
+        "color": "77adff",
+        "icon": "SP_RoleLabelC1"
+      },
+      {
+        "name": "伤害加深",
+        "des": "可以使队伍中特定角色伤害加深",
+        "color": "ff7777",
+        "icon": "SP_RoleLabelC7"
+      }
+    ],
+    "weaponType": [
+      "音感仪",
+      "SP_IconNorMagic"
+    ],
+    "iconhalf": "T_IconRole_Pile_shouanren_UI",
+    "iconbig": "T_ActivityRoleShouanren",
+    "type": "衍射",
+    "typeIcon": "T_IconElementLight",
+    "en": "Shorekeeper",
+    "birthday": "2月27日",
+    "sex": "女",
+    "country": "黑海岸",
+    "influence": "黑海岸",
+    "prop": {
+      "hp": 1337,
+      "att": 23,
+      "def": 90,
+      "cc%": 5,
+      "cd%": 150,
+      "ee%": 100,
+      "em": 175
+    },
+    "talentName": "叙响织构",
+    "since": "1.3"
+  },
+  {
+    "name": "釉瑚",
+    "id": 1106,
+    "icon": "T_IconRoleHead256_31_UI",
+    "star": 4,
+    "tag": [
+      {
+        "name": "生存治疗",
+        "des": "可以提升队伍的生存能力",
+        "color": "77ffb7",
+        "icon": "SP_RoleLabelA1"
+      },
+      {
+        "name": "共鸣技能伤害",
+        "des": "共鸣技能伤害较高",
+        "color": "ffde73",
+        "icon": "SP_RoleLabelB3"
+      },
+      {
+        "name": "共振摧毁",
+        "des": "可以更有效地削减目标的共振度",
+        "color": "77adff",
+        "icon": "SP_RoleLabelC5"
+      },
+      {
+        "name": "协同攻击伤害加深",
+        "des": "可以使队伍中特定角色协同攻击伤害加深",
+        "color": "ff7777",
+        "icon": "SP_RoleLabelD11"
+      }
+    ],
+    "weaponType": [
+      "臂铠",
+      "SP_IconNorFist"
+    ],
+    "iconhalf": "T_IconRole_Pile_youhu_UI",
+    "iconbig": "T_ActivityRoleYouhu",
+    "type": "冷凝",
+    "typeIcon": "T_IconElementIce",
+    "en": "Youhu",
+    "birthday": "10月13日",
+    "sex": "女",
+    "country": "瑝珑",
+    "influence": "重州",
+    "prop": {
+      "hp": 798,
+      "att": 21,
+      "def": 86,
+      "cc%": 5,
+      "cd%": 150,
+      "ee%": 100,
+      "em": 100
+    },
+    "talentName": "凝冰造物",
+    "since": "1.3"
+  },
+  {
+    "name": "折枝",
+    "id": 1105,
+    "icon": "T_IconRoleHead256_27_UI",
+    "star": 5,
+    "tag": [
+      {
+        "name": "快速协奏",
+        "des": "拥有较高的协奏效率",
+        "color": "ff4040",
+        "icon": "SP_RoleLabelA3"
+      },
+      {
+        "name": "普攻伤害",
+        "des": "普攻伤害较高",
+        "color": "ffde73",
+        "icon": "SP_RoleLabelB1"
+      },
+      {
+        "name": "协同攻击",
+        "des": "拥有较强的协同攻击能力",
+        "color": "77adff",
+        "icon": "SP_RoleLabelC2"
+      },
+      {
+        "name": "共鸣解放充能",
+        "des": "可以为队伍内特定角色回复共鸣能量",
+        "color": "77adff",
+        "icon": "SP_RoleLabelC4"
+      },
+      {
+        "name": "冷凝伤害加深",
+        "des": "可以使队伍中特定角色冷凝伤害加深",
+        "color": "ff7777",
+        "icon": "SP_RoleLabelD3"
+      },
+      {
+        "name": "共鸣技能伤害加深",
+        "des": "可以使队伍中特定角色共鸣技能伤害加深",
+        "color": "ff7777",
+        "icon": "SP_RoleLabelD9"
+      }
+    ],
+    "weaponType": [
+      "音感仪",
+      "SP_IconNorMagic"
+    ],
+    "iconhalf": "T_IconRole_Pile_zhezhi_UI",
+    "iconbig": "T_ActivityRoleZhezhi",
+    "type": "冷凝",
+    "typeIcon": "T_IconElementIce",
+    "en": "Zhezhi",
+    "birthday": "12月31日",
+    "sex": "女",
+    "country": "瑝珑",
+    "influence": "今州",
+    "prop": {
+      "hp": 980,
+      "att": 30,
+      "def": 98,
+      "cc%": 5,
+      "cd%": 150,
+      "ee%": 100,
+      "em": 125
+    },
+    "talentName": "笔落春风",
+    "since": "1.2"
+  },
+  {
+    "name": "相里要",
+    "id": 1305,
+    "icon": "T_IconRoleHead256_25_UI",
+    "star": 5,
+    "tag": [
+      {
+        "name": "主力输出",
+        "des": "拥有较强的输出能力",
+        "color": "ff8441",
+        "icon": "SP_RoleLabelA2"
+      },
+      {
+        "name": "共鸣解放伤害",
+        "des": "共鸣解放伤害较高",
+        "color": "ffde73",
+        "icon": "SP_RoleLabelB4"
+      }
+    ],
+    "weaponType": [
+      "臂铠",
+      "SP_IconNorFist"
+    ],
+    "iconhalf": "T_IconRole_Pile_xiangliyao_UI",
+    "iconbig": "T_ActivityRoleXiangliyao",
+    "type": "导电",
+    "typeIcon": "T_IconElementThunder",
+    "en": "Xiangli Yao",
+    "birthday": "未知",
+    "sex": "男",
+    "country": "瑝珑",
+    "influence": "今州",
+    "prop": {
+      "hp": 850,
+      "att": 34,
+      "def": 100,
+      "cc%": 5,
+      "cd%": 150,
+      "ee%": 100,
+      "em": 125
+    },
+    "talentName": "万象解明",
+    "since": "1.2"
+  },
+  {
+    "name": "长离",
+    "id": 1205,
+    "icon": "T_IconRoleHead256_26_UI",
+    "star": 5,
+    "tag": [
+      {
+        "name": "主力输出",
+        "des": "拥有较强的输出能力",
+        "color": "ff8441",
+        "icon": "SP_RoleLabelA2"
+      },
+      {
+        "name": "共鸣技能伤害",
+        "des": "共鸣技能伤害较高",
+        "color": "ffde73",
+        "icon": "SP_RoleLabelB3"
+      },
+      {
+        "name": "热熔伤害加深",
+        "des": "可以使队伍中特定角色热熔伤害加深",
+        "color": "ff7777",
+        "icon": "SP_RoleLabelD6"
+      },
+      {
+        "name": "共鸣解放伤害加深",
+        "des": "可以使队伍中特定角色共鸣解放伤害加深",
+        "color": "ff7777",
+        "icon": "SP_RoleLabelD10"
+      }
+    ],
+    "weaponType": [
+      "迅刀",
+      "SP_IconNorKnife"
+    ],
+    "iconhalf": "T_IconRole_Pile_changli_UI",
+    "iconbig": "T_ActivityRoleChangli",
+    "type": "热熔",
+    "typeIcon": "T_IconElementFire",
+    "en": "Changli",
+    "birthday": "6月6日",
+    "sex": "女",
+    "country": "瑝珑",
+    "influence": "今州",
+    "prop": {
+      "hp": 831,
+      "att": 37,
+      "def": 90,
+      "cc%": 5,
+      "cd%": 150,
+      "ee%": 100,
+      "em": 125
+    },
+    "talentName": "丹煌离火",
+    "since": "1.1"
+  },
+  {
+    "name": "今汐",
+    "id": 1304,
+    "icon": "T_IconRoleHead256_24_UI",
+    "star": 5,
+    "tag": [
+      {
+        "name": "主力输出",
+        "des": "拥有较强的输出能力",
+        "color": "ff8441",
+        "icon": "SP_RoleLabelA2"
+      },
+      {
+        "name": "共鸣技能伤害",
+        "des": "共鸣技能伤害较高",
+        "color": "ffde73",
+        "icon": "SP_RoleLabelB3"
+      },
+      {
+        "name": "同奏",
+        "des": "可以配合队伍内特定角色触发同奏相关效果",
+        "color": "ff7777",
+        "icon": "SP_RoleLabelI8"
+      }
+    ],
+    "weaponType": [
+      "长刃",
+      "SP_IconNorSword"
+    ],
+    "iconhalf": "T_IconRole_Pile_jinxi_UI",
+    "iconbig": "T_ActivityRoleJinxi",
+    "type": "衍射",
+    "typeIcon": "T_IconElementLight",
+    "en": "Jinhsi",
+    "birthday": "3月6日",
+    "sex": "女",
+    "country": "瑝珑",
+    "influence": "今州",
+    "prop": {
+      "hp": 866,
+      "att": 33,
+      "def": 103,
+      "cc%": 5,
+      "cd%": 150,
+      "ee%": 100,
+      "em": 150
+    },
+    "talentName": "寒尽觉春生",
+    "since": "1.1"
+  },
+  {
+    "name": "吟霖",
+    "id": 1302,
+    "icon": "T_IconRoleHead256_17_UI",
+    "star": 5,
+    "tag": [
+      {
+        "name": "快速协奏",
+        "des": "拥有较高的协奏效率",
+        "color": "ff4040",
+        "icon": "SP_RoleLabelA3"
+      },
+      {
+        "name": "共鸣技能伤害",
+        "des": "共鸣技能伤害较高",
+        "color": "ffde73",
+        "icon": "SP_RoleLabelB3"
+      },
+      {
+        "name": "协同攻击",
+        "des": "拥有较强的协同攻击能力",
+        "color": "77adff",
+        "icon": "SP_RoleLabelC2"
+      },
+      {
+        "name": "导电伤害加深",
+        "des": "可以使队伍中特定角色导电伤害加深",
+        "color": "ff7777",
+        "icon": "SP_RoleLabelD2"
+      },
+      {
+        "name": "共鸣解放伤害加深",
+        "des": "可以使队伍中特定角色共鸣解放伤害加深",
+        "color": "ff7777",
+        "icon": "SP_RoleLabelD10"
+      }
+    ],
+    "weaponType": [
+      "音感仪",
+      "SP_IconNorMagic"
+    ],
+    "iconhalf": "T_IconRole_Pile_yinlin_UI",
+    "iconbig": "T_ActivityRoleYinlin",
+    "type": "导电",
+    "typeIcon": "T_IconElementThunder",
+    "en": "Yinlin",
+    "birthday": "9月17日",
+    "sex": "女",
+    "country": "瑝珑",
+    "influence": "今州",
+    "prop": {
+      "hp": 880,
+      "att": 32,
+      "def": 105,
+      "cc%": 5,
+      "cd%": 150,
+      "ee%": 100,
+      "em": 125
+    },
+    "talentName": "诛恶傀儡",
+    "since": "1.0"
+  },
+  {
+    "name": "忌炎",
+    "id": 1404,
+    "icon": "T_IconRoleHead256_11_UI",
+    "star": 5,
+    "tag": [
+      {
+        "name": "主力输出",
+        "des": "拥有较强的输出能力",
+        "color": "ff8441",
+        "icon": "SP_RoleLabelA2"
+      },
+      {
+        "name": "重击伤害",
+        "des": "重击伤害较高",
+        "color": "ffde73",
+        "icon": "SP_RoleLabelB2"
+      },
+      {
+        "name": "牵引",
+        "des": "可以将一定范围内的目标牵引至特定位置",
+        "color": "77adff",
+        "icon": "SP_RoleLabelC1"
+      }
+    ],
+    "weaponType": [
+      "长刃",
+      "SP_IconNorSword"
+    ],
+    "iconhalf": "T_IconRole_Pile_jiyan_UI",
+    "iconbig": "T_ActivityRoleJiyan1",
+    "type": "气动",
+    "typeIcon": "T_IconElementWind",
+    "en": "Jiyan",
+    "birthday": "12月14日",
+    "sex": "男",
+    "country": "瑝珑",
+    "influence": "今州",
+    "prop": {
+      "hp": 839,
+      "att": 35,
+      "def": 97,
+      "cc%": 5,
+      "cd%": 150,
+      "ee%": 100,
+      "em": 125
+    },
+    "talentName": "凌风逐野",
+    "since": "1.0"
+  },
+  {
+    "name": "鉴心",
+    "id": 1405,
+    "icon": "T_IconRoleHead256_23_UI",
+    "star": 5,
+    "tag": [
+      {
+        "name": "生存治疗",
+        "des": "可以提升队伍的生存能力",
+        "color": "77ffb7",
+        "icon": "SP_RoleLabelA1"
+      },
+      {
+        "name": "重击伤害",
+        "des": "重击伤害较高",
+        "color": "ffde73",
+        "icon": "SP_RoleLabelB2"
+      },
+      {
+        "name": "牵引",
+        "des": "可以将一定范围内的目标牵引至特定位置",
+        "color": "77adff",
+        "icon": "SP_RoleLabelC1"
+      },
+      {
+        "name": "共鸣解放伤害加深",
+        "des": "可以使队伍中特定角色共鸣解放伤害加深",
+        "color": "ff7777",
+        "icon": "SP_RoleLabelD10"
+      }
+    ],
+    "weaponType": [
+      "臂铠",
+      "SP_IconNorFist"
+    ],
+    "iconhalf": "T_IconRole_Pile_jiexin_UI",
+    "iconbig": "T_ActivityRoleJianxin",
+    "type": "气动",
+    "typeIcon": "T_IconElementWind",
+    "en": "Jianxin",
+    "birthday": "4月6日",
+    "sex": "女",
+    "country": "瑝珑",
+    "influence": "今州",
+    "prop": {
+      "hp": 1129,
+      "att": 27,
+      "def": 92,
+      "cc%": 5,
+      "cd%": 150,
+      "ee%": 100,
+      "em": 150
+    },
+    "talentName": "涤除玄鉴",
+    "since": "1.0"
+  },
+  {
+    "name": "卡卡罗",
+    "id": 1301,
+    "icon": "T_IconRoleHead256_18_UI",
+    "star": 5,
+    "tag": [
+      {
+        "name": "主力输出",
+        "des": "拥有较强的输出能力",
+        "color": "ff8441",
+        "icon": "SP_RoleLabelA2"
+      },
+      {
+        "name": "共鸣解放伤害",
+        "des": "共鸣解放伤害较高",
+        "color": "ffde73",
+        "icon": "SP_RoleLabelB4"
+      }
+    ],
+    "weaponType": [
+      "长刃",
+      "SP_IconNorSword"
+    ],
+    "iconhalf": "T_IconRole_Pile_kakaluo_UI",
+    "iconbig": "T_ActivityRoleKakaluo",
+    "type": "导电",
+    "typeIcon": "T_IconElementThunder",
+    "en": "Calcharo",
+    "birthday": "7月8日",
+    "sex": "男",
+    "country": "新联邦",
+    "influence": "幽灵猎犬佣兵团",
+    "prop": {
+      "hp": 840,
+      "att": 35,
+      "def": 97,
+      "cc%": 5,
+      "cd%": 150,
+      "ee%": 100,
+      "em": 125
+    },
+    "talentName": "幻影猎兵",
+    "since": "1.0"
+  },
+  {
+    "name": "安可",
+    "id": 1203,
+    "icon": "T_IconRoleHead256_8_UI",
+    "star": 5,
+    "tag": [
+      {
+        "name": "主力输出",
+        "des": "拥有较强的输出能力",
+        "color": "ff8441",
+        "icon": "SP_RoleLabelA2"
+      },
+      {
+        "name": "普攻伤害",
+        "des": "普攻伤害较高",
+        "color": "ffde73",
+        "icon": "SP_RoleLabelB1"
+      }
+    ],
+    "weaponType": [
+      "音感仪",
+      "SP_IconNorMagic"
+    ],
+    "iconhalf": "T_IconRole_Pile_anke_UI",
+    "iconbig": "T_ActivityRoleAnke",
+    "type": "热熔",
+    "typeIcon": "T_IconElementFire",
+    "en": "Encore",
+    "birthday": "3月21日",
+    "sex": "女",
+    "country": "新联邦",
+    "influence": "黑海岸",
+    "prop": {
+      "hp": 841,
+      "att": 34,
+      "def": 102,
+      "cc%": 5,
+      "cd%": 150,
+      "ee%": 100,
+      "em": 125
+    },
+    "talentName": "数羊游戏",
+    "since": "1.0"
+  },
+  {
+    "name": "维里奈",
+    "id": 1503,
+    "icon": "T_IconRoleHead256_3_UI",
+    "star": 5,
+    "tag": [
+      {
+        "name": "生存治疗",
+        "des": "可以提升队伍的生存能力",
+        "color": "77ffb7",
+        "icon": "SP_RoleLabelA1"
+      },
+      {
+        "name": "协同攻击",
+        "des": "拥有较强的协同攻击能力",
+        "color": "77adff",
+        "icon": "SP_RoleLabelC2"
+      },
+      {
+        "name": "伤害加深",
+        "des": "可以使队伍中特定角色伤害加深",
+        "color": "ff7777",
+        "icon": "SP_RoleLabelC7"
+      }
+    ],
+    "weaponType": [
+      "音感仪",
+      "SP_IconNorMagic"
+    ],
+    "iconhalf": "T_IconRole_Pile_jueyuan_UI",
+    "iconbig": "T_ActivityRoleJueyuan",
+    "type": "衍射",
+    "typeIcon": "T_IconElementLight",
+    "en": "Verina",
+    "birthday": "5月18日",
+    "sex": "女",
+    "country": "新联邦",
+    "influence": "今州",
+    "prop": {
+      "hp": 1139,
+      "att": 27,
+      "def": 90,
+      "cc%": 5,
+      "cd%": 150,
+      "ee%": 100,
+      "em": 175
+    },
+    "talentName": "自然聆律",
+    "since": "1.0"
+  },
+  {
+    "name": "凌阳",
+    "id": 1104,
+    "icon": "T_IconRoleHead256_14_UI",
+    "star": 5,
+    "tag": [
+      {
+        "name": "主力输出",
+        "des": "拥有较强的输出能力",
+        "color": "ff8441",
+        "icon": "SP_RoleLabelA2"
+      }
+    ],
+    "weaponType": [
+      "臂铠",
+      "SP_IconNorFist"
+    ],
+    "iconhalf": "T_IconRole_Pile_lingyang_UI",
+    "iconbig": "T_ActivityRoleLingyang",
+    "type": "冷凝",
+    "typeIcon": "T_IconElementIce",
+    "en": "Lingyang",
+    "birthday": "8月8日",
+    "sex": "男",
+    "country": "瑝珑",
+    "influence": "今州",
+    "prop": {
+      "hp": 831,
+      "att": 35,
+      "def": 99,
+      "cc%": 5,
+      "cd%": 150,
+      "ee%": 100,
+      "em": 125
+    },
+    "talentName": "凛冽斗气",
+    "since": "1.0"
+  },
+  {
+    "name": "漂泊者·衍射",
+    "id": 1501,
+    "icon": "T_IconRoleHead256_4_UI",
+    "star": 5,
+    "tag": [
+      {
+        "name": "快速协奏",
+        "des": "拥有较高的协奏效率",
+        "color": "ff4040",
+        "icon": "SP_RoleLabelA3"
+      },
+      {
+        "name": "凝滞",
+        "des": "可以降低一定范围内目标的行动速度",
+        "color": "77adff",
+        "icon": "SP_RoleLabelC3"
+      }
+    ],
+    "weaponType": [
+      "迅刀",
+      "SP_IconNorKnife"
+    ],
+    "iconhalf": "T_IconRole_Pile_zhujuenan_UI",
+    "iconbig": "ActivityRoleNanzhu",
+    "type": "衍射",
+    "typeIcon": "T_IconElementLight",
+    "en": "Rover: Spectro",
+    "birthday": "未知",
+    "sex": "男",
+    "country": "未知",
+    "influence": "未知",
+    "prop": {
+      "hp": 912,
+      "att": 30,
+      "def": 112,
+      "cc%": 5,
+      "cd%": 150,
+      "ee%": 100,
+      "em": 125
+    },
+    "talentName": "声之容器",
+    "since": "1.0"
+  },
+  {
+    "name": "漂泊者·衍射",
+    "id": 1502,
+    "icon": "T_IconRoleHead256_5_UI",
+    "star": 5,
+    "tag": [
+      {
+        "name": "快速协奏",
+        "des": "拥有较高的协奏效率",
+        "color": "ff4040",
+        "icon": "SP_RoleLabelA3"
+      },
+      {
+        "name": "凝滞",
+        "des": "可以降低一定范围内目标的行动速度",
+        "color": "77adff",
+        "icon": "SP_RoleLabelC3"
+      }
+    ],
+    "weaponType": [
+      "迅刀",
+      "SP_IconNorKnife"
+    ],
+    "iconhalf": "T_IconRole_Pile_zhujue_UI",
+    "iconbig": "T_ActivityRoleNvzhu",
+    "type": "衍射",
+    "typeIcon": "T_IconElementLight",
+    "en": "Rover: Spectro",
+    "birthday": "未知",
+    "sex": "女",
+    "country": "未知",
+    "influence": "未知",
+    "prop": {
+      "hp": 912,
+      "att": 30,
+      "def": 112,
+      "cc%": 5,
+      "cd%": 150,
+      "ee%": 100,
+      "em": 125
+    },
+    "talentName": "声之容器",
+    "since": "1.0"
+  },
+  {
+    "name": "漂泊者·湮灭",
+    "id": 1604,
+    "icon": "T_IconRoleHead256_5_UI",
+    "star": 5,
+    "tag": [
+      {
+        "name": "主力输出",
+        "des": "拥有较强的输出能力",
+        "color": "ff8441",
+        "icon": "SP_RoleLabelA2"
+      }
+    ],
+    "weaponType": [
+      "迅刀",
+      "SP_IconNorKnife"
+    ],
+    "iconhalf": "T_IconRole_Pile_zhujue_UI",
+    "iconbig": "T_ActivityRoleNvzhu",
+    "type": "湮灭",
+    "typeIcon": "T_IconElementDark",
+    "en": "Rover: Havoc",
+    "birthday": "未知",
+    "sex": "女",
+    "country": "未知",
+    "influence": "未知",
+    "prop": {
+      "hp": 866,
+      "att": 33,
+      "def": 103,
+      "cc%": 5,
+      "cd%": 150,
+      "ee%": 100,
+      "em": 125
+    },
+    "talentName": "声之容器",
+    "since": "1.0"
+  },
+  {
+    "name": "漂泊者·湮灭",
+    "id": 1605,
+    "icon": "T_IconRoleHead256_4_UI",
+    "star": 5,
+    "tag": [
+      {
+        "name": "主力输出",
+        "des": "拥有较强的输出能力",
+        "color": "ff8441",
+        "icon": "SP_RoleLabelA2"
+      }
+    ],
+    "weaponType": [
+      "迅刀",
+      "SP_IconNorKnife"
+    ],
+    "iconhalf": "T_IconRole_Pile_zhujuenan_UI",
+    "iconbig": "ActivityRoleNanzhu",
+    "type": "湮灭",
+    "typeIcon": "T_IconElementDark",
+    "en": "Rover: Havoc",
+    "birthday": "未知",
+    "sex": "男",
+    "country": "未知",
+    "influence": "未知",
+    "prop": {
+      "hp": 866,
+      "att": 33,
+      "def": 103,
+      "cc%": 5,
+      "cd%": 150,
+      "ee%": 100,
+      "em": 125
+    },
+    "talentName": "声之容器",
+    "since": "1.0"
+  },
+  {
+    "name": "秧秧",
+    "id": 1402,
+    "icon": "T_IconRoleHead256_1_UI",
+    "star": 4,
+    "tag": [
+      {
+        "name": "快速协奏",
+        "des": "拥有较高的协奏效率",
+        "color": "ff4040",
+        "icon": "SP_RoleLabelA3"
+      },
+      {
+        "name": "牵引",
+        "des": "可以将一定范围内的目标牵引至特定位置",
+        "color": "77adff",
+        "icon": "SP_RoleLabelC1"
+      },
+      {
+        "name": "共鸣解放充能",
+        "des": "可以为队伍内特定角色回复共鸣能量",
+        "color": "77adff",
+        "icon": "SP_RoleLabelC4"
+      }
+    ],
+    "weaponType": [
+      "迅刀",
+      "SP_IconNorKnife"
+    ],
+    "iconhalf": "T_IconRole_Pile_yangyang_UI",
+    "iconbig": "T_ActivityRoleYangyang",
+    "type": "气动",
+    "typeIcon": "T_IconElementWind",
+    "en": "Yangyang",
+    "birthday": "10月11日",
+    "sex": "女",
+    "country": "瑝珑",
+    "influence": "今州",
+    "prop": {
+      "hp": 816,
+      "att": 20,
+      "def": 90,
+      "cc%": 5,
+      "cd%": 150,
+      "ee%": 100,
+      "em": 100
+    },
+    "talentName": "风声流息",
+    "since": "1.0"
+  },
+  {
+    "name": "白芷",
+    "id": 1103,
+    "icon": "T_IconRoleHead256_6_UI",
+    "star": 4,
+    "tag": [
+      {
+        "name": "生存治疗",
+        "des": "可以提升队伍的生存能力",
+        "color": "77ffb7",
+        "icon": "SP_RoleLabelA1"
+      },
+      {
+        "name": "协同攻击",
+        "des": "拥有较强的协同攻击能力",
+        "color": "77adff",
+        "icon": "SP_RoleLabelC2"
+      },
+      {
+        "name": "伤害加深",
+        "des": "可以使队伍中特定角色伤害加深",
+        "color": "ff7777",
+        "icon": "SP_RoleLabelC7"
+      }
+    ],
+    "weaponType": [
+      "音感仪",
+      "SP_IconNorMagic"
+    ],
+    "iconhalf": "T_IconRole_Pile_bailian_UI",
+    "iconbig": "T_ActivityRoleBailian",
+    "type": "冷凝",
+    "typeIcon": "T_IconElementIce",
+    "en": "Baizhi",
+    "birthday": "9月10日",
+    "sex": "女",
+    "country": "瑝珑",
+    "influence": "今州",
+    "prop": {
+      "hp": 1025,
+      "att": 17,
+      "def": 82,
+      "cc%": 5,
+      "cd%": 150,
+      "ee%": 100,
+      "em": 175
+    },
+    "talentName": "忧昙愈生",
+    "since": "1.0"
+  },
+  {
+    "name": "炽霞",
+    "id": 1202,
+    "icon": "T_IconRoleHead256_2_UI",
+    "star": 4,
+    "tag": [
+      {
+        "name": "主力输出",
+        "des": "拥有较强的输出能力",
+        "color": "ff8441",
+        "icon": "SP_RoleLabelA2"
+      }
+    ],
+    "weaponType": [
+      "佩枪",
+      "SP_IconNorGun"
+    ],
+    "iconhalf": "T_IconRole_Pile_maxiaofang_UI",
+    "iconbig": "T_ActivityRoleZhixia",
+    "type": "热熔",
+    "typeIcon": "T_IconElementFire",
+    "en": "Chixia",
+    "birthday": "4月18日",
+    "sex": "女",
+    "country": "瑝珑",
+    "influence": "今州",
+    "prop": {
+      "hp": 727,
+      "att": 24,
+      "def": 78,
+      "cc%": 5,
+      "cd%": 150,
+      "ee%": 100,
+      "em": 150
+    },
+    "talentName": "炽焰跃火",
+    "since": "1.0"
+  },
+  {
+    "name": "散华",
+    "id": 1102,
+    "icon": "T_IconRoleHead256_7_UI",
+    "star": 4,
+    "tag": [
+      {
+        "name": "快速协奏",
+        "des": "拥有较高的协奏效率",
+        "color": "ff4040",
+        "icon": "SP_RoleLabelA3"
+      },
+      {
+        "name": "普攻伤害加深",
+        "des": "可以使队伍中特定角色普攻伤害加深",
+        "color": "ff7777",
+        "icon": "SP_RoleLabelD7"
+      }
+    ],
+    "weaponType": [
+      "迅刀",
+      "SP_IconNorKnife"
+    ],
+    "iconhalf": "T_IconRole_Pile_shanhua_UI",
+    "iconbig": "T_ActivityRoleSanhua",
+    "type": "冷凝",
+    "typeIcon": "T_IconElementIce",
+    "en": "Sanhua",
+    "birthday": "1月20日",
+    "sex": "女",
+    "country": "瑝珑",
+    "influence": "今州",
+    "prop": {
+      "hp": 805,
+      "att": 22,
+      "def": 77,
+      "cc%": 5,
+      "cd%": 150,
+      "ee%": 100,
+      "em": 100
+    },
+    "talentName": "雪舞芳华",
+    "since": "1.0"
+  },
+  {
+    "name": "秋水",
+    "id": 1403,
+    "icon": "T_IconRoleHead256_12_UI",
+    "star": 4,
+    "tag": [
+      {
+        "name": "快速协奏",
+        "des": "拥有较高的协奏效率",
+        "color": "ff4040",
+        "icon": "SP_RoleLabelA3"
+      },
+      {
+        "name": "气动伤害加深",
+        "des": "可以使队伍中特定角色气动伤害加深",
+        "color": "ff7777",
+        "icon": "SP_RoleLabelD1"
+      }
+    ],
+    "weaponType": [
+      "佩枪",
+      "SP_IconNorGun"
+    ],
+    "iconhalf": "T_IconRole_Pile_qiushui_UI",
+    "iconbig": "T_ActivityRoleQiushui",
+    "type": "气动",
+    "typeIcon": "T_IconElementWind",
+    "en": "Aalto",
+    "birthday": "6月11日",
+    "sex": "男",
+    "country": "新联邦",
+    "influence": "黑海岸",
+    "prop": {
+      "hp": 788,
+      "att": 21,
+      "def": 88,
+      "cc%": 5,
+      "cd%": 150,
+      "ee%": 100,
+      "em": 150
+    },
+    "talentName": "隐雾迷踪",
+    "since": "1.0"
+  },
+  {
+    "name": "丹瑾",
+    "id": 1602,
+    "icon": "T_IconRoleHead256_10_UI",
+    "star": 4,
+    "tag": [
+      {
+        "name": "快速协奏",
+        "des": "拥有较高的协奏效率",
+        "color": "ff4040",
+        "icon": "SP_RoleLabelA3"
+      },
+      {
+        "name": "湮灭伤害加深",
+        "des": "可以使队伍中特定角色湮灭伤害加深",
+        "color": "ff7777",
+        "icon": "SP_RoleLabelD4"
+      }
+    ],
+    "weaponType": [
+      "迅刀",
+      "SP_IconNorKnife"
+    ],
+    "iconhalf": "T_IconRole_Pile_micai_UI",
+    "iconbig": "T_ActivityRoleDanjin",
+    "type": "湮灭",
+    "typeIcon": "T_IconElementDark",
+    "en": "Danjin",
+    "birthday": "8月31日",
+    "sex": "女",
+    "country": "瑝珑",
+    "influence": "今州",
+    "prop": {
+      "hp": 755,
+      "att": 21,
+      "def": 94,
+      "cc%": 5,
+      "cd%": 150,
+      "ee%": 100,
+      "em": 100
+    },
+    "talentName": "绯光剑影",
+    "since": "1.0"
+  },
+  {
+    "name": "莫特斐",
+    "id": 1204,
+    "icon": "T_IconRoleHead256_13_UI",
+    "star": 4,
+    "tag": [
+      {
+        "name": "快速协奏",
+        "des": "拥有较高的协奏效率",
+        "color": "ff4040",
+        "icon": "SP_RoleLabelA3"
+      },
+      {
+        "name": "共鸣解放伤害",
+        "des": "共鸣解放伤害较高",
+        "color": "ffde73",
+        "icon": "SP_RoleLabelB4"
+      },
+      {
+        "name": "协同攻击",
+        "des": "拥有较强的协同攻击能力",
+        "color": "77adff",
+        "icon": "SP_RoleLabelC2"
+      },
+      {
+        "name": "重击伤害加深",
+        "des": "可以使队伍中特定角色重击伤害加深",
+        "color": "ff7777",
+        "icon": "SP_RoleLabelD8"
+      }
+    ],
+    "weaponType": [
+      "佩枪",
+      "SP_IconNorGun"
+    ],
+    "iconhalf": "T_IconRole_Pile_baer_UI",
+    "iconbig": "T_ActivityRoleMofeite",
+    "type": "热熔",
+    "typeIcon": "T_IconElementFire",
+    "en": "Mortefi",
+    "birthday": "11月6日",
+    "sex": "男",
+    "country": "新联邦",
+    "influence": "今州",
+    "prop": {
+      "hp": 802,
+      "att": 20,
+      "def": 93,
+      "cc%": 5,
+      "cd%": 150,
+      "ee%": 100,
+      "em": 125
+    },
+    "talentName": "红龙怒息",
+    "since": "1.0"
+  },
+  {
+    "name": "渊武",
+    "id": 1303,
+    "icon": "T_IconRoleHead256_15_UI",
+    "star": 4,
+    "tag": [
+      {
+        "name": "快速协奏",
+        "des": "拥有较高的协奏效率",
+        "color": "ff4040",
+        "icon": "SP_RoleLabelA3"
+      },
+      {
+        "name": "协同攻击",
+        "des": "拥有较强的协同攻击能力",
+        "color": "77adff",
+        "icon": "SP_RoleLabelC2"
+      },
+      {
+        "name": "抗打断",
+        "des": "可以提升队伍内特定角色的抗打断能力",
+        "color": "77adff",
+        "icon": "SP_RoleLabelC6"
+      },
+      {
+        "name": "共振摧毁",
+        "des": "可以更有效地削减目标的共振度",
+        "color": "77adff",
+        "icon": "SP_RoleLabelC5"
+      }
+    ],
+    "weaponType": [
+      "臂铠",
+      "SP_IconNorFist"
+    ],
+    "iconhalf": "T_IconRole_Pile_yuanwu_UI",
+    "iconbig": "T_ActivityRoleYuanwu",
+    "type": "导电",
+    "typeIcon": "T_IconElementThunder",
+    "en": "Yuanwu",
+    "birthday": "10月2日",
+    "sex": "男",
+    "country": "瑝珑",
+    "influence": "今州",
+    "prop": {
+      "hp": 682,
+      "att": 18,
+      "def": 134,
+      "cc%": 5,
+      "cd%": 150,
+      "ee%": 100,
+      "em": 125
+    },
+    "talentName": "雷曜八方",
+    "since": "1.0"
+  },
+  {
+    "name": "桃祈",
+    "id": 1601,
+    "icon": "T_IconRoleHead256_9_UI",
+    "star": 4,
+    "tag": [
+      {
+        "name": "生存治疗",
+        "des": "可以提升队伍的生存能力",
+        "color": "77ffb7",
+        "icon": "SP_RoleLabelA1"
+      },
+      {
+        "name": "共鸣解放伤害",
+        "des": "共鸣解放伤害较高",
+        "color": "ffde73",
+        "icon": "SP_RoleLabelB4"
+      },
+      {
+        "name": "共鸣技能伤害加深",
+        "des": "可以使队伍中特定角色共鸣技能伤害加深",
+        "color": "ff7777",
+        "icon": "SP_RoleLabelD9"
+      }
+    ],
+    "weaponType": [
+      "长刃",
+      "SP_IconNorSword"
+    ],
+    "iconhalf": "T_IconRole_Pile_taohua_UI",
+    "iconbig": "T_ActivityRoleTaoqi",
+    "type": "湮灭",
+    "typeIcon": "T_IconElementDark",
+    "en": "Taoqi",
+    "birthday": "2月25日",
+    "sex": "女",
+    "country": "瑝珑",
+    "influence": "今州",
+    "prop": {
+      "hp": 716,
+      "att": 18,
+      "def": 128,
+      "cc%": 5,
+      "cd%": 150,
+      "ee%": 100,
+      "em": 125
+    },
+    "talentName": "桃华屏影",
+    "since": "1.0"
+  }
+]

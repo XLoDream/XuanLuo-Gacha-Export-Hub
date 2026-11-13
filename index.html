@@ -44,6 +44,10 @@
           <img class="nav-ico" src="icon/崩铁.png" alt="" />
           <span>崩铁 · 跃迁</span>
         </button>
+        <button class="nav-item" data-view="hsr-team">
+          <img class="nav-ico" src="icon/崩铁pd.png" alt="" />
+          <span>崩铁 · 配队</span>
+        </button>
         <button class="nav-item" data-view="zzz">
           <img class="nav-ico" src="icon/绝区零.webp" alt="" />
           <span>绝区零 · 调频</span>
@@ -165,6 +169,18 @@
             </div>
           </div>
           <div class="stat-row"></div>
+          <div class="card five-overview" data-role="fiveOverview">
+            <div class="card-head">
+              <h2>五星总览</h2>
+              <span class="chip" data-role="fivePoolCount">0 个 5★</span>
+            </div>
+            <div class="five-tabs" data-role="fiveTabs"></div>
+            <div class="five-grid" data-role="fiveGrid"></div>
+            <div class="empty five-empty" data-role="fiveEmpty" hidden>
+              <b>该卡池暂无 5★ 记录</b>
+              <p>点击「更新数据」获取最新祈愿记录。</p>
+            </div>
+          </div>
           <div class="carousel">
             <button class="car-btn prev" data-role="carPrev" title="上一个"><svg viewBox="0 0 24 24"><path d="M15 4.5 7.5 12 15 19.5" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
             <div class="pool-detail-grid" data-role="poolGrid"></div>
@@ -237,6 +253,18 @@
             </div>
           </div>
           <div class="stat-row"></div>
+          <div class="card five-overview" data-role="fiveOverview">
+            <div class="card-head">
+              <h2>五星总览</h2>
+              <span class="chip" data-role="fivePoolCount">0 个 5★</span>
+            </div>
+            <div class="five-tabs" data-role="fiveTabs"></div>
+            <div class="five-grid" data-role="fiveGrid"></div>
+            <div class="empty five-empty" data-role="fiveEmpty" hidden>
+              <b>该卡池暂无 5★ 记录</b>
+              <p>点击「更新数据」获取最新跃迁记录。</p>
+            </div>
+          </div>
           <div class="carousel">
             <button class="car-btn prev" data-role="carPrev" title="上一个"><svg viewBox="0 0 24 24"><path d="M15 4.5 7.5 12 15 19.5" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
             <div class="pool-detail-grid" data-role="poolGrid"></div>
@@ -379,6 +407,18 @@
             </div>
           </div>
           <div class="stat-row"></div>
+          <div class="card five-overview" data-role="fiveOverview">
+            <div class="card-head">
+              <h2>五星总览</h2>
+              <span class="chip" data-role="fivePoolCount">0 个 5★</span>
+            </div>
+            <div class="five-tabs" data-role="fiveTabs"></div>
+            <div class="five-grid" data-role="fiveGrid"></div>
+            <div class="empty five-empty" data-role="fiveEmpty" hidden>
+              <b>该卡池暂无 5★ 记录</b>
+              <p>点击「更新数据」获取最新唤取记录。</p>
+            </div>
+          </div>
           <div class="carousel">
             <button class="car-btn prev" data-role="carPrev" title="上一个"><svg viewBox="0 0 24 24"><path d="M15 4.5 7.5 12 15 19.5" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
             <div class="pool-detail-grid" data-role="poolGrid"></div>
@@ -416,6 +456,60 @@
                 <span data-role="pageInfo"></span>
                 <button class="btn-sm" data-role="nextPage">下一页 ›</button>
               </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ---------- 崩铁·配队 ---------- -->
+        <section class="view" id="view-hsr-team" data-game="hsr">
+          <div class="view-head">
+            <div>
+              <h1>崩坏：星穹铁道 · 配队</h1>
+              <p>根据跃迁记录整理已拥有的角色与光锥，辅助配队规划。</p>
+            </div>
+          </div>
+          <div class="account-bar">
+            <span class="ab-label">账号</span>
+            <button class="uid-select-btn" data-role="uidSelectBtn"><span class="usb-text">选择账号</span><svg class="usb-chevron" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+            <span class="ab-remark" data-role="abRemark" title="点击编辑账号备注">＋ 备注</span>
+            <span class="ab-hint" data-role="abHint"></span>
+          </div>
+          <div class="card account-empty" data-role="accountEmpty" hidden>
+            <div class="empty">
+              <b>暂无账号数据</b>
+              <p>请先前往「崩铁 · 跃迁」页面导入账号，再回到此处查看已拥有角色与光锥。</p>
+            </div>
+          </div>
+          <div class="card team-owned" data-role="teamOwned" hidden>
+            <div class="card-head">
+              <h2>已有角色 / 光锥</h2>
+              <span class="chip" data-role="teamCount">0 个</span>
+            </div>
+            <div class="team-filters" data-role="teamFilters">
+              <div class="team-filter-row" data-filter="type">
+                <span class="team-filter-label">类型</span>
+                <div class="segmented" data-role="teamTabs">
+                  <button class="seg active" data-type="角色">角色</button>
+                  <button class="seg" data-type="光锥">光锥</button>
+                </div>
+              </div>
+              <div class="team-filter-row" data-filter="path">
+                <span class="team-filter-label">命途</span>
+                <div class="segmented team-filter-segs"></div>
+              </div>
+              <div class="team-filter-row" data-filter="property">
+                <span class="team-filter-label">属性</span>
+                <div class="segmented team-filter-segs"></div>
+              </div>
+              <div class="team-filter-row" data-filter="star">
+                <span class="team-filter-label">星级</span>
+                <div class="segmented team-filter-segs"></div>
+              </div>
+            </div>
+            <div class="five-grid team-grid" data-role="teamGrid"></div>
+            <div class="empty team-empty" data-role="teamEmpty" hidden>
+              <b>暂无该类型记录</b>
+              <p>该账号尚未抽到对应类型的物品。</p>
             </div>
           </div>
         </section>
@@ -541,6 +635,17 @@
           <button class="btn-sm" data-act="closeRemark">取消</button>
           <button class="btn-sm primary" data-act="saveRemark">保存</button>
         </div>
+      </div>
+    </div>
+
+    <!-- 崩铁·配队推荐弹窗 -->
+    <div class="update-mask" id="teamRecMask" hidden>
+      <div class="team-rec-card" role="dialog" aria-modal="true" aria-labelledby="teamRecTitle">
+        <div class="asc-head">
+          <h3 id="teamRecTitle">配队推荐</h3>
+          <button class="asc-close" data-act="closeTeamRec" aria-label="关闭">×</button>
+        </div>
+        <div class="team-rec-list" data-role="teamRecList"></div>
       </div>
     </div>
 

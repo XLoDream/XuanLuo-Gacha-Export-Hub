@@ -1,0 +1,232 @@
+{
+  "id": 1511,
+  "name": "星神★阿哈",
+  "property": "量子",
+  "path": "欢愉",
+  "star": "5",
+  "teams": [
+    {
+      "rank": "",
+      "usage": "",
+      "cycles": [],
+      "mate": [
+        {
+          "id": 1511,
+          "name": "星神★阿哈",
+          "property": "量子",
+          "path": "欢愉",
+          "star": "5"
+        },
+        {
+          "id": 1503,
+          "name": "真珠",
+          "property": "冰",
+          "path": "欢愉",
+          "star": "5"
+        },
+        {
+          "id": 1506,
+          "name": "银狼LV.999",
+          "property": "虚数",
+          "path": "欢愉",
+          "star": "5"
+        },
+        {
+          "id": 1502,
+          "name": "爻光",
+          "property": "物理",
+          "path": "欢愉",
+          "star": "5"
+        },
+        {
+          "id": 1501,
+          "name": "火花",
+          "property": "火",
+          "path": "欢愉",
+          "star": "5",
+          "alt": 1
+        },
+        {
+          "id": 8010,
+          "name": "开拓者(欢愉)",
+          "property": "雷",
+          "path": "欢愉",
+          "star": "5",
+          "alt": 1
+        }
+      ]
+    },
+    {
+      "rank": "",
+      "usage": "",
+      "cycles": [],
+      "mate": [
+        {
+          "id": 1511,
+          "name": "星神★阿哈",
+          "property": "量子",
+          "path": "欢愉",
+          "star": "5"
+        },
+        {
+          "id": 1503,
+          "name": "真珠",
+          "property": "冰",
+          "path": "欢愉",
+          "star": "5"
+        },
+        {
+          "id": 1217,
+          "name": "藿藿",
+          "property": "风",
+          "path": "丰饶",
+          "star": "5",
+          "alt": 1
+        },
+        {
+          "id": 1505,
+          "name": "绯英",
+          "property": "物理",
+          "path": "欢愉",
+          "star": "5"
+        },
+        {
+          "id": 1502,
+          "name": "爻光",
+          "property": "物理",
+          "path": "欢愉",
+          "star": "5"
+        },
+        {
+          "id": 8010,
+          "name": "开拓者(欢愉)",
+          "property": "雷",
+          "path": "欢愉",
+          "star": "5",
+          "alt": 1
+        }
+      ]
+    },
+    {
+      "rank": "",
+      "usage": "",
+      "cycles": [],
+      "mate": [
+        {
+          "id": 1511,
+          "name": "星神★阿哈",
+          "property": "量子",
+          "path": "欢愉",
+          "star": "5"
+        },
+        {
+          "id": 1513,
+          "name": "砂金•戏浪",
+          "property": "量子",
+          "path": "欢愉",
+          "star": "5"
+        },
+        {
+          "id": 1504,
+          "name": "不死途",
+          "property": "雷",
+          "path": "巡猎",
+          "star": "5"
+        },
+        {
+          "id": 1409,
+          "name": "风堇",
+          "property": "风",
+          "path": "记忆",
+          "star": "5"
+        },
+        {
+          "id": 1414,
+          "name": "丹恒•腾荒",
+          "property": "物理",
+          "path": "存护",
+          "star": "5",
+          "alt": 1
+        }
+      ]
+    },
+    {
+      "rank": "",
+      "usage": "",
+      "cycles": [],
+      "mate": [
+        {
+          "id": 1511,
+          "name": "星神★阿哈",
+          "property": "量子",
+          "path": "欢愉",
+          "star": "5"
+        },
+        {
+          "id": 1503,
+          "name": "真珠",
+          "property": "冰",
+          "path": "欢愉",
+          "star": "5"
+        },
+        {
+          "id": 1502,
+          "name": "爻光",
+          "property": "物理",
+          "path": "欢愉",
+          "star": "5"
+        },
+        {
+          "id": 8010,
+          "name": "开拓者(欢愉)",
+          "property": "雷",
+          "path": "欢愉",
+          "star": "5",
+          "alt": 1
+        },
+        {
+          "id": 1501,
+          "name": "火花",
+          "property": "火",
+          "path": "欢愉",
+          "star": "5"
+        }
+      ]
+    },
+    {
+      "rank": "",
+      "usage": "",
+      "cycles": [],
+      "mate": [
+        {
+          "id": 1511,
+          "name": "星神★阿哈",
+          "property": "量子",
+          "path": "欢愉",
+          "star": "5"
+        },
+        {
+          "id": 1503,
+          "name": "真珠",
+          "property": "冰",
+          "path": "欢愉",
+          "star": "5"
+        },
+        {
+          "id": 1502,
+          "name": "爻光",
+          "property": "物理",
+          "path": "欢愉",
+          "star": "5"
+        },
+        {
+          "id": 8010,
+          "name": "开拓者(欢愉)",
+          "property": "雷",
+          "path": "欢愉",
+          "star": "5"
+        }
+      ]
+    }
+  ]
+}

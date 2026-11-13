@@ -1,0 +1,2238 @@
+[
+  {
+    "name": "安魂",
+    "id": 21030076,
+    "star": 5,
+    "prop": {
+      "name": "共鸣效率",
+      "aname": "",
+      "IsRatio": false,
+      "icon": "T_Iconpropertygreenenergy_UI",
+      "value": 1712
+    },
+    "type": "佩枪",
+    "typeIcon": "SP_IconNorGun",
+    "propDes": "生命值提升12%。施放共鸣解放时，回复8点协奏能量，每20秒可触发1次。重击造成治疗时，队伍中的角色获得【落梦归魂】状态，持续30秒。【落梦归魂】持续期间，若该角色获得同奏或响应同奏，该角色攻击提升16%，持续30秒，【落梦归魂】持续时间结束时移除该效果。重击造成治疗时，队伍中的登场角色获得24%声骸技能伤害加成，持续30秒。同名效果之间不可叠加。",
+    "icon": "T_IconWeapon21030076_UI",
+    "title": "幻梦安魂语",
+    "since": "3.8"
+  },
+  {
+    "name": "玉阙玄华",
+    "id": 21050116,
+    "star": 5,
+    "prop": {
+      "name": "暴击",
+      "aname": "",
+      "IsRatio": false,
+      "icon": "T_Iconpropertyredbaoji_UI",
+      "value": 540
+    },
+    "type": "音感仪",
+    "typeIcon": "SP_IconNorMagic",
+    "propDes": "全属性伤害加成提升12%。附加电磁效应后或响应同奏时，共鸣技能伤害加深36%，共鸣技能伤害无视目标10%导电伤害抗性，且自身为队伍中登场角色时，一定范围内的目标受到电磁效应伤害加深30%，持续30秒，每0.1秒可触发1次。同名效果之间取最高值。",
+    "icon": "T_IconWeapon21050116_UI",
+    "title": "百巧琢锋",
+    "since": "3.7"
+  },
+  {
+    "name": "沉冥",
+    "id": 21020107,
+    "star": 5,
+    "prop": {
+      "name": "暴击",
+      "aname": "",
+      "IsRatio": false,
+      "icon": "T_Iconpropertyredbaoji_UI",
+      "value": 540
+    },
+    "type": "迅刀",
+    "typeIcon": "SP_IconNorKnife",
+    "propDes": "攻击提升12%。未拥有并获得同奏时，导电伤害提升30%，持续30秒。\n未拥有并获得同奏时，队伍中角色获得【羁念】效果并移除【怅念】，导电伤害加成提升24%，持续30秒。同名效果之间不可叠加。\n自身的协奏能量消耗，且消耗值低于100点时，获得【怅念】效果并移除队伍中角色的【羁念】，自身导电伤害额外提升40%，持续14秒， 切换至其他角色时，该效果提前结束。",
+    "icon": "T_IconWeapon21020107_UI",
+    "title": "囚雷困雨",
+    "since": "3.7"
+  },
+  {
+    "name": "云琅",
+    "id": 21020106,
+    "star": 5,
+    "prop": {
+      "name": "暴击",
+      "aname": "",
+      "IsRatio": false,
+      "icon": "T_Iconpropertyredbaoji_UI",
+      "value": 800
+    },
+    "type": "迅刀",
+    "typeIcon": "SP_IconNorKnife",
+    "propDes": "攻击提升12%。附加集谐偏移后，获得气动伤害加成提升11.2%，持续2秒，最多叠加5层，该效果每0.5秒可触发1次。达到上限后，获得下列效果：\n·该气动伤害加成提升效果持续时间延长至30秒。\n·效果持续期间，气动伤害无视目标10%的防御。",
+    "icon": "T_IconWeapon21020106_UI",
+    "title": "却邪",
+    "since": "3.6"
+  },
+  {
+    "name": "千般渡",
+    "id": 21010076,
+    "star": 5,
+    "prop": {
+      "name": "生命",
+      "aname": "生命百分比",
+      "IsRatio": true,
+      "icon": "T_Iconpropertygreenlife_UI",
+      "value": 0.16050000488758087
+    },
+    "type": "长刃",
+    "typeIcon": "SP_IconNorSword",
+    "propDes": "全属性伤害加成提升12%。自身为登场角色施放变奏技能或获得护盾时，获得1层【承天】和1层【载物】，每0.5秒可通过获得护盾触发1次，可叠加6层，持续7秒。\n若切换至其他角色【承天】和【载物】提前结束。\n承天：暴击伤害提升4%，最多提升24%。【承天】达到6层时，重击伤害的暴击提升12%。\n载物：施放重击时，消耗最多2层【载物】，每消耗1层【载物】，重击伤害无视目标15%防御，最多无视目标30%防御，持续2秒。",
+    "icon": "T_IconWeapon21010076_UI",
+    "title": "召鬼呼星",
+    "since": "3.6"
+  },
+  {
+    "name": "栖霞饮露",
+    "id": 21050096,
+    "star": 5,
+    "prop": {
+      "name": "共鸣效率",
+      "aname": "",
+      "IsRatio": false,
+      "icon": "T_Iconpropertygreenenergy_UI",
+      "value": 1712
+    },
+    "type": "音感仪",
+    "typeIcon": "SP_IconNorMagic",
+    "propDes": "生命提升12%。施放共鸣解放时，回复自身8点协奏能量，每20秒可触发1次。每次附加霜渐效应时，获得【染雪色】，持续6秒；每次造成治疗时，获得【生漪】，持续6秒。若自身为队伍中登场角色时附加过霜渐效应且造成过治疗，则下次施放延奏技能时获得6秒的【染雪色】与【生漪】。自身同时持有【染雪色】和【生漪】时，附近队伍中所有角色攻击提升20%。同名效果之间不可叠加。",
+    "icon": "T_IconWeapon21050096_UI",
+    "title": "簪春",
+    "since": "3.5"
+  },
+  {
+    "name": "天之苍苍",
+    "id": 21020096,
+    "star": 5,
+    "prop": {
+      "name": "暴击",
+      "aname": "",
+      "IsRatio": false,
+      "icon": "T_Iconpropertyredbaoji_UI",
+      "value": 540
+    },
+    "type": "迅刀",
+    "typeIcon": "SP_IconNorKnife",
+    "propDes": "全属性伤害加成提升12%。附加虚湮效应后，重击伤害加深36%，重击伤害无视目标12%防御，持续8秒。",
+    "icon": "T_IconWeapon21020096_UI",
+    "title": "千仞无枝",
+    "since": "3.5"
+  },
+  {
+    "name": "存帧",
+    "id": 21050086,
+    "star": 5,
+    "prop": {
+      "name": "暴击",
+      "aname": "",
+      "IsRatio": false,
+      "icon": "T_Iconpropertyredbaoji_UI",
+      "value": 540
+    },
+    "type": "音感仪",
+    "typeIcon": "SP_IconNorMagic",
+    "propDes": "攻击提升12%。附加霜渐效应后，自身冷凝伤害加成提升30%，持续12秒；队伍中的角色攻击提升24%，持续30秒，同名效果之间不可叠加。",
+    "icon": "T_IconWeapon21050086_UI",
+    "title": "光殉",
+    "since": "3.4"
+  },
+  {
+    "name": "碎骨",
+    "id": 21030066,
+    "star": 5,
+    "prop": {
+      "name": "暴击伤害",
+      "aname": "",
+      "IsRatio": false,
+      "icon": "T_Iconpropertyredcrit_UI",
+      "value": 1600
+    },
+    "type": "佩枪",
+    "typeIcon": "SP_IconNorGun",
+    "propDes": "攻击提升12%。施放变奏技能时，自身普攻伤害加成提升24%，持续14秒。附加【骇破·偏移】时，自身普攻伤害加成提升12%，持续14秒，队伍中的角色攻击提升24%，持续30秒，同名效果之间不可叠加。",
+    "icon": "T_IconWeapon21030066_UI",
+    "title": "独醒",
+    "since": "3.4"
+  },
+  {
+    "name": "蜃影",
+    "id": 21030056,
+    "star": 5,
+    "prop": {
+      "name": "暴击伤害",
+      "aname": "",
+      "IsRatio": false,
+      "icon": "T_Iconpropertyredcrit_UI",
+      "value": 1080
+    },
+    "type": "佩枪",
+    "typeIcon": "SP_IconNorGun",
+    "propDes": "攻击提升12%。施放共鸣技能时，自身衍射伤害加成提升20%，最多叠加2层，持续14秒。每次为敌方怪物附加【骇破·偏移】后，重击伤害加深30%，且重击伤害能无视目标10%防御，持续14秒。",
+    "icon": "T_IconWeapon21030056_UI",
+    "title": "沉梦",
+    "since": "3.4"
+  },
+  {
+    "name": "灼霜",
+    "id": 21020086,
+    "star": 5,
+    "prop": {
+      "name": "暴击",
+      "aname": "",
+      "IsRatio": false,
+      "icon": "T_Iconpropertyredbaoji_UI",
+      "value": 540
+    },
+    "type": "迅刀",
+    "typeIcon": "SP_IconNorKnife",
+    "propDes": "攻击提升12%。自身附加霜渐效应后，冷凝伤害加深28%，且共鸣解放伤害无视目标10%的防御，且自身为队伍中登场角色时，一定范围内的目标受到霜渐效应伤害加深20%，持续6秒，每0.1秒可触发1次。同名效果之间取最高值。",
+    "icon": "T_IconWeapon21020086_UI",
+    "title": "再无我",
+    "since": "3.3"
+  },
+  {
+    "name": "赝作的矮星",
+    "id": 21050076,
+    "star": 5,
+    "prop": {
+      "name": "暴击",
+      "aname": "",
+      "IsRatio": false,
+      "icon": "T_Iconpropertyredbaoji_UI",
+      "value": 800
+    },
+    "type": "音感仪",
+    "typeIcon": "SP_IconNorMagic",
+    "propDes": "攻击提升12%。附加聚爆效应或集谐·偏移后，共鸣解放伤害加成提升36%，持续5秒。该效果生效期间，队伍中的角色附加聚爆效应或集谐·偏移后，该角色攻击提升24%，持续15秒，同名效果之间不可叠加。",
+    "icon": "T_IconWeapon21050076_UI",
+    "title": "寂静",
+    "since": "3.3"
+  },
+  {
+    "name": "昭日译注",
+    "id": 21040066,
+    "star": 5,
+    "prop": {
+      "name": "暴击伤害",
+      "aname": "",
+      "IsRatio": false,
+      "icon": "T_Iconpropertyredcrit_UI",
+      "value": 1080
+    },
+    "type": "臂铠",
+    "typeIcon": "SP_IconNorFist",
+    "propDes": "攻击提升12%。施放变奏技能或声骸技能时，声骸技能伤害加深32%，持续15秒。造成声骸技能伤害时，气动伤害无视目标10%防御，持续6秒。",
+    "icon": "T_IconWeapon21040066_UI",
+    "title": "近日点",
+    "since": "3.2"
+  },
+  {
+    "name": "白昼之脊",
+    "id": 21040056,
+    "star": 5,
+    "prop": {
+      "name": "暴击",
+      "aname": "",
+      "IsRatio": false,
+      "icon": "T_Iconpropertyredbaoji_UI",
+      "value": 540
+    },
+    "type": "臂铠",
+    "typeIcon": "SP_IconNorFist",
+    "propDes": "攻击提升12%。造成普攻伤害后，衍射伤害加成提升20%，持续4秒。每次为敌方怪物附加【集谐·偏移】后，普攻伤害加深20%，且普攻伤害能无视目标10%防御，持续6秒。",
+    "icon": "T_IconWeapon_21040056_UI",
+    "title": "缝合晨昏",
+    "since": "3.1"
+  },
+  {
+    "name": "永远的启明星",
+    "id": 21020076,
+    "star": 5,
+    "prop": {
+      "name": "暴击",
+      "aname": "",
+      "IsRatio": false,
+      "icon": "T_Iconpropertyredbaoji_UI",
+      "value": 540
+    },
+    "type": "迅刀",
+    "typeIcon": "SP_IconNorKnife",
+    "propDes": "全属性伤害加成提升12%。附加震谐·偏移或聚爆效应时，共鸣解放伤害无视目标32%防御，共鸣解放伤害无视目标10%热熔抗性，持续8秒。",
+    "icon": "T_IconWeapon21020076_UI",
+    "title": "逐星",
+    "since": "3.1"
+  },
+  {
+    "name": "玻色星仪",
+    "id": 21050045,
+    "star": 5,
+    "prop": {
+      "name": "共鸣效率",
+      "aname": "",
+      "IsRatio": false,
+      "icon": "T_Iconpropertygreenenergy_UI",
+      "value": 864
+    },
+    "type": "音感仪",
+    "typeIcon": "SP_IconNorMagic",
+    "propDes": "攻击提升12%。队伍中的角色施放【谐度破坏技】后，自身攻击提升12%，普攻伤害加成提升12%，持续14秒。",
+    "icon": "T_IconWeapon_21050045_UI",
+    "title": "观测者",
+    "since": "3.0"
+  },
+  {
+    "name": "脉冲协臂",
+    "id": 21040045,
+    "star": 5,
+    "prop": {
+      "name": "暴击",
+      "aname": "",
+      "IsRatio": false,
+      "icon": "T_Iconpropertyredbaoji_UI",
+      "value": 540
+    },
+    "type": "臂铠",
+    "typeIcon": "SP_IconNorFist",
+    "propDes": "攻击提升12%。对处于【集谐·干涉】状态的敌人造成伤害后，普攻伤害加成提升6%，持续3秒，可叠加4层，每0.5秒触发1次，重复触发时刷新持续时间。",
+    "icon": "T_IconWeapon_21040045_UI",
+    "title": "攻关者",
+    "since": "3.0"
+  },
+  {
+    "name": "相位涟漪",
+    "id": 21030045,
+    "star": 5,
+    "prop": {
+      "name": "暴击伤害",
+      "aname": "",
+      "IsRatio": false,
+      "icon": "T_Iconpropertyredcrit_UI",
+      "value": 1080
+    },
+    "type": "佩枪",
+    "typeIcon": "SP_IconNorGun",
+    "propDes": "攻击提升12%。队伍中的角色施放【谐度破坏技】后，自身全属性伤害加成提升20%，持续14秒。",
+    "icon": "T_IconWeapon_21030045_UI",
+    "title": "洞见者",
+    "since": "3.0"
+  },
+  {
+    "name": "镭射切变",
+    "id": 21020045,
+    "star": 5,
+    "prop": {
+      "name": "共鸣效率",
+      "aname": "",
+      "IsRatio": false,
+      "icon": "T_Iconpropertygreenenergy_UI",
+      "value": 864
+    },
+    "type": "迅刀",
+    "typeIcon": "SP_IconNorKnife",
+    "propDes": "攻击提升12%。对处于【集谐·干涉】状态的敌人造成伤害后，共鸣技能伤害加成提升24%，持续3秒，重复触发时刷新持续时间。",
+    "icon": "T_IconWeapon_21020045_UI",
+    "title": "先觉者",
+    "since": "3.0"
+  },
+  {
+    "name": "源能机锋",
+    "id": 21010045,
+    "star": 5,
+    "prop": {
+      "name": "暴击伤害",
+      "aname": "",
+      "IsRatio": false,
+      "icon": "T_Iconpropertyredcrit_UI",
+      "value": 1080
+    },
+    "type": "长刃",
+    "typeIcon": "SP_IconNorSword",
+    "propDes": "攻击提升12%。对处于【集谐·干涉】状态的敌人造成伤害后，共鸣解放伤害加成提升24%，持续3秒，重复触发时刷新持续时间。",
+    "icon": "T_IconWeapon_21010045_UI",
+    "title": "拓界者",
+    "since": "3.0"
+  },
+  {
+    "name": "宙算仪轨",
+    "id": 21010066,
+    "star": 5,
+    "prop": {
+      "name": "共鸣效率",
+      "aname": "",
+      "IsRatio": false,
+      "icon": "T_Iconpropertygreenenergy_UI",
+      "value": 1712
+    },
+    "type": "长刃",
+    "typeIcon": "SP_IconNorSword",
+    "propDes": "防御提升16%。施放共鸣技能时，回复自身8点协奏能量，每20秒可触发1次。造成治疗时，使附近队伍中所有角色的暴击伤害提升20%，持续4秒，同名效果之间不可叠加。",
+    "icon": "T_IconWeapon21010066_UI",
+    "title": "定解",
+    "since": "3.0"
+  },
+  {
+    "name": "溢彩荧辉",
+    "id": 21030046,
+    "star": 5,
+    "prop": {
+      "name": "暴击",
+      "aname": "",
+      "IsRatio": false,
+      "icon": "T_Iconpropertyredbaoji_UI",
+      "value": 540
+    },
+    "type": "佩枪",
+    "typeIcon": "SP_IconNorGun",
+    "propDes": "攻击提升12%。施放变奏技能或普攻伤害命中时，使自身普攻伤害加成提升36%，持续4秒。每次自身施放普攻技能期间为目标附加【震谐·偏移】或【集谐·偏移】时，使队伍中的角色造成的伤害提升8%，最多叠加3层，持续30秒，同名效果之间不可叠加。",
+    "icon": "T_IconWeapon21030046_UI",
+    "title": "考勤豁免协议",
+    "since": "3.0"
+  },
+  {
+    "name": "昙切",
+    "id": 21010056,
+    "star": 5,
+    "prop": {
+      "name": "暴击",
+      "aname": "",
+      "IsRatio": false,
+      "icon": "T_Iconpropertyredbaoji_UI",
+      "value": 800
+    },
+    "type": "长刃",
+    "typeIcon": "SP_IconNorSword",
+    "propDes": "攻击提升12%。施放变奏技能或附加【异常效应】时，自身共鸣解放伤害加成提升8%，可叠加3层，持续15秒。\n该效果叠加至满层时，队伍中的角色附加【异常效应】时，该角色全属性伤害加成提升24%，持续15秒，同名效果之间不可叠加。",
+    "icon": "T_IconWeapon21010056_UI",
+    "title": "命弦",
+    "since": "2.8"
+  },
+  {
+    "name": "裁竹",
+    "id": 21020066,
+    "star": 5,
+    "prop": {
+      "name": "暴击",
+      "aname": "",
+      "IsRatio": false,
+      "icon": "T_Iconpropertyredbaoji_UI",
+      "value": 540
+    },
+    "type": "迅刀",
+    "typeIcon": "SP_IconNorKnife",
+    "propDes": "攻击提升12%。施放变奏技能或普攻后10秒内，施放声骸技能时，获得1层【解竹】，重击伤害加成提升30%，同名声骸只可触发一次，最多可叠加2层，持续12秒，叠加至2层后施放声骸技能不刷新持续时间。该效果10秒内最多生效1次，若切换至其他角色则该效果提前结束。\n施放变奏技能时，队伍中的角色声骸技能伤害加成提升20%，持续30秒，同名效果之间不可叠加。",
+    "icon": "T_IconWeapon21020066_UI",
+    "title": "人定",
+    "since": "2.7"
+  },
+  {
+    "name": "光影双生",
+    "id": 21030036,
+    "star": 5,
+    "prop": {
+      "name": "暴击伤害",
+      "aname": "",
+      "IsRatio": false,
+      "icon": "T_Iconpropertyredcrit_UI",
+      "value": 1080
+    },
+    "type": "佩枪",
+    "typeIcon": "SP_IconNorGun",
+    "propDes": "攻击提升12%。造成声骸技能伤害时，重击伤害加深24%，持续6秒；造成重击伤害时，声骸技能伤害加深24%，持续6秒；单次攻击最多享受24%伤害加深。同时拥有两种效果时，造成伤害时无视目标8%防御。",
+    "icon": "T_IconWeapon21030036_UI",
+    "title": "复归于火",
+    "since": "2.7"
+  },
+  {
+    "name": "驭冕铸雷之权",
+    "id": 21010046,
+    "star": 5,
+    "prop": {
+      "name": "暴击",
+      "aname": "",
+      "IsRatio": false,
+      "icon": "T_Iconpropertyredbaoji_UI",
+      "value": 270
+    },
+    "type": "长刃",
+    "typeIcon": "SP_IconNorSword",
+    "propDes": "攻击提升12%。施放变奏技能或共鸣技能时，重击伤害提升20%，持续15秒；自身获得护盾时，重击伤害无视目标7.2%防御，每0.5秒可生效1次，可叠加5层，持续7秒。",
+    "icon": "T_IconWeapon21010046_UI",
+    "title": "炽烈权霆",
+    "since": "2.6"
+  },
+  {
+    "name": "万物持存的注释",
+    "id": 21040046,
+    "star": 5,
+    "prop": {
+      "name": "暴击",
+      "aname": "",
+      "IsRatio": false,
+      "icon": "T_Iconpropertyredbaoji_UI",
+      "value": 800
+    },
+    "type": "臂铠",
+    "typeIcon": "SP_IconNorFist",
+    "propDes": "攻击提升12%。 施放变奏技能或共鸣解放时，共鸣解放伤害提升20%，持续15秒。 自身获得护盾时：共鸣解放伤害无视目标7.2%防御，每0.5秒可生效1次，可叠加5层，持续7秒；施放变奏技能时，无视目标防御的效果视为满层，持续3秒。",
+    "icon": "T_IconWeapon21040046_UI",
+    "title": "昼月缀界",
+    "since": "2.6"
+  },
+  {
+    "name": "幽冥的忘忧章",
+    "id": 21050066,
+    "star": 5,
+    "prop": {
+      "name": "暴击",
+      "aname": "",
+      "IsRatio": false,
+      "icon": "T_Iconpropertyredbaoji_UI",
+      "value": 540
+    },
+    "type": "音感仪",
+    "typeIcon": "SP_IconNorMagic",
+    "propDes": "攻击提升12%。造成声骸技能伤害后12秒内，共鸣技能伤害加成提升32%，声骸技能伤害加深32%，且造成伤害时无视目标8%防御。",
+    "icon": "T_IconWeapon21050066_UI",
+    "title": "安魂曲",
+    "since": "2.5"
+  },
+  {
+    "name": "焰痕",
+    "id": 21010036,
+    "star": 5,
+    "prop": {
+      "name": "暴击伤害",
+      "aname": "",
+      "IsRatio": false,
+      "icon": "T_Iconpropertyredcrit_UI",
+      "value": 1080
+    },
+    "type": "长刃",
+    "typeIcon": "SP_IconNorSword",
+    "propDes": "攻击提升12%。施放变奏技能或共鸣解放时，共鸣解放伤害提升24%，持续6秒；造成重击伤害时，该效果延长4秒，最多可延长1次。成功延长效果时，使队伍中的角色热熔伤害加成提升24%，持续30秒，同名效果之间不可叠加。",
+    "icon": "T_IconWeapon21010036_UI",
+    "title": "闪耀星火",
+    "since": "2.4"
+  },
+  {
+    "name": "不屈命定之冠",
+    "id": 21020056,
+    "star": 5,
+    "prop": {
+      "name": "生命",
+      "aname": "生命百分比",
+      "IsRatio": true,
+      "icon": "T_Iconpropertygreenlife_UI",
+      "value": 0.16050000488758087
+    },
+    "type": "迅刀",
+    "typeIcon": "SP_IconNorKnife",
+    "propDes": "生命提升12%。施放变奏技能或普攻后15秒内，自身造成伤害无视目标8%防御，当目标的风蚀效应不少于1层时，对目标造成的伤害加深20%。",
+    "icon": "T_IconWeapon21020056_UI",
+    "title": "自由骑士之舞",
+    "since": "2.4"
+  },
+  {
+    "name": "林间的咏叹调",
+    "id": 21030026,
+    "star": 5,
+    "prop": {
+      "name": "暴击",
+      "aname": "",
+      "IsRatio": false,
+      "icon": "T_Iconpropertyredbaoji_UI",
+      "value": 800
+    },
+    "type": "佩枪",
+    "typeIcon": "SP_IconNorGun",
+    "propDes": "攻击提升12%。为目标添加【风蚀效应】后，自身气动伤害加成提升24%，持续10秒。攻击命中带有【风蚀效应】的敌人时，降低对方10%的气动抗性，持续20秒，同名效果之间不可叠加。",
+    "icon": "T_IconWeapon21030026_UI",
+    "title": "长夏咏颂",
+    "since": "2.3"
+  },
+  {
+    "name": "焰光裁定",
+    "id": 21040036,
+    "star": 5,
+    "prop": {
+      "name": "暴击伤害",
+      "aname": "",
+      "IsRatio": false,
+      "icon": "T_Iconpropertyredcrit_UI",
+      "value": 1080
+    },
+    "type": "臂铠",
+    "typeIcon": "SP_IconNorFist",
+    "propDes": "攻击提升12%。施放普攻时，获得以下效果：自身造成伤害无视目标8%防御，同时自身直接造成的【光噪效应】伤害加深50%，持续6秒。重复获得时刷新持续时间。",
+    "icon": "T_IconWeapon21040019_UI",
+    "title": "破暗者",
+    "since": "2.3"
+  },
+  {
+    "name": "血誓盟约",
+    "id": 21020046,
+    "star": 5,
+    "prop": {
+      "name": "共鸣效率",
+      "aname": "",
+      "IsRatio": false,
+      "icon": "T_Iconpropertygreenenergy_UI",
+      "value": 864
+    },
+    "type": "迅刀",
+    "typeIcon": "SP_IconNorKnife",
+    "propDes": "造成治疗时，自身共鸣技能伤害提升10%，持续6秒。漂泊者·气动施放共鸣技能·缥缈无相时，附近队伍中登场角色气动伤害加深10%，持续30秒。",
+    "icon": "T_IconWeapon21020026_UI",
+    "title": "和鸣谐振",
+    "since": "2.2"
+  },
+  {
+    "name": "海的呢喃",
+    "id": 21050056,
+    "star": 5,
+    "prop": {
+      "name": "暴击伤害",
+      "aname": "",
+      "IsRatio": false,
+      "icon": "T_Iconpropertyredcrit_UI",
+      "value": 1600
+    },
+    "type": "音感仪",
+    "typeIcon": "SP_IconNorMagic",
+    "propDes": "攻击提升12%。施放变奏技能或普攻后10秒内，施放声骸技能时，获得1层【柔软的梦】，同名声骸只可触发一次，最多可叠加2层，持续10秒，叠加至2层后施放声骸技能不刷新持续时间。该效果10秒内最多生效1次，若切换至其他角色则该效果提前结束。\n第1层：普攻伤害加成提升40%；\n第2层：无视目标12%湮灭属性抗性。",
+    "icon": "T_IconWeapon21050030_UI",
+    "title": "在海中",
+    "since": "2.2"
+  },
+  {
+    "name": "和光回唱",
+    "id": 21050046,
+    "star": 5,
+    "prop": {
+      "name": "暴击",
+      "aname": "",
+      "IsRatio": false,
+      "icon": "T_Iconpropertyredbaoji_UI",
+      "value": 800
+    },
+    "type": "音感仪",
+    "typeIcon": "SP_IconNorMagic",
+    "propDes": "攻击提升12%。对附加了【光噪效应】的目标造成伤害时，自身普攻、重击伤害加成提升14%，可以叠加3层，持续6秒。施放延奏技能时，使队伍中登场角色周围的目标受到【光噪效应】伤害加深30%，持续30秒，同名效果之间不可叠加。",
+    "icon": "T_IconWeapon21050029_UI",
+    "title": "衔枝者赞诗",
+    "since": "2.1"
+  },
+  {
+    "name": "不灭航路",
+    "id": 21020036,
+    "star": 5,
+    "prop": {
+      "name": "共鸣效率",
+      "aname": "",
+      "IsRatio": false,
+      "icon": "T_Iconpropertygreenenergy_UI",
+      "value": 1712
+    },
+    "type": "迅刀",
+    "typeIcon": "SP_IconNorKnife",
+    "propDes": "暴击提升8%。施放共鸣解放后，普攻伤害加成提高24%，持续10秒。造成普攻伤害时，普攻伤害加成提升24%，持续4秒。",
+    "icon": "T_IconWeapon21020025_UI",
+    "title": "欢笑海",
+    "since": "2.1"
+  },
+  {
+    "name": "死与舞",
+    "id": 21030016,
+    "star": 5,
+    "prop": {
+      "name": "暴击伤害",
+      "aname": "",
+      "IsRatio": false,
+      "icon": "T_Iconpropertyredcrit_UI",
+      "value": 1600
+    },
+    "type": "佩枪",
+    "typeIcon": "SP_IconNorGun",
+    "propDes": "攻击提升12%。施放变奏技能或共鸣解放时，自身共鸣技能伤害加成提升48%，持续5秒。",
+    "icon": "T_IconWeapon21030017_UI",
+    "title": "缄默悼词",
+    "since": "2.0"
+  },
+  {
+    "name": "悲喜剧",
+    "id": 21040026,
+    "star": 5,
+    "prop": {
+      "name": "暴击",
+      "aname": "",
+      "IsRatio": false,
+      "icon": "T_Iconpropertyredbaoji_UI",
+      "value": 540
+    },
+    "type": "臂铠",
+    "typeIcon": "SP_IconNorFist",
+    "propDes": "攻击提升12%。施放普攻或变奏技能时，自身重击伤害加成提升48%，持续3秒。",
+    "icon": "T_IconWeapon21040018_UI",
+    "title": "愚人欢歌",
+    "since": "2.0"
+  },
+  {
+    "name": "裁春",
+    "id": 21020026,
+    "star": 5,
+    "prop": {
+      "name": "暴击",
+      "aname": "",
+      "IsRatio": false,
+      "icon": "T_Iconpropertyredbaoji_UI",
+      "value": 540
+    },
+    "type": "迅刀",
+    "typeIcon": "SP_IconNorKnife",
+    "propDes": "攻击提升12%。造成普攻伤害时，自身普攻伤害加成提升10%，持续14秒，每秒可触发1次，可叠加3层；\n自身的协奏能量消耗时，自身普攻伤害加成提升40%，持续10秒，每秒可触发1次，若切换至其他角色则该效果提前结束。",
+    "icon": "T_IconWeapon21020017_UI",
+    "title": "终始之外",
+    "since": "1.4"
+  },
+  {
+    "name": "星序协响",
+    "id": 21050036,
+    "star": 5,
+    "prop": {
+      "name": "共鸣效率",
+      "aname": "",
+      "IsRatio": false,
+      "icon": "T_Iconpropertygreenenergy_UI",
+      "value": 1712
+    },
+    "type": "音感仪",
+    "typeIcon": "SP_IconNorMagic",
+    "propDes": "生命提升12%。施放共鸣解放时，回复自身8点协奏能量，每20秒可触发1次。共鸣技能造成治疗时，使附近队伍中所有角色的攻击提升14%，持续30秒，同名效果之间不可叠加。",
+    "icon": "T_IconWeapon21050027_UI",
+    "title": "群星迭律",
+    "since": "1.3"
+  },
+  {
+    "name": "诸方玄枢",
+    "id": 21040016,
+    "star": 5,
+    "prop": {
+      "name": "暴击",
+      "aname": "",
+      "IsRatio": false,
+      "icon": "T_Iconpropertyredbaoji_UI",
+      "value": 540
+    },
+    "type": "臂铠",
+    "typeIcon": "SP_IconNorFist",
+    "propDes": "全属性伤害加成提升12%。施放共鸣解放时，自身共鸣解放伤害加成提升48%，持续8秒；施放共鸣技能时，该效果延长5秒，最多可延长3次。",
+    "icon": "T_IconWeapon21040016_UI",
+    "title": "探源逐本",
+    "since": "1.2"
+  },
+  {
+    "name": "琼枝冰绡",
+    "id": 21050026,
+    "star": 5,
+    "prop": {
+      "name": "暴击伤害",
+      "aname": "",
+      "IsRatio": false,
+      "icon": "T_Iconpropertyredcrit_UI",
+      "value": 1600
+    },
+    "type": "音感仪",
+    "typeIcon": "SP_IconNorMagic",
+    "propDes": "攻击提升12%。施放共鸣技能时，获得效果：自身在场时普攻伤害加成提升12%。该效果可叠加3层，持续6秒。施放延奏技能时，若已累计3层效果，则移除全部层数，使自身不在场时普攻伤害加成提升52%，持续27秒。",
+    "icon": "T_IconWeapon21050026_UI",
+    "title": "景外之景",
+    "since": "1.2"
+  },
+  {
+    "name": "赫奕流明",
+    "id": 21020016,
+    "star": 5,
+    "prop": {
+      "name": "暴击伤害",
+      "aname": "",
+      "IsRatio": false,
+      "icon": "T_Iconpropertyredcrit_UI",
+      "value": 1080
+    },
+    "type": "迅刀",
+    "typeIcon": "SP_IconNorKnife",
+    "propDes": "攻击提升12%。造成伤害时获得1层【灼羽】，每0.5秒可获得1层。施放共鸣技能时额外获得5层。每层【灼羽】使共鸣技能伤害加成提升4%，可叠加14层。【灼羽】达到14层的12秒后，清空全部层数。",
+    "icon": "T_IconWeapon21020016_UI",
+    "title": "丹煌灼羽",
+    "since": "1.1"
+  },
+  {
+    "name": "时和岁稔",
+    "id": 21010026,
+    "star": 5,
+    "prop": {
+      "name": "暴击",
+      "aname": "",
+      "IsRatio": false,
+      "icon": "T_Iconpropertyredbaoji_UI",
+      "value": 540
+    },
+    "type": "长刃",
+    "typeIcon": "SP_IconNorSword",
+    "propDes": "全属性伤害加成提升12%。施放变奏技能时，自身获得【岁蕴】，使共鸣技能伤害加成提升24%，持续12秒。施放共鸣技能时，自身获得【福泽】，使共鸣技能伤害加成提升24%，持续12秒。",
+    "icon": "T_IconWeapon21010026_UI",
+    "title": "承天之祐",
+    "since": "1.1"
+  },
+  {
+    "name": "掣傀之手",
+    "id": 21050016,
+    "star": 5,
+    "prop": {
+      "name": "暴击",
+      "aname": "",
+      "IsRatio": false,
+      "icon": "T_Iconpropertyredbaoji_UI",
+      "value": 800
+    },
+    "type": "音感仪",
+    "typeIcon": "SP_IconNorMagic",
+    "propDes": "全属性伤害加成提升12%。造成共鸣技能伤害时，自身攻击提升12%，可叠加2层，效果持续5秒。自身不在场时，该效果攻击额外提升12%。",
+    "icon": "T_IconWeapon21050016_UI",
+    "title": "密电增幅",
+    "since": "1.0"
+  },
+  {
+    "name": "苍鳞千嶂",
+    "id": 21010016,
+    "star": 5,
+    "prop": {
+      "name": "暴击伤害",
+      "aname": "",
+      "IsRatio": false,
+      "icon": "T_Iconpropertyredcrit_UI",
+      "value": 1080
+    },
+    "type": "长刃",
+    "typeIcon": "SP_IconNorSword",
+    "propDes": "全属性伤害加成提升12%。每次施放变奏技能或共鸣解放时，自身重击伤害加成提升24%，可叠加2层，效果持续14秒。",
+    "icon": "T_IconWeapon21010016_UI",
+    "title": "金戈铁马",
+    "since": "1.0"
+  },
+  {
+    "name": "漪澜浮录",
+    "id": 21050015,
+    "star": 5,
+    "prop": {
+      "name": "攻击",
+      "aname": "攻击百分比",
+      "IsRatio": true,
+      "icon": "T_Iconpropertyredattack_UI",
+      "value": 0.11999999731779099
+    },
+    "type": "音感仪",
+    "typeIcon": "SP_IconNorMagic",
+    "propDes": "共鸣效率提升12.8%。造成普攻伤害时，普攻伤害加成提升3.2%，可叠加5层，持续8秒，每0.5秒可触发1次。",
+    "icon": "T_IconWeapon21050015_UI",
+    "title": "浮波万顷",
+    "since": "1.0"
+  },
+  {
+    "name": "擎渊怒涛",
+    "id": 21040015,
+    "star": 5,
+    "prop": {
+      "name": "攻击",
+      "aname": "攻击百分比",
+      "IsRatio": true,
+      "icon": "T_Iconpropertyredattack_UI",
+      "value": 0.08100000023841858
+    },
+    "type": "臂铠",
+    "typeIcon": "SP_IconNorFist",
+    "propDes": "共鸣效率提升12.8%。造成共鸣技能伤害时，普攻伤害加成提升10%，持续8秒。造成普攻伤害时，共鸣技能伤害加成提升10%，持续8秒。",
+    "icon": "T_IconWeapon21040015_UI",
+    "title": "噬渊沦亡",
+    "since": "1.0"
+  },
+  {
+    "name": "停驻之烟",
+    "id": 21030015,
+    "star": 5,
+    "prop": {
+      "name": "暴击",
+      "aname": "",
+      "IsRatio": false,
+      "icon": "T_Iconpropertyredbaoji_UI",
+      "value": 540
+    },
+    "type": "佩枪",
+    "typeIcon": "SP_IconNorGun",
+    "propDes": "共鸣效率提升12.8%。施放延奏技能后，入场角色攻击提升10%，可叠加1层，持续14秒。",
+    "icon": "T_IconWeapon21030015_UI",
+    "title": "削肉蚀骨",
+    "since": "1.0"
+  },
+  {
+    "name": "千古洑流",
+    "id": 21020015,
+    "star": 5,
+    "prop": {
+      "name": "暴击",
+      "aname": "",
+      "IsRatio": false,
+      "icon": "T_Iconpropertyredbaoji_UI",
+      "value": 540
+    },
+    "type": "迅刀",
+    "typeIcon": "SP_IconNorKnife",
+    "propDes": "共鸣效率提升12.8%。施放共鸣技能时，攻击提升6%，可叠加2层，持续10秒。",
+    "icon": "T_IconWeapon21020015_UI",
+    "title": "流涡无垠",
+    "since": "1.0"
+  },
+  {
+    "name": "浩境粼光",
+    "id": 21010015,
+    "star": 5,
+    "prop": {
+      "name": "攻击",
+      "aname": "攻击百分比",
+      "IsRatio": true,
+      "icon": "T_Iconpropertyredattack_UI",
+      "value": 0.08100000023841858
+    },
+    "type": "长刃",
+    "typeIcon": "SP_IconNorSword",
+    "propDes": "共鸣效率提升12.8%。施放共鸣技能时，共鸣解放伤害加成提升7%，可叠加3层，持续12秒。",
+    "icon": "T_IconWeapon21010015_UI",
+    "title": "扬波无止",
+    "since": "1.0"
+  },
+  {
+    "name": "曜光",
+    "id": 21050104,
+    "star": 4,
+    "prop": {
+      "name": "暴击伤害",
+      "aname": "",
+      "IsRatio": false,
+      "icon": "T_Iconpropertyredcrit_UI",
+      "value": 900
+    },
+    "type": "音感仪",
+    "typeIcon": "SP_IconNorMagic",
+    "propDes": "施放共鸣技能时，攻击和普攻伤害加成提升9%，持续10秒。",
+    "icon": "T_IconWeapon21050104_UI",
+    "title": "狩潮之誓",
+    "since": "2.6"
+  },
+  {
+    "name": "凌空",
+    "id": 21040104,
+    "star": 4,
+    "prop": {
+      "name": "暴击伤害",
+      "aname": "",
+      "IsRatio": false,
+      "icon": "T_Iconpropertyredcrit_UI",
+      "value": 900
+    },
+    "type": "臂铠",
+    "typeIcon": "SP_IconNorFist",
+    "propDes": "施放共鸣解放时，攻击提升7.2%，共鸣解放伤害加成提升10.8%，持续15秒。",
+    "icon": "T_IconWeapon21040104_UI",
+    "title": "狩潮之誓",
+    "since": "2.6"
+  },
+  {
+    "name": "阳焰",
+    "id": 21030104,
+    "star": 4,
+    "prop": {
+      "name": "暴击",
+      "aname": "",
+      "IsRatio": false,
+      "icon": "T_Iconpropertyredbaoji_UI",
+      "value": 450
+    },
+    "type": "佩枪",
+    "typeIcon": "SP_IconNorGun",
+    "propDes": "造成普攻或重击伤害时，攻击和重击伤害加成提升2.2%，可叠加4层，持续7秒，每1秒可触发1次。",
+    "icon": "T_IconWeapon21030104_UI",
+    "title": "狩潮之誓",
+    "since": "2.6"
+  },
+  {
+    "name": "翼锋",
+    "id": 21020104,
+    "star": 4,
+    "prop": {
+      "name": "暴击",
+      "aname": "",
+      "IsRatio": false,
+      "icon": "T_Iconpropertyredbaoji_UI",
+      "value": 450
+    },
+    "type": "迅刀",
+    "typeIcon": "SP_IconNorKnife",
+    "propDes": "施放共鸣解放时，攻击提升7.2%，共鸣解放伤害加成提升10.8%，持续15秒。",
+    "icon": "T_IconWeapon21020104_UI",
+    "title": "狩潮之誓",
+    "since": "2.6"
+  },
+  {
+    "name": "金穹",
+    "id": 21010104,
+    "star": 4,
+    "prop": {
+      "name": "暴击伤害",
+      "aname": "",
+      "IsRatio": false,
+      "icon": "T_Iconpropertyredcrit_UI",
+      "value": 900
+    },
+    "type": "长刃",
+    "typeIcon": "SP_IconNorSword",
+    "propDes": "施放共鸣解放时，攻击提升7.2%，重击伤害加成提升10.8%，持续15秒。",
+    "icon": "T_IconWeapon21010104_UI",
+    "title": "狩潮之誓",
+    "since": "2.6"
+  },
+  {
+    "name": "大海的馈赠",
+    "id": 21050027,
+    "star": 4,
+    "prop": {
+      "name": "攻击",
+      "aname": "攻击百分比",
+      "IsRatio": true,
+      "icon": "T_Iconpropertyredattack_UI",
+      "value": 0.04050000011920929
+    },
+    "type": "音感仪",
+    "typeIcon": "SP_IconNorMagic",
+    "propDes": "对带有【光噪效应】的敌人造成伤害时获得效果：自身衍射伤害提升6%，每1秒可获得1层，持续6秒，可叠加4层。",
+    "icon": "T_IconWeapon21050036_UI",
+    "title": "渔获",
+    "since": "2.1"
+  },
+  {
+    "name": "虚饰的华尔兹",
+    "id": 21050094,
+    "star": 4,
+    "prop": {
+      "name": "攻击",
+      "aname": "攻击百分比",
+      "IsRatio": true,
+      "icon": "T_Iconpropertyredattack_UI",
+      "value": 0.04050000011920929
+    },
+    "type": "音感仪",
+    "typeIcon": "SP_IconNorMagic",
+    "propDes": "对带有【异常效应】的怪物造成伤害时，自身攻击提升4%，持续10秒，每秒可触发1次，可叠加4层。",
+    "icon": "T_IconWeapon21050094_UI",
+    "title": "修辞",
+    "since": "2.0"
+  },
+  {
+    "name": "酩酊的英雄志",
+    "id": 21040094,
+    "star": 4,
+    "prop": {
+      "name": "攻击",
+      "aname": "攻击百分比",
+      "IsRatio": true,
+      "icon": "T_Iconpropertyredattack_UI",
+      "value": 0.04050000011920929
+    },
+    "type": "臂铠",
+    "typeIcon": "SP_IconNorFist",
+    "propDes": "对带有【异常效应】的怪物造成伤害时，自身攻击提升4%，持续10秒，每秒可触发1次，可叠加4层。",
+    "icon": "T_IconWeapon21040094_UI",
+    "title": "修辞",
+    "since": "2.0"
+  },
+  {
+    "name": "叙别的罗曼史",
+    "id": 21030094,
+    "star": 4,
+    "prop": {
+      "name": "攻击",
+      "aname": "攻击百分比",
+      "IsRatio": true,
+      "icon": "T_Iconpropertyredattack_UI",
+      "value": 0.04050000011920929
+    },
+    "type": "佩枪",
+    "typeIcon": "SP_IconNorGun",
+    "propDes": "对带有【异常效应】的怪物造成伤害时，自身攻击提升4%，持续10秒，每秒可触发1次，可叠加4层。",
+    "icon": "T_IconWeapon21030094_UI",
+    "title": "修辞",
+    "since": "2.0"
+  },
+  {
+    "name": "风流的寓言诗",
+    "id": 21020094,
+    "star": 4,
+    "prop": {
+      "name": "攻击",
+      "aname": "攻击百分比",
+      "IsRatio": true,
+      "icon": "T_Iconpropertyredattack_UI",
+      "value": 0.04050000011920929
+    },
+    "type": "迅刀",
+    "typeIcon": "SP_IconNorKnife",
+    "propDes": "对带有【异常效应】的怪物造成伤害时，自身攻击提升4%，持续10秒，每秒可触发1次，可叠加4层。",
+    "icon": "T_IconWeapon21020094_UI",
+    "title": "修辞",
+    "since": "2.0"
+  },
+  {
+    "name": "容赦的沉思录",
+    "id": 21010094,
+    "star": 4,
+    "prop": {
+      "name": "攻击",
+      "aname": "攻击百分比",
+      "IsRatio": true,
+      "icon": "T_Iconpropertyredattack_UI",
+      "value": 0.04050000011920929
+    },
+    "type": "长刃",
+    "typeIcon": "SP_IconNorSword",
+    "propDes": "对带有【异常效应】的怪物造成伤害时，自身攻击提升4%，持续10秒，每秒可触发1次，可叠加4层。",
+    "icon": "T_IconWeapon21010094_UI",
+    "title": "修辞",
+    "since": "2.0"
+  },
+  {
+    "name": "渊海回声",
+    "id": 21050017,
+    "star": 4,
+    "prop": {
+      "name": "共鸣效率",
+      "aname": "",
+      "IsRatio": false,
+      "icon": "T_Iconpropertygreenenergy_UI",
+      "value": 1152
+    },
+    "type": "音感仪",
+    "typeIcon": "SP_IconNorMagic",
+    "propDes": "施放共鸣解放时，自身治疗效果加成提升16%，持续15秒。",
+    "icon": "T_IconWeapon21050017_UI",
+    "title": "天星瞭望",
+    "since": "2.0"
+  },
+  {
+    "name": "心之锚",
+    "id": 21020017,
+    "star": 4,
+    "prop": {
+      "name": "攻击",
+      "aname": "攻击百分比",
+      "IsRatio": true,
+      "icon": "T_Iconpropertyredattack_UI",
+      "value": 0.04050000011920929
+    },
+    "type": "迅刀",
+    "typeIcon": "SP_IconNorKnife",
+    "propDes": "在场造成伤害时获得1层【凶猛】，每1秒可获得1层。【凶猛】：每1层使自身攻击提升2%，持续3秒，可叠加10层，角色离场时，清除所有层数。【凶猛】为10层时，自身暴击提升6%。",
+    "icon": "T_IconWeapon21020019_UI",
+    "title": "喵呜！",
+    "since": "1.4"
+  },
+  {
+    "name": "核熔星盘",
+    "id": 21050084,
+    "star": 4,
+    "prop": {
+      "name": "攻击",
+      "aname": "攻击百分比",
+      "IsRatio": true,
+      "icon": "T_Iconpropertyredattack_UI",
+      "value": 0.04050000011920929
+    },
+    "type": "音感仪",
+    "typeIcon": "SP_IconNorMagic",
+    "propDes": "施放共鸣技能时，获得6点共鸣能量，且攻击提升10%，持续16秒。该效果每20秒可触发1次。",
+    "icon": "T_IconWeapon21050084_UI",
+    "title": "彼岸眼瞳",
+    "since": "1.3"
+  },
+  {
+    "name": "尘云旋臂",
+    "id": 21040084,
+    "star": 4,
+    "prop": {
+      "name": "攻击",
+      "aname": "攻击百分比",
+      "IsRatio": true,
+      "icon": "T_Iconpropertyredattack_UI",
+      "value": 0.04050000011920929
+    },
+    "type": "臂铠",
+    "typeIcon": "SP_IconNorFist",
+    "propDes": "施放共鸣技能时，获得6点共鸣能量，且攻击提升10%，持续16秒。该效果每20秒可触发1次。",
+    "icon": "T_IconWeapon21040084_UI",
+    "title": "彼岸眼瞳",
+    "since": "1.3"
+  },
+  {
+    "name": "悖论喷流",
+    "id": 21030084,
+    "star": 4,
+    "prop": {
+      "name": "攻击",
+      "aname": "攻击百分比",
+      "IsRatio": true,
+      "icon": "T_Iconpropertyredattack_UI",
+      "value": 0.04050000011920929
+    },
+    "type": "佩枪",
+    "typeIcon": "SP_IconNorGun",
+    "propDes": "施放共鸣技能时，获得6点共鸣能量，且攻击提升10%，持续16秒。该效果每20秒可触发1次。",
+    "icon": "T_IconWeapon21030084_UI",
+    "title": "彼岸眼瞳",
+    "since": "1.3"
+  },
+  {
+    "name": "永续坍缩",
+    "id": 21020084,
+    "star": 4,
+    "prop": {
+      "name": "攻击",
+      "aname": "攻击百分比",
+      "IsRatio": true,
+      "icon": "T_Iconpropertyredattack_UI",
+      "value": 0.04050000011920929
+    },
+    "type": "迅刀",
+    "typeIcon": "SP_IconNorKnife",
+    "propDes": "施放共鸣技能时，获得6点共鸣能量，且攻击提升10%，持续16秒。该效果每20秒可触发1次。",
+    "icon": "T_IconWeapon21020084_UI",
+    "title": "彼岸眼瞳",
+    "since": "1.3"
+  },
+  {
+    "name": "凋亡频移",
+    "id": 21010084,
+    "star": 4,
+    "prop": {
+      "name": "攻击",
+      "aname": "攻击百分比",
+      "IsRatio": true,
+      "icon": "T_Iconpropertyredattack_UI",
+      "value": 0.04050000011920929
+    },
+    "type": "长刃",
+    "typeIcon": "SP_IconNorSword",
+    "propDes": "施放共鸣技能时，获得6点共鸣能量，且攻击提升10%，持续16秒。该效果每20秒可触发1次。",
+    "icon": "T_IconWeapon21010084_UI",
+    "title": "彼岸眼瞳",
+    "since": "1.3"
+  },
+  {
+    "name": "异度",
+    "id": 21050064,
+    "star": 4,
+    "prop": {
+      "name": "生命",
+      "aname": "生命百分比",
+      "IsRatio": true,
+      "icon": "T_Iconpropertygreenlife_UI",
+      "value": 0.06750000268220901
+    },
+    "type": "音感仪",
+    "typeIcon": "SP_IconNorMagic",
+    "propDes": "造成普攻或重击伤害时，治疗效果加成提升3%，持续8秒，可叠加3层，每0.6秒可触发1次。",
+    "icon": "T_IconWeapon21050064_UI",
+    "title": "重光护持",
+    "since": "1.0"
+  },
+  {
+    "name": "骇行",
+    "id": 21040064,
+    "star": 4,
+    "prop": {
+      "name": "攻击",
+      "aname": "攻击百分比",
+      "IsRatio": true,
+      "icon": "T_Iconpropertyredattack_UI",
+      "value": 0.06750000268220901
+    },
+    "type": "臂铠",
+    "typeIcon": "SP_IconNorFist",
+    "propDes": "施放共鸣解放时，获得3层【铁甲】效果，每层使攻击和防御提升3%，可叠加3层，每次受到伤害时减少1层。",
+    "icon": "T_IconWeapon21040064_UI",
+    "title": "旋星相佑",
+    "since": "1.0"
+  },
+  {
+    "name": "飞逝",
+    "id": 21030064,
+    "star": 4,
+    "prop": {
+      "name": "攻击",
+      "aname": "攻击百分比",
+      "IsRatio": true,
+      "icon": "T_Iconpropertyredattack_UI",
+      "value": 0.06750000268220901
+    },
+    "type": "佩枪",
+    "typeIcon": "SP_IconNorGun",
+    "propDes": "角色冲刺或闪避时，攻击提升4%，持续8秒，可叠加3层。",
+    "icon": "T_IconWeapon21030064_UI",
+    "title": "一息万变",
+    "since": "1.0"
+  },
+  {
+    "name": "西升",
+    "id": 21020064,
+    "star": 4,
+    "prop": {
+      "name": "攻击",
+      "aname": "攻击百分比",
+      "IsRatio": true,
+      "icon": "T_Iconpropertyredattack_UI",
+      "value": 0.06750000268220901
+    },
+    "type": "迅刀",
+    "typeIcon": "SP_IconNorKnife",
+    "propDes": "角色登场后获得6层【守誓】效果，每层使攻击提升2%，可叠加6层，每12秒可触发1次。每2秒该状态减少1层，击败目标时，额外获得6层【守誓】效果。",
+    "icon": "T_IconWeapon21020064_UI",
+    "title": "天时引动",
+    "since": "1.0"
+  },
+  {
+    "name": "东落",
+    "id": 21010064,
+    "star": 4,
+    "prop": {
+      "name": "攻击",
+      "aname": "攻击百分比",
+      "IsRatio": true,
+      "icon": "T_Iconpropertyredattack_UI",
+      "value": 0.06750000268220901
+    },
+    "type": "长刃",
+    "typeIcon": "SP_IconNorSword",
+    "propDes": "施放共鸣技能后12秒内，每2秒攻击提升3%，可叠加4层。每12秒可触发1次。当层数达到4层后，6秒内重置全部层数。",
+    "icon": "T_IconWeapon21010064_UI",
+    "title": "潜能蕴蓄",
+    "since": "1.0"
+  },
+  {
+    "name": "今州守望",
+    "id": 21050044,
+    "star": 4,
+    "prop": {
+      "name": "攻击",
+      "aname": "攻击百分比",
+      "IsRatio": true,
+      "icon": "T_Iconpropertyredattack_UI",
+      "value": 0.08100000023841858
+    },
+    "type": "音感仪",
+    "typeIcon": "SP_IconNorMagic",
+    "propDes": "施放变奏技能时，自身攻击提升8%，生命提升10%，持续15秒。",
+    "icon": "T_IconWeapon21050044_UI",
+    "title": "忠诚卫士",
+    "since": "1.0"
+  },
+  {
+    "name": "袍泽之固",
+    "id": 21040044,
+    "star": 4,
+    "prop": {
+      "name": "防御",
+      "aname": "防御百分比",
+      "IsRatio": true,
+      "icon": "T_Iconpropertygreendefense_UI",
+      "value": 0.13680000603199005
+    },
+    "type": "臂铠",
+    "typeIcon": "SP_IconNorFist",
+    "propDes": "施放变奏技能时，自身共鸣解放伤害加成提升20%，持续15秒。",
+    "icon": "T_IconWeapon21040044_UI",
+    "title": "无衣长歌",
+    "since": "1.0"
+  },
+  {
+    "name": "无眠烈火",
+    "id": 21030044,
+    "star": 4,
+    "prop": {
+      "name": "攻击",
+      "aname": "攻击百分比",
+      "IsRatio": true,
+      "icon": "T_Iconpropertyredattack_UI",
+      "value": 0.06750000268220901
+    },
+    "type": "佩枪",
+    "typeIcon": "SP_IconNorGun",
+    "propDes": "施放变奏技能时，自身共鸣技能伤害加成提升20%。持续15秒。",
+    "icon": "T_IconWeapon21030044_UI",
+    "title": "赤胆丹心",
+    "since": "1.0"
+  },
+  {
+    "name": "不归孤军",
+    "id": 21020044,
+    "star": 4,
+    "prop": {
+      "name": "攻击",
+      "aname": "攻击百分比",
+      "IsRatio": true,
+      "icon": "T_Iconpropertyredattack_UI",
+      "value": 0.06750000268220901
+    },
+    "type": "迅刀",
+    "typeIcon": "SP_IconNorKnife",
+    "propDes": "施放变奏技能时，自身攻击提升15%。持续15秒。",
+    "icon": "T_IconWeapon21020044_UI",
+    "title": "一往无前",
+    "since": "1.0"
+  },
+  {
+    "name": "永夜长明",
+    "id": 21010044,
+    "star": 4,
+    "prop": {
+      "name": "防御",
+      "aname": "防御百分比",
+      "IsRatio": true,
+      "icon": "T_Iconpropertygreendefense_UI",
+      "value": 0.13680000603199005
+    },
+    "type": "长刃",
+    "typeIcon": "SP_IconNorSword",
+    "propDes": "施放变奏技能时，自身攻击提升8%，防御提升15%，持续15秒。",
+    "icon": "T_IconWeapon21010044_UI",
+    "title": "枕戈待旦",
+    "since": "1.0"
+  },
+  {
+    "name": "鸣动仪-25型",
+    "id": 21050034,
+    "star": 4,
+    "prop": {
+      "name": "共鸣效率",
+      "aname": "",
+      "IsRatio": false,
+      "icon": "T_Iconpropertygreenenergy_UI",
+      "value": 1152
+    },
+    "type": "音感仪",
+    "typeIcon": "SP_IconNorMagic",
+    "propDes": "施放共鸣技能时，若角色生命低于60%，回复角色5%生命值，每8秒可触发1次；若角色生命高于60%，则攻击提升12%，持续10秒。",
+    "icon": "T_IconWeapon21050034_UI",
+    "title": "创制开先",
+    "since": "1.0"
+  },
+  {
+    "name": "钢影拳-21丁型",
+    "id": 21040034,
+    "star": 4,
+    "prop": {
+      "name": "共鸣效率",
+      "aname": "",
+      "IsRatio": false,
+      "icon": "T_Iconpropertygreenenergy_UI",
+      "value": 864
+    },
+    "type": "臂铠",
+    "typeIcon": "SP_IconNorFist",
+    "propDes": "闪避或冲刺时，攻击提升8%，闪避反击造成的伤害提升50%，持续8秒。施放闪避反击时，回复角色5%生命，每6秒可触发1次。",
+    "icon": "T_IconWeapon21040034_UI",
+    "title": "谋定入微",
+    "since": "1.0"
+  },
+  {
+    "name": "穿击枪-26型",
+    "id": 21030034,
+    "star": 4,
+    "prop": {
+      "name": "攻击",
+      "aname": "攻击百分比",
+      "IsRatio": true,
+      "icon": "T_Iconpropertyredattack_UI",
+      "value": 0.08100000023841858
+    },
+    "type": "佩枪",
+    "typeIcon": "SP_IconNorGun",
+    "propDes": "角色没有受到伤害时，每5秒攻击提升6%，可叠加2层，持续8秒。受到伤害时，消耗1层状态，并回复角色5%生命。",
+    "icon": "T_IconWeapon21030034_UI",
+    "title": "穷理洞彻",
+    "since": "1.0"
+  },
+  {
+    "name": "瞬斩刀-18型",
+    "id": 21020034,
+    "star": 4,
+    "prop": {
+      "name": "攻击",
+      "aname": "攻击百分比",
+      "IsRatio": true,
+      "icon": "T_Iconpropertyredattack_UI",
+      "value": 0.08100000023841858
+    },
+    "type": "迅刀",
+    "typeIcon": "SP_IconNorKnife",
+    "propDes": "生命低于40%时，重击伤害加成提升18%，造成重击伤害时回复当前角色5%生命值，每8秒可触发1次。",
+    "icon": "T_IconWeapon21020034_UI",
+    "title": "踔时之进",
+    "since": "1.0"
+  },
+  {
+    "name": "重破刃-41型",
+    "id": 21010034,
+    "star": 4,
+    "prop": {
+      "name": "共鸣效率",
+      "aname": "",
+      "IsRatio": false,
+      "icon": "T_Iconpropertygreenenergy_UI",
+      "value": 720
+    },
+    "type": "长刃",
+    "typeIcon": "SP_IconNorSword",
+    "propDes": "生命大于80%时，攻击提升12%。生命低于40%时，造成普攻或重击伤害时回复角色5%生命值，每8秒可触发1次。",
+    "icon": "T_IconWeapon21010034_UI",
+    "title": "兼收并蓄",
+    "since": "1.0"
+  },
+  {
+    "name": "奇幻变奏",
+    "id": 21050024,
+    "star": 4,
+    "prop": {
+      "name": "共鸣效率",
+      "aname": "",
+      "IsRatio": false,
+      "icon": "T_Iconpropertygreenenergy_UI",
+      "value": 1152
+    },
+    "type": "音感仪",
+    "typeIcon": "SP_IconNorMagic",
+    "propDes": "施放共鸣技能时，回复8点协奏能量，每20秒可触发1次。",
+    "icon": "T_IconWeapon21050024_UI",
+    "since": "1.0"
+  },
+  {
+    "name": "呼啸重音",
+    "id": 21040024,
+    "star": 4,
+    "prop": {
+      "name": "共鸣效率",
+      "aname": "",
+      "IsRatio": false,
+      "icon": "T_Iconpropertygreenenergy_UI",
+      "value": 1152
+    },
+    "type": "臂铠",
+    "typeIcon": "SP_IconNorFist",
+    "propDes": "施放共鸣技能时，回复8点协奏能量，每20秒可触发1次。",
+    "icon": "T_IconWeapon21040024_UI",
+    "since": "1.0"
+  },
+  {
+    "name": "华彩乐段",
+    "id": 21030024,
+    "star": 4,
+    "prop": {
+      "name": "共鸣效率",
+      "aname": "",
+      "IsRatio": false,
+      "icon": "T_Iconpropertygreenenergy_UI",
+      "value": 1152
+    },
+    "type": "佩枪",
+    "typeIcon": "SP_IconNorGun",
+    "propDes": "施放共鸣技能时，回复8点协奏能量，每20秒可触发1次。",
+    "icon": "T_IconWeapon21030024_UI",
+    "since": "1.0"
+  },
+  {
+    "name": "行进序曲",
+    "id": 21020024,
+    "star": 4,
+    "prop": {
+      "name": "共鸣效率",
+      "aname": "",
+      "IsRatio": false,
+      "icon": "T_Iconpropertygreenenergy_UI",
+      "value": 1152
+    },
+    "type": "迅刀",
+    "typeIcon": "SP_IconNorKnife",
+    "propDes": "施放共鸣技能时，回复8点协奏能量，每20秒可触发1次。",
+    "icon": "T_IconWeapon21020024_UI",
+    "since": "1.0"
+  },
+  {
+    "name": "异响空灵",
+    "id": 21010024,
+    "star": 4,
+    "prop": {
+      "name": "共鸣效率",
+      "aname": "",
+      "IsRatio": false,
+      "icon": "T_Iconpropertygreenenergy_UI",
+      "value": 1152
+    },
+    "type": "长刃",
+    "typeIcon": "SP_IconNorSword",
+    "propDes": "施放共鸣技能时，回复8点协奏能量，每20秒可触发1次。",
+    "icon": "T_IconWeapon21010024_UI",
+    "title": "咏叹之音",
+    "since": "1.0"
+  },
+  {
+    "name": "清音",
+    "id": 21050074,
+    "star": 4,
+    "prop": {
+      "name": "暴击",
+      "aname": "",
+      "IsRatio": false,
+      "icon": "T_Iconpropertyredbaoji_UI",
+      "value": 450
+    },
+    "type": "音感仪",
+    "typeIcon": "SP_IconNorMagic",
+    "propDes": "施放共鸣解放时，自身攻击提升15%，持续15秒。",
+    "icon": "T_IconWeapon21050074_UI",
+    "title": "刚柔并出",
+    "since": "1.0"
+  },
+  {
+    "name": "金掌",
+    "id": 21040074,
+    "star": 4,
+    "prop": {
+      "name": "暴击",
+      "aname": "",
+      "IsRatio": false,
+      "icon": "T_Iconpropertyredbaoji_UI",
+      "value": 450
+    },
+    "type": "臂铠",
+    "typeIcon": "SP_IconNorFist",
+    "propDes": "施放共鸣技能时，自身共鸣解放伤害加成提升18%，效果持续15秒。",
+    "icon": "T_IconWeapon21040074_UI",
+    "title": "破壁攻坚",
+    "since": "1.0"
+  },
+  {
+    "name": "奔雷",
+    "id": 21030074,
+    "star": 4,
+    "prop": {
+      "name": "攻击",
+      "aname": "攻击百分比",
+      "IsRatio": true,
+      "icon": "T_Iconpropertyredattack_UI",
+      "value": 0.08100000023841858
+    },
+    "type": "佩枪",
+    "typeIcon": "SP_IconNorGun",
+    "propDes": "造成普攻或重击伤害时，自身共鸣技能伤害加成提升7%，可叠加3层，持续10秒。每1秒可触发1次。",
+    "icon": "T_IconWeapon21030074_UI",
+    "title": "锐不可当",
+    "since": "1.0"
+  },
+  {
+    "name": "飞景",
+    "id": 21020074,
+    "star": 4,
+    "prop": {
+      "name": "攻击",
+      "aname": "攻击百分比",
+      "IsRatio": true,
+      "icon": "T_Iconpropertyredattack_UI",
+      "value": 0.08100000023841858
+    },
+    "type": "迅刀",
+    "typeIcon": "SP_IconNorKnife",
+    "propDes": "施放共鸣技能时，自身普攻和重击伤害加成提升20%，可叠加1层，持续10秒。每1秒可触发1次。",
+    "icon": "T_IconWeapon21020074_UI",
+    "title": "白刃疾风",
+    "since": "1.0"
+  },
+  {
+    "name": "纹秋",
+    "id": 21010074,
+    "star": 4,
+    "prop": {
+      "name": "暴击",
+      "aname": "",
+      "IsRatio": false,
+      "icon": "T_Iconpropertyredbaoji_UI",
+      "value": 450
+    },
+    "type": "长刃",
+    "typeIcon": "SP_IconNorSword",
+    "propDes": "造成普攻或重击伤害时，攻击提升4%，可叠加5层，持续7秒，每1秒可触发1次。",
+    "icon": "T_IconWeapon21010074_UI",
+    "title": "锋芒所向",
+    "since": "1.0"
+  },
+  {
+    "name": "钧天正音",
+    "id": 21010063,
+    "star": 3,
+    "prop": {
+      "name": "攻击",
+      "aname": "攻击百分比",
+      "IsRatio": true,
+      "icon": "T_Iconpropertyredattack_UI",
+      "value": 0.06750000268220901
+    },
+    "type": "长刃",
+    "typeIcon": "SP_IconNorSword",
+    "propDes": "施放变奏技能时，回复4点协奏能量；施放延奏技能时，回复4点共鸣能量。",
+    "icon": "T_IconWeapon21010063_UI",
+    "title": "轻拢慢捻",
+    "since": "1.1"
+  },
+  {
+    "name": "戍关音感仪·留光",
+    "id": 21050053,
+    "star": 3,
+    "prop": {
+      "name": "攻击",
+      "aname": "攻击百分比",
+      "IsRatio": true,
+      "icon": "T_Iconpropertyredattack_UI",
+      "value": 0.05400000140070915
+    },
+    "type": "音感仪",
+    "typeIcon": "SP_IconNorMagic",
+    "propDes": "普攻和重击伤害加成提升12%。",
+    "icon": "T_IconWeapon21050053_UI",
+    "title": "相行",
+    "since": "1.0"
+  },
+  {
+    "name": "戍关臂铠·拔山",
+    "id": 21040053,
+    "star": 3,
+    "prop": {
+      "name": "防御",
+      "aname": "防御百分比",
+      "IsRatio": true,
+      "icon": "T_Iconpropertygreendefense_UI",
+      "value": 0.08550000190734863
+    },
+    "type": "臂铠",
+    "typeIcon": "SP_IconNorFist",
+    "propDes": "共鸣解放伤害加成提升12%。",
+    "icon": "T_IconWeapon21040053_UI",
+    "title": "众力",
+    "since": "1.0"
+  },
+  {
+    "name": "戍关佩枪·平云",
+    "id": 21030053,
+    "star": 3,
+    "prop": {
+      "name": "攻击",
+      "aname": "攻击百分比",
+      "IsRatio": true,
+      "icon": "T_Iconpropertyredattack_UI",
+      "value": 0.06750000268220901
+    },
+    "type": "佩枪",
+    "typeIcon": "SP_IconNorGun",
+    "propDes": "共鸣技能伤害加成提升12%。",
+    "icon": "T_IconWeapon21030053_UI",
+    "title": "同心",
+    "since": "1.0"
+  },
+  {
+    "name": "戍关迅刀·镇海",
+    "id": 21020053,
+    "star": 3,
+    "prop": {
+      "name": "生命",
+      "aname": "生命百分比",
+      "IsRatio": true,
+      "icon": "T_Iconpropertygreenlife_UI",
+      "value": 0.06750000268220901
+    },
+    "type": "迅刀",
+    "typeIcon": "SP_IconNorKnife",
+    "propDes": "共鸣技能伤害加成提升12%。",
+    "icon": "T_IconWeapon21020053_UI",
+    "title": "共济",
+    "since": "1.0"
+  },
+  {
+    "name": "戍关长刃·定军",
+    "id": 21010053,
+    "star": 3,
+    "prop": {
+      "name": "攻击",
+      "aname": "攻击百分比",
+      "IsRatio": true,
+      "icon": "T_Iconpropertyredattack_UI",
+      "value": 0.05400000140070915
+    },
+    "type": "长刃",
+    "typeIcon": "SP_IconNorSword",
+    "propDes": "普攻和重击伤害加成提升12%。",
+    "icon": "T_IconWeapon21010053_UI",
+    "title": "合意",
+    "since": "1.0"
+  },
+  {
+    "name": "远行者矩阵·探幽",
+    "id": 21050043,
+    "star": 3,
+    "prop": {
+      "name": "共鸣效率",
+      "aname": "",
+      "IsRatio": false,
+      "icon": "T_Iconpropertygreenenergy_UI",
+      "value": 720
+    },
+    "type": "音感仪",
+    "typeIcon": "SP_IconNorMagic",
+    "propDes": "施放共鸣技能时，回复8点共鸣能量，每20秒可触发1次。",
+    "icon": "T_IconWeapon21050043_UI",
+    "title": "远涉",
+    "since": "1.0"
+  },
+  {
+    "name": "远行者臂铠·破障",
+    "id": 21040043,
+    "star": 3,
+    "prop": {
+      "name": "防御",
+      "aname": "防御百分比",
+      "IsRatio": true,
+      "icon": "T_Iconpropertygreendefense_UI",
+      "value": 0.06840000301599503
+    },
+    "type": "臂铠",
+    "typeIcon": "SP_IconNorFist",
+    "propDes": "施放共鸣技能时，回复8点共鸣能量，每20秒可触发1次。",
+    "icon": "T_IconWeapon21040043_UI",
+    "title": "远涉",
+    "since": "1.0"
+  },
+  {
+    "name": "远行者佩枪·洞察",
+    "id": 21030043,
+    "star": 3,
+    "prop": {
+      "name": "攻击",
+      "aname": "攻击百分比",
+      "IsRatio": true,
+      "icon": "T_Iconpropertyredattack_UI",
+      "value": 0.06750000268220901
+    },
+    "type": "佩枪",
+    "typeIcon": "SP_IconNorGun",
+    "propDes": "施放共鸣技能时，回复8点共鸣能量，每20秒可触发1次。",
+    "icon": "T_IconWeapon21030043_UI",
+    "title": "远涉",
+    "since": "1.0"
+  },
+  {
+    "name": "远行者迅刀·旅迹",
+    "id": 21020043,
+    "star": 3,
+    "prop": {
+      "name": "共鸣效率",
+      "aname": "",
+      "IsRatio": false,
+      "icon": "T_Iconpropertygreenenergy_UI",
+      "value": 720
+    },
+    "type": "迅刀",
+    "typeIcon": "SP_IconNorKnife",
+    "propDes": "施放共鸣技能时，回复8点共鸣能量，每20秒可触发1次。",
+    "icon": "T_IconWeapon21020043_UI",
+    "title": "远涉",
+    "since": "1.0"
+  },
+  {
+    "name": "远行者长刃·辟路",
+    "id": 21010043,
+    "star": 3,
+    "prop": {
+      "name": "共鸣效率",
+      "aname": "",
+      "IsRatio": false,
+      "icon": "T_Iconpropertygreenenergy_UI",
+      "value": 720
+    },
+    "type": "长刃",
+    "typeIcon": "SP_IconNorSword",
+    "propDes": "施放共鸣技能时，回复8点共鸣能量，每20秒可触发1次。",
+    "icon": "T_IconWeapon21010043_UI",
+    "title": "远涉",
+    "since": "1.0"
+  },
+  {
+    "name": "源能音感仪·测五",
+    "id": 21050023,
+    "star": 3,
+    "prop": {
+      "name": "生命",
+      "aname": "生命百分比",
+      "IsRatio": true,
+      "icon": "T_Iconpropertygreenlife_UI",
+      "value": 0.06750000268220901
+    },
+    "type": "音感仪",
+    "typeIcon": "SP_IconNorMagic",
+    "propDes": "施放变奏技能时，回复自身5%生命值，每20秒可触发1次。",
+    "icon": "T_IconWeapon21050023_UI",
+    "title": "扶助",
+    "since": "1.0"
+  },
+  {
+    "name": "源能臂铠·测肆",
+    "id": 21040023,
+    "star": 3,
+    "prop": {
+      "name": "暴击伤害",
+      "aname": "",
+      "IsRatio": false,
+      "icon": "T_Iconpropertyredcrit_UI",
+      "value": 900
+    },
+    "type": "臂铠",
+    "typeIcon": "SP_IconNorFist",
+    "propDes": "造成普攻伤害时，回复自身0.5%生命值，每3秒可触发1次。",
+    "icon": "T_IconWeapon21040023_UI",
+    "title": "愈合",
+    "since": "1.0"
+  },
+  {
+    "name": "源能佩枪·测叁",
+    "id": 21030023,
+    "star": 3,
+    "prop": {
+      "name": "攻击",
+      "aname": "攻击百分比",
+      "IsRatio": true,
+      "icon": "T_Iconpropertyredattack_UI",
+      "value": 0.05400000140070915
+    },
+    "type": "佩枪",
+    "typeIcon": "SP_IconNorGun",
+    "propDes": "施放闪避反击时，回复自身1.6%生命值，每6秒可触发1次。",
+    "icon": "T_IconWeapon21030023_UI",
+    "title": "迅生",
+    "since": "1.0"
+  },
+  {
+    "name": "源能迅刀·测贰",
+    "id": 21020023,
+    "star": 3,
+    "prop": {
+      "name": "攻击",
+      "aname": "攻击百分比",
+      "IsRatio": true,
+      "icon": "T_Iconpropertyredattack_UI",
+      "value": 0.05400000140070915
+    },
+    "type": "迅刀",
+    "typeIcon": "SP_IconNorKnife",
+    "propDes": "施放共鸣解放时，回复自身5%生命值，每20秒可触发1次。",
+    "icon": "T_IconWeapon21020023_UI",
+    "title": "复苏",
+    "since": "1.0"
+  },
+  {
+    "name": "源能长刃·测壹",
+    "id": 21010023,
+    "star": 3,
+    "prop": {
+      "name": "防御",
+      "aname": "防御百分比",
+      "IsRatio": true,
+      "icon": "T_Iconpropertygreendefense_UI",
+      "value": 0.08550000190734863
+    },
+    "type": "长刃",
+    "typeIcon": "SP_IconNorSword",
+    "propDes": "施放共鸣技能时，回复自身3%生命值，每12秒可触发1次。",
+    "icon": "T_IconWeapon21010023_UI",
+    "title": "急疗",
+    "since": "1.0"
+  },
+  {
+    "name": "暗夜矩阵·暝光",
+    "id": 21050013,
+    "star": 3,
+    "prop": {
+      "name": "攻击",
+      "aname": "攻击百分比",
+      "IsRatio": true,
+      "icon": "T_Iconpropertyredattack_UI",
+      "value": 0.05400000140070915
+    },
+    "type": "音感仪",
+    "typeIcon": "SP_IconNorMagic",
+    "propDes": "施放变奏技能时，攻击提升8%，持续10秒。",
+    "icon": "T_IconWeapon21050013_UI",
+    "title": "无归",
+    "since": "1.0"
+  },
+  {
+    "name": "暗夜臂铠·夜芒",
+    "id": 21040013,
+    "star": 3,
+    "prop": {
+      "name": "攻击",
+      "aname": "攻击百分比",
+      "IsRatio": true,
+      "icon": "T_Iconpropertyredattack_UI",
+      "value": 0.05400000140070915
+    },
+    "type": "臂铠",
+    "typeIcon": "SP_IconNorFist",
+    "propDes": "施放变奏技能时，攻击提升8%，持续10秒。",
+    "icon": "T_IconWeapon21040013_UI",
+    "title": "无归",
+    "since": "1.0"
+  },
+  {
+    "name": "暗夜佩枪·暗星",
+    "id": 21030013,
+    "star": 3,
+    "prop": {
+      "name": "攻击",
+      "aname": "攻击百分比",
+      "IsRatio": true,
+      "icon": "T_Iconpropertyredattack_UI",
+      "value": 0.05400000140070915
+    },
+    "type": "佩枪",
+    "typeIcon": "SP_IconNorGun",
+    "propDes": "施放变奏技能时，攻击提升8%，持续10秒。",
+    "icon": "T_IconWeapon21030013_UI",
+    "title": "无归",
+    "since": "1.0"
+  },
+  {
+    "name": "暗夜迅刀·黑闪",
+    "id": 21020013,
+    "star": 3,
+    "prop": {
+      "name": "攻击",
+      "aname": "攻击百分比",
+      "IsRatio": true,
+      "icon": "T_Iconpropertyredattack_UI",
+      "value": 0.05400000140070915
+    },
+    "type": "迅刀",
+    "typeIcon": "SP_IconNorKnife",
+    "propDes": "施放变奏技能时，攻击提升8%，持续10秒。",
+    "icon": "T_IconWeapon21020013_UI",
+    "title": "无归",
+    "since": "1.0"
+  },
+  {
+    "name": "暗夜长刃·玄明",
+    "id": 21010013,
+    "star": 3,
+    "prop": {
+      "name": "攻击",
+      "aname": "攻击百分比",
+      "IsRatio": true,
+      "icon": "T_Iconpropertyredattack_UI",
+      "value": 0.05400000140070915
+    },
+    "type": "长刃",
+    "typeIcon": "SP_IconNorSword",
+    "propDes": "施放变奏技能时，攻击提升8%，持续10秒。",
+    "icon": "T_IconWeapon21010013_UI",
+    "title": "无归",
+    "since": "1.0"
+  },
+  {
+    "name": "原初音感仪·听浪",
+    "id": 21050012,
+    "star": 2,
+    "prop": {
+      "name": "攻击",
+      "aname": "攻击百分比",
+      "IsRatio": true,
+      "icon": "T_Iconpropertyredattack_UI",
+      "value": 0.032999999821186066
+    },
+    "type": "音感仪",
+    "typeIcon": "SP_IconNorMagic",
+    "propDes": "攻击提升5%。",
+    "icon": "T_IconWeapon21050012_UI",
+    "since": "1.0"
+  },
+  {
+    "name": "原初臂铠·磐岩",
+    "id": 21040012,
+    "star": 2,
+    "prop": {
+      "name": "攻击",
+      "aname": "攻击百分比",
+      "IsRatio": true,
+      "icon": "T_Iconpropertyredattack_UI",
+      "value": 0.032999999821186066
+    },
+    "type": "臂铠",
+    "typeIcon": "SP_IconNorFist",
+    "propDes": "攻击提升5%。",
+    "icon": "T_IconWeapon21040012_UI",
+    "since": "1.0"
+  },
+  {
+    "name": "原初佩枪·穿林",
+    "id": 21030012,
+    "star": 2,
+    "prop": {
+      "name": "攻击",
+      "aname": "攻击百分比",
+      "IsRatio": true,
+      "icon": "T_Iconpropertyredattack_UI",
+      "value": 0.032999999821186066
+    },
+    "type": "佩枪",
+    "typeIcon": "SP_IconNorGun",
+    "propDes": "攻击提升5%。",
+    "icon": "T_IconWeapon21030012_UI",
+    "since": "1.0"
+  },
+  {
+    "name": "原初迅刀·鸣雨",
+    "id": 21020012,
+    "star": 2,
+    "prop": {
+      "name": "攻击",
+      "aname": "攻击百分比",
+      "IsRatio": true,
+      "icon": "T_Iconpropertyredattack_UI",
+      "value": 0.032999999821186066
+    },
+    "type": "迅刀",
+    "typeIcon": "SP_IconNorKnife",
+    "propDes": "攻击提升5%。",
+    "icon": "T_IconWeapon21020012_UI",
+    "since": "1.0"
+  },
+  {
+    "name": "原初长刃·朴石",
+    "id": 21010012,
+    "star": 2,
+    "prop": {
+      "name": "攻击",
+      "aname": "攻击百分比",
+      "IsRatio": true,
+      "icon": "T_Iconpropertyredattack_UI",
+      "value": 0.032999999821186066
+    },
+    "type": "长刃",
+    "typeIcon": "SP_IconNorSword",
+    "propDes": "攻击提升5%。",
+    "icon": "T_IconWeapon21010012_UI",
+    "since": "1.0"
+  },
+  {
+    "name": "教学音感仪",
+    "id": 21050011,
+    "star": 1,
+    "prop": {
+      "name": "攻击",
+      "aname": "攻击百分比",
+      "IsRatio": true,
+      "icon": "T_Iconpropertyredattack_UI",
+      "value": 0.025499999523162842
+    },
+    "type": "音感仪",
+    "typeIcon": "SP_IconNorMagic",
+    "propDes": "攻击提升4%。",
+    "icon": "T_IconWeapon21050011_UI",
+    "since": "1.0"
+  },
+  {
+    "name": "教学臂铠",
+    "id": 21040011,
+    "star": 1,
+    "prop": {
+      "name": "攻击",
+      "aname": "攻击百分比",
+      "IsRatio": true,
+      "icon": "T_Iconpropertyredattack_UI",
+      "value": 0.025499999523162842
+    },
+    "type": "臂铠",
+    "typeIcon": "SP_IconNorFist",
+    "propDes": "攻击提升4%。",
+    "icon": "T_IconWeapon21040011_UI",
+    "since": "1.0"
+  },
+  {
+    "name": "教学佩枪",
+    "id": 21030011,
+    "star": 1,
+    "prop": {
+      "name": "攻击",
+      "aname": "攻击百分比",
+      "IsRatio": true,
+      "icon": "T_Iconpropertyredattack_UI",
+      "value": 0.025499999523162842
+    },
+    "type": "佩枪",
+    "typeIcon": "SP_IconNorGun",
+    "propDes": "攻击提升4%。",
+    "icon": "T_IconWeapon21030011_UI",
+    "since": "1.0"
+  },
+  {
+    "name": "教学迅刀",
+    "id": 21020011,
+    "star": 1,
+    "prop": {
+      "name": "攻击",
+      "aname": "攻击百分比",
+      "IsRatio": true,
+      "icon": "T_Iconpropertyredattack_UI",
+      "value": 0.025499999523162842
+    },
+    "type": "迅刀",
+    "typeIcon": "SP_IconNorKnife",
+    "propDes": "攻击提升4%。",
+    "icon": "T_IconWeapon21020011_UI",
+    "since": "1.0"
+  },
+  {
+    "name": "教学长刃",
+    "id": 21010011,
+    "star": 1,
+    "prop": {
+      "name": "攻击",
+      "aname": "攻击百分比",
+      "IsRatio": true,
+      "icon": "T_Iconpropertyredattack_UI",
+      "value": 0.025499999523162842
+    },
+    "type": "长刃",
+    "typeIcon": "SP_IconNorSword",
+    "propDes": "攻击提升4%。",
+    "icon": "T_IconWeapon21010011_UI",
+    "since": "1.0"
+  }
+]

@@ -1,0 +1,424 @@
+{
+  "id": 1006,
+  "name": "银狼",
+  "property": "量子",
+  "path": "虚无",
+  "star": "5",
+  "teams": [
+    {
+      "rank": "74",
+      "usage": "0.53%",
+      "cycles": [
+        {
+          "e": 0,
+          "l": "0 命",
+          "v": 10.8
+        },
+        {
+          "e": 1,
+          "l": "1 命+",
+          "v": 7.96
+        }
+      ],
+      "mate": [
+        {
+          "id": 1006,
+          "name": "银狼",
+          "property": "量子",
+          "path": "虚无",
+          "star": "5"
+        },
+        {
+          "id": 1414,
+          "name": "丹恒•腾荒",
+          "property": "物理",
+          "path": "存护",
+          "star": "5"
+        },
+        {
+          "id": 1015,
+          "name": "Archer",
+          "property": "量子",
+          "path": "巡猎",
+          "star": "5"
+        },
+        {
+          "id": 1306,
+          "name": "花火",
+          "property": "量子",
+          "path": "同谐",
+          "star": "5"
+        }
+      ]
+    },
+    {
+      "rank": "113",
+      "usage": "0.28%",
+      "cycles": [
+        {
+          "e": 1,
+          "l": "1 命+",
+          "v": 4.77
+        }
+      ],
+      "mate": [
+        {
+          "id": 1006,
+          "name": "银狼",
+          "property": "量子",
+          "path": "虚无",
+          "star": "5"
+        },
+        {
+          "id": 1508,
+          "name": "远坂凛",
+          "property": "量子",
+          "path": "智识",
+          "star": "5"
+        },
+        {
+          "id": 1015,
+          "name": "Archer",
+          "property": "量子",
+          "path": "巡猎",
+          "star": "5"
+        },
+        {
+          "id": 1306,
+          "name": "花火",
+          "property": "量子",
+          "path": "同谐",
+          "star": "5"
+        }
+      ]
+    },
+    {
+      "rank": "309",
+      "usage": "0.07%",
+      "cycles": [
+        {
+          "e": 1,
+          "l": "1 命+",
+          "v": 6.2
+        }
+      ],
+      "mate": [
+        {
+          "id": 1006,
+          "name": "银狼",
+          "property": "量子",
+          "path": "虚无",
+          "star": "5"
+        },
+        {
+          "id": 1015,
+          "name": "Archer",
+          "property": "量子",
+          "path": "巡猎",
+          "star": "5"
+        },
+        {
+          "id": 1309,
+          "name": "知更鸟",
+          "property": "物理",
+          "path": "同谐",
+          "star": "5"
+        },
+        {
+          "id": 1306,
+          "name": "花火",
+          "property": "量子",
+          "path": "同谐",
+          "star": "5"
+        }
+      ]
+    },
+    {
+      "rank": "323",
+      "usage": "0.06%",
+      "cycles": [
+        {
+          "e": 1,
+          "l": "1 命+",
+          "v": 10.12
+        }
+      ],
+      "mate": [
+        {
+          "id": 1006,
+          "name": "银狼",
+          "property": "量子",
+          "path": "虚无",
+          "star": "5"
+        },
+        {
+          "id": 1015,
+          "name": "Archer",
+          "property": "量子",
+          "path": "巡猎",
+          "star": "5"
+        },
+        {
+          "id": 1306,
+          "name": "花火",
+          "property": "量子",
+          "path": "同谐",
+          "star": "5"
+        },
+        {
+          "id": 1208,
+          "name": "符玄",
+          "property": "量子",
+          "path": "存护",
+          "star": "5"
+        }
+      ]
+    },
+    {
+      "rank": "323",
+      "usage": "0.06%",
+      "cycles": [
+        {
+          "e": 1,
+          "l": "1 命+",
+          "v": 8.88
+        }
+      ],
+      "mate": [
+        {
+          "id": 1006,
+          "name": "银狼",
+          "property": "量子",
+          "path": "虚无",
+          "star": "5"
+        },
+        {
+          "id": 1507,
+          "name": "千冶•刃",
+          "property": "火",
+          "path": "虚无",
+          "star": "5"
+        },
+        {
+          "id": 1409,
+          "name": "风堇",
+          "property": "风",
+          "path": "记忆",
+          "star": "5"
+        },
+        {
+          "id": 1308,
+          "name": "黄泉",
+          "property": "雷",
+          "path": "虚无",
+          "star": "5"
+        }
+      ]
+    },
+    {
+      "rank": "323",
+      "usage": "0.06%",
+      "cycles": [
+        {
+          "e": 1,
+          "l": "1 命+",
+          "v": 3.38
+        }
+      ],
+      "mate": [
+        {
+          "id": 1006,
+          "name": "银狼",
+          "property": "量子",
+          "path": "虚无",
+          "star": "5"
+        },
+        {
+          "id": 1015,
+          "name": "Archer",
+          "property": "量子",
+          "path": "巡猎",
+          "star": "5"
+        },
+        {
+          "id": 1403,
+          "name": "缇宝",
+          "property": "量子",
+          "path": "同谐",
+          "star": "5"
+        },
+        {
+          "id": 1306,
+          "name": "花火",
+          "property": "量子",
+          "path": "同谐",
+          "star": "5"
+        }
+      ]
+    },
+    {
+      "rank": "371",
+      "usage": "0.05%",
+      "cycles": [
+        {
+          "e": 1,
+          "l": "1 命+",
+          "v": 3.14
+        }
+      ],
+      "mate": [
+        {
+          "id": 1006,
+          "name": "银狼",
+          "property": "量子",
+          "path": "虚无",
+          "star": "5"
+        },
+        {
+          "id": 1507,
+          "name": "千冶•刃",
+          "property": "火",
+          "path": "虚无",
+          "star": "5"
+        },
+        {
+          "id": 1403,
+          "name": "缇宝",
+          "property": "量子",
+          "path": "同谐",
+          "star": "5"
+        },
+        {
+          "id": 1308,
+          "name": "黄泉",
+          "property": "雷",
+          "path": "虚无",
+          "star": "5"
+        }
+      ]
+    },
+    {
+      "rank": "371",
+      "usage": "0.05%",
+      "cycles": [
+        {
+          "e": 1,
+          "l": "1 命+",
+          "v": 9.57
+        }
+      ],
+      "mate": [
+        {
+          "id": 1006,
+          "name": "银狼",
+          "property": "量子",
+          "path": "虚无",
+          "star": "5"
+        },
+        {
+          "id": 1015,
+          "name": "Archer",
+          "property": "量子",
+          "path": "巡猎",
+          "star": "5"
+        },
+        {
+          "id": 1409,
+          "name": "风堇",
+          "property": "风",
+          "path": "记忆",
+          "star": "5"
+        },
+        {
+          "id": 1306,
+          "name": "花火",
+          "property": "量子",
+          "path": "同谐",
+          "star": "5"
+        }
+      ]
+    },
+    {
+      "rank": "371",
+      "usage": "0.05%",
+      "cycles": [
+        {
+          "e": 1,
+          "l": "1 命+",
+          "v": 8
+        }
+      ],
+      "mate": [
+        {
+          "id": 1006,
+          "name": "银狼",
+          "property": "量子",
+          "path": "虚无",
+          "star": "5"
+        },
+        {
+          "id": 1409,
+          "name": "风堇",
+          "property": "风",
+          "path": "记忆",
+          "star": "5"
+        },
+        {
+          "id": 1407,
+          "name": "遐蝶",
+          "property": "量子",
+          "path": "记忆",
+          "star": "5"
+        },
+        {
+          "id": 1403,
+          "name": "缇宝",
+          "property": "量子",
+          "path": "同谐",
+          "star": "5"
+        }
+      ]
+    },
+    {
+      "rank": "371",
+      "usage": "0.05%",
+      "cycles": [
+        {
+          "e": 1,
+          "l": "1 命+",
+          "v": 9.14
+        }
+      ],
+      "mate": [
+        {
+          "id": 1006,
+          "name": "银狼",
+          "property": "量子",
+          "path": "虚无",
+          "star": "5"
+        },
+        {
+          "id": 1509,
+          "name": "吉尔伽美什",
+          "property": "雷",
+          "path": "毁灭",
+          "star": "5"
+        },
+        {
+          "id": 1014,
+          "name": "Saber",
+          "property": "风",
+          "path": "毁灭",
+          "star": "5"
+        },
+        {
+          "id": 1217,
+          "name": "藿藿",
+          "property": "风",
+          "path": "丰饶",
+          "star": "5"
+        }
+      ]
+    }
+  ]
+}

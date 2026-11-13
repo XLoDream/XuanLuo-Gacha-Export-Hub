@@ -261,8 +261,8 @@ function switchView(view) {
   navItems.forEach((b) => b.classList.toggle('active', b.dataset.view === view));
   $$('.view').forEach((v) => v.classList.toggle('active', v.id === `view-${view}`));
   $$('.subgroup').forEach((g) => { g.hidden = g.dataset.sub !== view; });
-  // 总览不需要左侧边栏
-  $('.body').classList.toggle('no-sub', view === 'overview');
+  // 总览/配队 等非游戏视图不需要左侧边栏
+  $('.body').classList.toggle('no-sub', ['overview', 'hsr-team'].includes(view));
   $('#subTitle').textContent = VIEW_TITLES[view] || '';
   $('.content').scrollTop = 0;
   moveIndicator();
@@ -271,6 +271,8 @@ function switchView(view) {
   // 进入游戏视图时开始计时，用于 20 分钟自动更新
   if (GAMES[view]) {
     lastUpdateTime[view] = Date.now();
+    // 按需加载该游戏的物品图标映射（其他游戏不加载，节省内存）
+    if (FIVE_OVERVIEW_GAMES.includes(view)) loadItemIcons(view);
     // 切换到游戏视图时立即拉取一次最新记录（可在设置中开关，内置 5 分钟冷却）
     if (autoUpdateOnSwitchEnabled) {
       const SWITCH_COOLDOWN = 5 * 60 * 1000;
@@ -279,6 +281,11 @@ function switchView(view) {
         setTimeout(() => fetchOnline(view), 300);
       }
     }
+  }
+  // 崩铁·配队：共用崩铁数据，进入时加载图标并渲染已有角色/光锥
+  if (view === 'hsr-team') {
+    loadItemIcons('hsr');
+    renderHsrTeam();
   }
 }
 
@@ -357,6 +364,79 @@ function shiftCar(game, d) {
 let viewMode = {};
 let recFilter = {};
 let subRefs = {};
+// 五星总览：每个游戏当前选中的卡池 key
+let fiveOverviewPool = { genshin: 'char', hsr: 'char', wuwa: 'char' };
+// 五星总览分页：每页 2 行 × 7 列 = 14 个
+const FIVE_PAGE_SIZE = 14;
+let fiveOverviewPage = { genshin: 1, hsr: 1, wuwa: 1 };
+const FIVE_OVERVIEW_GAMES = ['genshin', 'hsr', 'wuwa'];
+// 崩铁·配队：当前选中的物品类型
+let teamTab = '角色';
+// 崩铁·配队：筛选条件（命途 / 属性 / 星级，空字符串表示全部）
+let teamFilter = { path: '', property: '', star: '' };
+// 崩铁·配队：分页（每行 7 个，每页最多 2 行 = 14 个）
+const TEAM_PAGE_SIZE = 14;
+let teamPage = 1;
+
+// 物品图标：名称 → 资源 ID（角色 / 武器 光锥）
+let ysCharMap = {}, ysWeaponMap = {};   // 原神
+let srCharMap = {}, srLcMap = {};        // 崩铁
+let mcCharMap = {}, mcWeaponMap = {};    // 鸣潮
+// 崩铁角色/光锥完整元数据：name → { path, property, star }
+let srCharInfo = {}, srLcInfo = {};
+// 每个游戏图标映射的加载时间（0 表示未加载）；超过 5 分钟未访问则卸载
+const ICON_UNLOAD_MS = 5 * 60 * 1000;
+let iconLoadTime = { genshin: 0, hsr: 0, wuwa: 0 };
+// 加载中的 Promise，避免并发重复请求；调用方可 await 等待加载完成
+let iconLoadPromise = { genshin: null, hsr: null, wuwa: null };
+
+const ICON_RES = {
+  genshin: { char: 'res/ys/avatar.json', weapon: 'res/ys/weapon.json', cMap: () => ysCharMap, wMap: () => ysWeaponMap, setC: (m) => ysCharMap = m, setW: (m) => ysWeaponMap = m },
+  hsr:     { char: 'res/sr/avatar.json', weapon: 'res/sr/lightCone.json', cMap: () => srCharMap, wMap: () => srLcMap, setC: (m) => srCharMap = m, setW: (m) => srLcMap = m },
+  wuwa:    { char: 'res/mc/avatar.json', weapon: 'res/mc/weapon.json', cMap: () => mcCharMap, wMap: () => mcWeaponMap, setC: (m) => mcCharMap = m, setW: (m) => mcWeaponMap = m }
+};
+
+async function loadItemIcons(game) {
+  const res = ICON_RES[game];
+  if (!res) return;
+  // 已加载则直接返回
+  if (Object.keys(res.cMap()).length && Object.keys(res.wMap()).length) { iconLoadTime[game] = Date.now(); return; }
+  // 已有加载中的 Promise，等待其完成
+  if (iconLoadPromise[game]) return iconLoadPromise[game];
+  iconLoadPromise[game] = (async () => {
+    try {
+      const [c, w] = await Promise.all([
+        fetch(res.char).then((r) => r.json()),
+        fetch(res.weapon).then((r) => r.json())
+      ]);
+      const cm = {}, wm = {};
+      for (const it of c) cm[it.name] = it.id;
+      for (const it of w) wm[it.name] = it.id;
+      res.setC(cm); res.setW(wm);
+      // 崩铁额外保存命途/属性/星级元数据，用于配队页筛选
+      if (game === 'hsr') {
+        const ci = {}, li = {};
+        for (const it of c) ci[it.name] = { path: it.path, property: it.property, star: Number(it.star) };
+        for (const it of w) li[it.name] = { path: it.path, property: '', star: Number(it.star) };
+        srCharInfo = ci; srLcInfo = li;
+      }
+      iconLoadTime[game] = Date.now();
+    } catch (e) {
+      console.warn(`加载 ${game} 图标映射失败：`, e);
+    } finally {
+      iconLoadPromise[game] = null;
+    }
+  })();
+  return iconLoadPromise[game];
+}
+
+function unloadItemIcons(game) {
+  const res = ICON_RES[game];
+  if (!res) return;
+  res.setC({}); res.setW({});
+  if (game === 'hsr') { srCharInfo = {}; srLcInfo = {}; }
+  iconLoadTime[game] = 0;
+}
 
 function setupGameSubgroups() {
 GAME_ORDER.forEach((game) => {
@@ -379,6 +459,16 @@ GAME_ORDER.forEach((game) => {
   ovBtn.addEventListener('click', () => select('overview'));
   group.appendChild(ovBtn);
   subRefs[game].push({ key: 'overview', btn: ovBtn });
+
+  // 五星总览（原神 / 崩铁 / 鸣潮，固定在概览下方）
+  if (FIVE_OVERVIEW_GAMES.includes(game)) {
+    const fiveBtn = document.createElement('button');
+    fiveBtn.className = 'sub-item';
+    fiveBtn.innerHTML = `<svg class="sub-ico" viewBox="0 0 24 24"><path d="M12 2l2.9 6.3L22 9.2l-5 4.9 1.2 6.9L12 17.8 5.8 21l1.2-6.9-5-4.9 7.1-.9z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg><span class="sub-item-label">五星总览</span><span class="sub-item-count"></span>`;
+    fiveBtn.addEventListener('click', () => select('fiveOverview'));
+    group.appendChild(fiveBtn);
+    subRefs[game].push({ key: 'fiveOverview', btn: fiveBtn });
+  }
 
   // 卡池：有数据平铺展示；无数据默认折叠进「无数据（N）」分组，点击展开
   const hasBox = document.createElement('div');
@@ -639,7 +729,8 @@ function renderGame(game) {
 
   // 卡池按有无数据归位：有数据显示计数、无数据置底灰显禁用；当前池变空时回退「概览」
   const countOf = (k) => (acc ? acc.records.filter((r) => r.pool === k).length : 0);
-  if (viewMode[game] !== 'overview' && !countOf(viewMode[game])) viewMode[game] = 'overview';
+  const isFiveMode = viewMode[game] === 'fiveOverview';
+  if (viewMode[game] !== 'overview' && !isFiveMode && !countOf(viewMode[game])) viewMode[game] = 'overview';
   const group = $(`.subgroup[data-sub="${game}"]`);
   const [hasBox, emptyBox] = group.querySelectorAll('.sub-pools');
   const divider = group.querySelector('.sub-divider');
@@ -649,6 +740,11 @@ function renderGame(game) {
     const countEl = btn.querySelector('.sub-item-count');
     if (key === 'overview') {
       countEl.textContent = acc && acc.records.length ? acc.records.length : '';
+      return;
+    }
+    if (key === 'fiveOverview') {
+      const fiveCount = acc ? acc.records.filter((r) => r.rank === 5).length : 0;
+      countEl.textContent = fiveCount || '';
       return;
     }
     const n = countOf(key);
@@ -661,11 +757,14 @@ function renderGame(game) {
   divider.hidden = emptyCount === 0;
   divider.querySelector('.sub-divider-label').textContent = `无数据（${emptyCount}）`;
   const overview = viewMode[game] === 'overview';
+  const fiveMode = viewMode[game] === 'fiveOverview';
 
   $('[data-role="accountEmpty"]', view).hidden = !!acc;
   $('.stat-row', view).style.display = acc && overview ? '' : 'none';
   $('[data-role="poolGrid"]', view).style.display = acc && overview ? '' : 'none';
-  $('.records-card', view).style.display = acc && !overview ? '' : 'none';
+  $('.records-card', view).style.display = acc && !overview && !fiveMode ? '' : 'none';
+  const fiveCard = $('[data-role="fiveOverview"]', view);
+  if (fiveCard) fiveCard.style.display = acc && fiveMode ? '' : 'none';
   if (!overview) layoutCar(game); // 非概览模式收起轮盘箭头
 
   if (!acc) return;
@@ -686,9 +785,406 @@ function renderGame(game) {
     <div class="stat-card"><span>平均出金</span><b>${fives.length ? (recs.length / fives.length).toFixed(1) : '—'}</b></div>
   `;
 
-  if (overview) renderPoolGrid(game, acc); // 概览：卡池详情块
-  else renderRecords(game);                // 具体卡池：记录表
+  if (overview) renderPoolGrid(game, acc);       // 概览：卡池详情块
+  else if (fiveMode) { if (FIVE_OVERVIEW_GAMES.includes(game)) renderFiveOverview(game, acc); } // 五星总览
+  else renderRecords(game);                       // 具体卡池：记录表
 }
+
+// ---------- 五星总览（原神 / 崩铁 / 鸣潮） ----------
+// 物品图标路径：按游戏与类型选择资源目录与扩展名
+function itemIcon(game, name, type) {
+  let id, sub, ext;
+  if (game === 'genshin') {
+    id = type === '角色' ? ysCharMap[name] : ysWeaponMap[name];
+    sub = type === '角色' ? 'avatar' : 'weapon'; ext = 'webp';
+  } else if (game === 'hsr') {
+    id = type === '角色' ? srCharMap[name] : srLcMap[name];
+    sub = type === '角色' ? 'avatar' : 'lightCone'; ext = 'webp';
+  } else if (game === 'wuwa') {
+    id = type === '角色' ? mcCharMap[name] : mcWeaponMap[name];
+    sub = type === '角色' ? 'avatar' : 'weapon'; ext = 'png';
+  }
+  if (!id) return '';
+  const base = game === 'genshin' ? 'ys' : game === 'hsr' ? 'sr' : 'mc';
+  return `res/${base}/ui/${sub}/${id}.${ext}`;
+}
+
+function renderFiveOverview(game, acc) {
+  const view = $(`#view-${game}`);
+  const tabsBox = $('[data-role="fiveTabs"]', view);
+  const card = $('[data-role="fiveOverview"]', view);
+  const grid = $('[data-role="fiveGrid"]', view);
+  const empty = $('[data-role="fiveEmpty"]', view);
+  const countChip = $('[data-role="fivePoolCount"]', view);
+
+  // 确保当前游戏的图标映射已加载（可能因 5 分钟未访问被卸载）
+  loadItemIcons(game);
+
+  if (!acc) {
+    tabsBox.innerHTML = '';
+    grid.innerHTML = '';
+    empty.hidden = false;
+    countChip.textContent = '0 个 5★';
+    const p = card.querySelector('.five-pager'); if (p) p.remove();
+    return;
+  }
+
+  // 仅保留有 5★ 记录的卡池，重建横向标签
+  const poolsWithFive = GAMES[game].pools.filter((p) =>
+    acc.records.some((r) => r.pool === p.key && r.rank === 5)
+  );
+
+  // 当前选中的卡池若无 5★，回退到第一个有数据的卡池
+  if (!poolsWithFive.some((p) => p.key === fiveOverviewPool[game])) {
+    fiveOverviewPool[game] = poolsWithFive[0]?.key || GAMES[game].pools[0].key;
+    fiveOverviewPage[game] = 1;
+  }
+
+  tabsBox.innerHTML = '';
+  poolsWithFive.forEach((p) => {
+    const btn = document.createElement('button');
+    btn.className = 'five-tab' + (p.key === fiveOverviewPool[game] ? ' active' : '');
+    btn.textContent = p.label;
+    btn.dataset.pool = p.key;
+    btn.addEventListener('click', () => {
+      fiveOverviewPool[game] = p.key;
+      fiveOverviewPage[game] = 1;
+      $$('.five-tab', tabsBox).forEach((b) => b.classList.toggle('active', b === btn));
+      renderFiveOverview(game, acc);
+    });
+    tabsBox.appendChild(btn);
+  });
+
+  const pity = pityMap(acc);
+  const poolKey = fiveOverviewPool[game];
+  const fives = acc.records
+    .filter((r) => r.pool === poolKey && r.rank === 5)
+    .sort(cmpRec)
+    .reverse(); // 最新在前
+
+  countChip.textContent = `${fives.length} 个 5★`;
+
+  if (!fives.length) {
+    grid.innerHTML = '';
+    empty.hidden = false;
+    const p = card.querySelector('.five-pager'); if (p) p.remove();
+    return;
+  }
+  empty.hidden = true;
+
+  // 分页：每页 14 个（2 行 × 7 列）
+  const totalPages = Math.max(1, Math.ceil(fives.length / FIVE_PAGE_SIZE));
+  if (fiveOverviewPage[game] > totalPages) fiveOverviewPage[game] = totalPages;
+  const page = fiveOverviewPage[game];
+  const pageItems = fives.slice((page - 1) * FIVE_PAGE_SIZE, page * FIVE_PAGE_SIZE);
+
+  grid.innerHTML = pageItems.map((r) => {
+    const p = pity.get(r.id) ?? '?';
+    const icon = itemIcon(game, r.name, r.type);
+    const iconHtml = icon ? `<img class="five-item-icon" src="${icon}" alt="" onerror="this.style.display='none'">` : '';
+    // 崩铁角色卡片可点击打开配队推荐
+    const clickable = game === 'hsr' && r.type === '角色' ? ' team-char' : '';
+    return `<div class="five-item${clickable}"${clickable ? ` data-name="${r.name.replace(/"/g, '&quot;')}"` : ''}>
+      ${iconHtml}
+      <div class="five-item-name" style="color:${nameColor(r.name)}">${r.name}</div>
+      <div class="five-item-meta">
+        <span class="five-item-type">${r.type}</span>
+        <span class="five-item-pity">${p} 抽出</span>
+      </div>
+      <div class="five-item-time">${r.time}</div>
+    </div>`;
+  }).join('');
+
+  // 崩铁角色卡片点击 → 打开配队推荐弹窗
+  if (game === 'hsr') {
+    grid.querySelectorAll('.team-char').forEach((el) => {
+      el.addEventListener('click', () => openTeamRec(el.dataset.name));
+    });
+  }
+
+  // 分页控件（多页时才显示）
+  let pager = card.querySelector('.five-pager');
+  if (totalPages > 1) {
+    if (!pager) {
+      pager = document.createElement('div');
+      pager.className = 'five-pager';
+      card.appendChild(pager);
+    }
+    const go = (pg) => {
+      fiveOverviewPage[game] = pg;
+      renderFiveOverview(game, acc);
+    };
+    let btns = `<button class="five-page-btn" ${page <= 1 ? 'disabled' : ''} data-go="${page - 1}">上一页</button>`;
+    for (let i = 1; i <= totalPages; i++) {
+      btns += `<button class="five-page-btn${i === page ? ' active' : ''}" data-go="${i}">${i}</button>`;
+    }
+    btns += `<button class="five-page-btn" ${page >= totalPages ? 'disabled' : ''} data-go="${page + 1}">下一页</button>`;
+    pager.innerHTML = btns;
+    pager.querySelectorAll('[data-go]').forEach((b) => {
+      b.addEventListener('click', () => go(Number(b.dataset.go)));
+    });
+  } else if (pager) {
+    pager.remove();
+  }
+}
+
+// ---------- 崩铁·配队：已有角色 / 光锥 ----------
+async function renderHsrTeam() {
+  const view = $('#view-hsr-team');
+  const acc = activeOf('hsr');
+
+  // 账号栏
+  const selBtn = $('[data-role="uidSelectBtn"]', view);
+  if (selBtn) {
+    const txt = selBtn.querySelector('.usb-text');
+    if (acc) {
+      txt.textContent = acc.remark ? `${acc.uid} · ${acc.remark}` : acc.uid;
+      selBtn.classList.remove('empty');
+    } else {
+      txt.textContent = '选择账号';
+      selBtn.classList.add('empty');
+    }
+    selBtn.disabled = !accountsOf('hsr').length;
+  }
+  const remarkEl = $('[data-role="abRemark"]', view);
+  if (remarkEl) {
+    const r = acc?.remark || '';
+    remarkEl.textContent = r ? '修改备注' : '新增备注';
+    remarkEl.classList.toggle('has', !!r);
+    remarkEl.title = r ? `当前备注：${r}，点击修改` : '点击添加账号备注';
+  }
+  const hint = $('[data-role="abHint"]', view);
+  if (hint) {
+    if (!acc) { hint.textContent = '未导入'; }
+    else {
+      const copies = acc.records.length;
+      hint.textContent = `${copies} 条记录 · 更新于 ${fmtTime(acc.updatedAt)}`;
+    }
+  }
+
+  const owned = $('[data-role="teamOwned"]', view);
+  const empty = $('[data-role="accountEmpty"]', view);
+  if (!acc) {
+    empty.hidden = false;
+    owned.hidden = true;
+    return;
+  }
+  empty.hidden = true;
+  owned.hidden = false;
+
+  // 按需加载崩铁图标映射；若本次触发了实际加载，加载完成后自动重渲一次
+  const hadInfo = Object.keys(srCharInfo).length > 0 || Object.keys(srLcInfo).length > 0;
+  await loadItemIcons('hsr');
+  if (!hadInfo && (Object.keys(srCharInfo).length > 0 || Object.keys(srLcInfo).length > 0)) {
+    renderHsrTeam();
+    return;
+  }
+
+  const grid = $('[data-role="teamGrid"]', view);
+  const emptyTip = $('[data-role="teamEmpty"]', view);
+  const countChip = $('[data-role="teamCount"]', view);
+  const filtersBox = $('[data-role="teamFilters"]', view);
+
+  const infoMap = teamTab === '角色' ? srCharInfo : srLcInfo;
+
+  // 按名称去重，统计数量、最高星级、首次获取时间；附上命途/属性/星级元数据
+  const map = new Map();
+  acc.records.forEach((r) => {
+    if (r.type !== teamTab) return;
+    const info = infoMap[r.name] || {};
+    const star = info.star ?? r.rank;
+    // 三星排除在外
+    if (star < 4) return;
+    const cur = map.get(r.name);
+    if (cur) {
+      cur.count += 1;
+      cur.rank = Math.max(cur.rank, r.rank);
+    } else {
+      map.set(r.name, {
+        name: r.name, type: r.type, rank: r.rank, count: 1, time: r.time,
+        path: info.path || '', property: info.property || '', star,
+      });
+    }
+  });
+
+  const allItems = [...map.values()];
+
+  // 渲染筛选栏：根据当前类型下所有可用物品生成命途/属性/星级选项
+  const availPath = [...new Set(allItems.map((i) => i.path).filter(Boolean))].sort();
+  const availProp = [...new Set(allItems.map((i) => i.property).filter(Boolean))].sort();
+  const availStar = [...new Set(allItems.map((i) => i.star).filter(Boolean))].sort((a, b) => b - a);
+
+  // 光锥没有属性，隐藏属性筛选行
+  filtersBox.querySelector('[data-filter="property"]').style.display =
+    teamTab === '光锥' ? 'none' : '';
+
+  const renderFilterRow = (key, label, values, valFormatter) => {
+    const row = filtersBox.querySelector(`[data-filter="${key}"]`);
+    const segs = row.querySelector('.team-filter-segs');
+    const current = teamFilter[key];
+    // 若当前选中值不在可用列表中，回退为全部
+    if (current && !values.map(String).includes(String(current))) teamFilter[key] = '';
+    const active = teamFilter[key];
+    let html = `<button class="seg${active === '' ? ' active' : ''}" data-val="">全部</button>`;
+    values.forEach((v) => {
+      const sv = String(v);
+      html += `<button class="seg${active === sv ? ' active' : ''}" data-val="${sv}">${valFormatter ? valFormatter(v) : v}</button>`;
+    });
+    segs.innerHTML = html;
+    segs.querySelectorAll('.seg').forEach((b) => {
+      b.addEventListener('click', () => {
+        teamFilter[key] = b.dataset.val;
+        teamPage = 1;
+        renderHsrTeam();
+      });
+    });
+  };
+
+  renderFilterRow('path', '命途', availPath);
+  renderFilterRow('property', '属性', availProp);
+  renderFilterRow('star', '星级', availStar, (v) => `${v}★`);
+
+  // 应用筛选
+  const items = allItems
+    .filter((it) => {
+      if (teamFilter.path && it.path !== teamFilter.path) return false;
+      if (teamFilter.property && it.property !== teamFilter.property) return false;
+      if (teamFilter.star && String(it.star) !== teamFilter.star) return false;
+      return true;
+    })
+    // 排序：首次获取时间从新到旧
+    .sort((a, b) => {
+      if (a.time !== b.time) return a.time < b.time ? 1 : -1;
+      return a.name < b.name ? -1 : 1;
+    });
+
+  countChip.textContent = `${items.length} 个${teamTab}`;
+
+  if (!items.length) {
+    grid.innerHTML = '';
+    emptyTip.hidden = false;
+    const oldPager = owned.querySelector('.team-pager'); if (oldPager) oldPager.remove();
+    return;
+  }
+  emptyTip.hidden = true;
+
+  // 分页：每页最多 2 行（14 个）
+  const totalPages = Math.max(1, Math.ceil(items.length / TEAM_PAGE_SIZE));
+  if (teamPage > totalPages) teamPage = totalPages;
+  if (teamPage < 1) teamPage = 1;
+  const pageItems = items.slice((teamPage - 1) * TEAM_PAGE_SIZE, teamPage * TEAM_PAGE_SIZE);
+
+  grid.innerHTML = pageItems.map((it) => {
+    const icon = itemIcon('hsr', it.name, it.type);
+    const iconHtml = icon ? `<img class="five-item-icon" src="${icon}" alt="" onerror="this.style.display='none'">` : '';
+    // 命座/叠影 = 抽到个数 - 1，最高 6 命/叠；仅 1 个时不显示
+    const eidolon = Math.min(it.count - 1, 6);
+    const copies = it.count > 1 ? `<span class="team-copies">${eidolon}${teamTab === '角色' ? '命' : '叠'}</span>` : '';
+    const tags = [it.path, it.property].filter(Boolean).join(' · ');
+    const clickable = teamTab === '角色' ? ' team-char' : '';
+    return `<div class="five-item${clickable}"${clickable ? ` data-name="${it.name.replace(/"/g, '&quot;')}"` : ''}>
+      <div class="team-icon-wrap">${iconHtml}${copies}</div>
+      <div class="five-item-name" style="color:${nameColor(it.name)}">${it.name}</div>
+      <div class="five-item-meta">
+        <span class="five-item-type">${it.star}★</span>
+        ${tags ? `<span class="five-item-pity">${tags}</span>` : ''}
+      </div>
+      <div class="five-item-time">首获 ${it.time}</div>
+    </div>`;
+  }).join('');
+
+  // 角色卡片点击 → 打开配队推荐弹窗
+  grid.querySelectorAll('.team-char').forEach((el) => {
+    el.addEventListener('click', () => openTeamRec(el.dataset.name));
+  });
+
+  // 分页控件（多页时才显示）
+  let pager = owned.querySelector('.team-pager');
+  if (totalPages > 1) {
+    if (!pager) {
+      pager = document.createElement('div');
+      pager.className = 'team-pager';
+      owned.appendChild(pager);
+    }
+    const go = (pg) => { teamPage = pg; renderHsrTeam(); };
+    let btns = `<button class="team-page-btn" ${teamPage <= 1 ? 'disabled' : ''} data-go="${teamPage - 1}">上一页</button>`;
+    for (let i = 1; i <= totalPages; i++) {
+      btns += `<button class="team-page-btn${i === teamPage ? ' active' : ''}" data-go="${i}">${i}</button>`;
+    }
+    btns += `<button class="team-page-btn" ${teamPage >= totalPages ? 'disabled' : ''} data-go="${teamPage + 1}">下一页</button>`;
+    pager.innerHTML = btns;
+    pager.querySelectorAll('[data-go]').forEach((b) => {
+      b.addEventListener('click', () => go(Number(b.dataset.go)));
+    });
+  } else if (pager) {
+    pager.remove();
+  }
+}
+
+// ---------- 崩铁·配队推荐弹窗 ----------
+async function openTeamRec(charName) {
+  const acc = activeOf('hsr');
+  // 已拥有的角色（按名称去重）
+  const ownedNames = new Set();
+  if (acc && acc.records) {
+    acc.records.forEach((r) => {
+      if (r.type === '角色' && Number(r.rank) >= 4) ownedNames.add(r.name);
+    });
+  }
+  // 开拓者所有命途形态默认全部拥有
+  Object.keys(srCharMap || {}).forEach((n) => {
+    if (n.startsWith('开拓者')) ownedNames.add(n);
+  });
+
+  const mask = $('#teamRecMask');
+  const title = $('#teamRecTitle');
+  const list = $('[data-role="teamRecList"]');
+  title.textContent = `${charName} · 配队推荐`;
+  list.innerHTML = '<div class="team-rec-empty">加载中…</div>';
+  mask.hidden = false;
+
+  // 确保角色图标映射已加载
+  await loadItemIcons('hsr');
+
+  try {
+    const url = `res/sr/teams/${encodeURIComponent(charName)}.json`;
+    const data = await (await fetch(url)).json();
+    const teams = data.teams || [];
+    if (!teams.length) {
+      list.innerHTML = '<div class="team-rec-empty">暂无配队数据</div>';
+      return;
+    }
+    list.innerHTML = teams.map((t) => {
+      const mates = (t.mate || []).slice(0, 4).map((m) => {
+        const owned = ownedNames.has(m.name);
+        const icon = itemIcon('hsr', m.name, '角色');
+        const iconHtml = icon
+          ? `<img src="${icon}" alt="" onerror="this.style.display='none'">`
+          : '';
+        const tags = [m.path, m.property].filter(Boolean).join(' · ');
+        return `<div class="team-rec-mate ${owned ? 'owned' : 'missing'}">
+          <div class="team-rec-mate-icon">${iconHtml}</div>
+          <div class="team-rec-mate-name">${m.name}</div>
+          <div class="team-rec-mate-tags">${tags}</div>
+        </div>`;
+      }).join('');
+      return `<div class="team-rec-item">
+        <div class="team-rec-mates">${mates}</div>
+      </div>`;
+    }).join('');
+  } catch (err) {
+    list.innerHTML = '<div class="team-rec-empty">配队数据加载失败</div>';
+  }
+}
+
+function closeTeamRec() {
+  $('#teamRecMask').hidden = true;
+}
+
+// Esc 关闭配队弹窗
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && !$('#teamRecMask').hidden) closeTeamRec();
+});
 
 function renderRecords(game) {
   const view = $(`#view-${game}`);
@@ -989,6 +1485,7 @@ async function saveRemark() {
     renderGame(game);
     renderOverview();
     renderAccounts();
+    if (game === 'hsr') renderHsrTeam();
     toast(acc.remark ? '备注已保存' : '备注已清除');
   } finally {
     remarkSaving = false;
@@ -1016,6 +1513,7 @@ $('#accountList').addEventListener('click', async (e) => {
     await save();
     renderGame(game);
     renderOverview();
+    if (game === 'hsr') renderHsrTeam();
     toast(`已切换到账号 ${uid}`);
   } else if (del) {
     const [game, uid] = del.dataset.del.split(':');
@@ -1026,6 +1524,7 @@ $('#accountList').addEventListener('click', async (e) => {
     await save();
     renderGame(game);
     renderOverview();
+    if (game === 'hsr') renderHsrTeam();
     toast(`已删除账号 ${uid}`);
   }
 });
@@ -1092,6 +1591,7 @@ async function importData(game) {
     await save();
     renderGame(game);
     renderOverview();
+    if (game === 'hsr') renderHsrTeam();
     toast(`导入完成：${res.uids.length} 个账号，新增 ${added} 条记录`);
     return;
   }
@@ -1111,6 +1611,7 @@ async function importData(game) {
   await save();
   renderGame(game);
   renderOverview();
+  if (game === 'hsr') renderHsrTeam();
   toast(`导入完成：${res.uids.length} 个账号，新增 ${added} 条记录`);
 }
 
@@ -1167,6 +1668,7 @@ async function fetchOnline(game, link) {
     await save();
     renderGame(game);
     renderOverview();
+    if (game === 'hsr') renderHsrTeam();
     toast(added ? `更新完成：新增 ${added} 条记录` : '数据已是最新');
   } finally {
     off();
@@ -1278,6 +1780,8 @@ $('#acctSelectMask').addEventListener('click', async (e) => {
   closeAcctSelect();
   renderGame(game);
   renderOverview();
+  // 切换崩铁账号后同步刷新配队页
+  if (game === 'hsr') renderHsrTeam();
 });
 
 // ---------- 操作按钮 ----------
@@ -1293,6 +1797,7 @@ document.addEventListener('click', (e) => {
   if (act === 'closeLink') return closeLinkUpdate();
   if (act === 'closeAcctSelect') return closeAcctSelect();
   if (act === 'closeRemark') return closeRemarkEdit();
+  if (act === 'closeTeamRec') return closeTeamRec();
   if (act === 'saveRemark') return saveRemark();
   if (act === 'submitLink') return submitLinkUpdate();
   if (act === 'export' && game) return exportData(game);
@@ -1355,6 +1860,32 @@ function setupUidSelects() {
       });
     }
   });
+
+  // 崩铁·配队：共用崩铁账号
+  const teamView = $('#view-hsr-team');
+  if (teamView) {
+    const teamBtn = $('[data-role="uidSelectBtn"]', teamView);
+    if (teamBtn) teamBtn.addEventListener('click', () => openAcctSelect('hsr'));
+    const teamRemark = $('[data-role="abRemark"]', teamView);
+    if (teamRemark) {
+      teamRemark.addEventListener('click', () => {
+        const acc = activeOf('hsr');
+        if (!acc) { toast('请先导入账号'); return; }
+        openRemarkEdit('hsr', acc.uid);
+      });
+    }
+    // 角色 / 光锥 切换
+    $$('[data-role="teamTabs"] .seg', teamView).forEach((seg) => {
+      seg.addEventListener('click', () => {
+        teamTab = seg.dataset.type;
+        // 切换类型时重置筛选条件与页码
+        teamFilter = { path: '', property: '', star: '' };
+        teamPage = 1;
+        $$('[data-role="teamTabs"] .seg', teamView).forEach((s) => s.classList.toggle('active', s === seg));
+        renderHsrTeam();
+      });
+    });
+  }
 }
 
 // ---------- 图标 ----------
@@ -1372,6 +1903,8 @@ const ICONS = new Proxy({}, {
     return;
   }
   GAME_ORDER = Object.keys(GAMES);
+
+  // 物品图标映射改为按需加载（进入对应游戏视图时加载，5 分钟未访问自动卸载）
 
   // 由 poolMap 反推内部 key → 原始 gacha_type（取每个 key 首个 code）
   API_KEY_OF = {};
@@ -1397,6 +1930,8 @@ const ICONS = new Proxy({}, {
     subRefs[g] = [];
     VIEW_TITLES[g] = `${GAMES[g].name} · ${GAMES[g].act}`;
   });
+  // 崩铁·配队：标题从崩铁配置派生
+  if (GAMES['hsr']) VIEW_TITLES['hsr-team'] = `${GAMES['hsr'].name} · 配队`;
 
   setupGameSubgroups();
   setupUidSelects();
@@ -1432,9 +1967,16 @@ const ICONS = new Proxy({}, {
   const AUTO_UPDATE_INTERVAL = 20 * 60 * 1000;
   setInterval(() => {
     const active = document.querySelector('.view.active');
-    if (!active) return;
-    const game = active.id.slice(5); // 'view-xxx' -> 'xxx'
-    if (!GAMES[game]) return;
+    const game = active ? active.id.slice(5) : null; // 'view-xxx' -> 'xxx'
+    // 物品图标映射：当前游戏保活，其他游戏超过 5 分钟未访问则卸载
+    FIVE_OVERVIEW_GAMES.forEach((g) => {
+      if (g === game) {
+        if (iconLoadTime[g]) iconLoadTime[g] = Date.now(); // 保活
+      } else if (iconLoadTime[g] && Date.now() - iconLoadTime[g] >= ICON_UNLOAD_MS) {
+        unloadItemIcons(g);
+      }
+    });
+    if (!active || !GAMES[game]) return;
     // 刷新下次自动更新时间提示（开关状态或时间变化时同步）
     setAbHint(game);
     if (!autoUpdateEnabled || fetching[game]) return;

@@ -1,0 +1,173 @@
+{
+  "id": 1215,
+  "name": "寒鸦",
+  "property": "物理",
+  "path": "同谐",
+  "star": "4",
+  "teams": [
+    {
+      "rank": "724",
+      "usage": "0.01%",
+      "cycles": [
+        {
+          "e": 1,
+          "l": "1 命+",
+          "v": 10.5
+        }
+      ],
+      "mate": [
+        {
+          "id": 1215,
+          "name": "寒鸦",
+          "property": "物理",
+          "path": "同谐",
+          "star": "4"
+        },
+        {
+          "id": 1414,
+          "name": "丹恒•腾荒",
+          "property": "物理",
+          "path": "存护",
+          "star": "5"
+        },
+        {
+          "id": 1015,
+          "name": "Archer",
+          "property": "量子",
+          "path": "巡猎",
+          "star": "5"
+        },
+        {
+          "id": 1306,
+          "name": "花火",
+          "property": "量子",
+          "path": "同谐",
+          "star": "5"
+        }
+      ]
+    },
+    {
+      "rank": "724",
+      "usage": "0.01%",
+      "cycles": [
+        {
+          "e": 1,
+          "l": "1 命+",
+          "v": 10
+        }
+      ],
+      "mate": [
+        {
+          "id": 1215,
+          "name": "寒鸦",
+          "property": "物理",
+          "path": "同谐",
+          "star": "4"
+        },
+        {
+          "id": 1508,
+          "name": "远坂凛",
+          "property": "量子",
+          "path": "智识",
+          "star": "5"
+        },
+        {
+          "id": 1015,
+          "name": "Archer",
+          "property": "量子",
+          "path": "巡猎",
+          "star": "5"
+        },
+        {
+          "id": 1208,
+          "name": "符玄",
+          "property": "量子",
+          "path": "存护",
+          "star": "5"
+        }
+      ]
+    },
+    {
+      "rank": "724",
+      "usage": "0.01%",
+      "cycles": [
+        {
+          "e": 1,
+          "l": "1 命+",
+          "v": 0
+        }
+      ],
+      "mate": [
+        {
+          "id": 1215,
+          "name": "寒鸦",
+          "property": "物理",
+          "path": "同谐",
+          "star": "4"
+        },
+        {
+          "id": 1508,
+          "name": "远坂凛",
+          "property": "量子",
+          "path": "智识",
+          "star": "5"
+        },
+        {
+          "id": 1015,
+          "name": "Archer",
+          "property": "量子",
+          "path": "巡猎",
+          "star": "5"
+        },
+        {
+          "id": 1306,
+          "name": "花火",
+          "property": "量子",
+          "path": "同谐",
+          "star": "5"
+        }
+      ]
+    },
+    {
+      "rank": "724",
+      "usage": "0.01%",
+      "cycles": [
+        {
+          "e": 1,
+          "l": "1 命+",
+          "v": 7
+        }
+      ],
+      "mate": [
+        {
+          "id": 1215,
+          "name": "寒鸦",
+          "property": "物理",
+          "path": "同谐",
+          "star": "4"
+        },
+        {
+          "id": 1508,
+          "name": "远坂凛",
+          "property": "量子",
+          "path": "智识",
+          "star": "5"
+        },
+        {
+          "id": 1015,
+          "name": "Archer",
+          "property": "量子",
+          "path": "巡猎",
+          "star": "5"
+        },
+        {
+          "id": 1403,
+          "name": "缇宝",
+          "property": "量子",
+          "path": "同谐",
+          "star": "5"
+        }
+      ]
+    }
+  ]
+}

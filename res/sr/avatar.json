@@ -1,0 +1,893 @@
+[
+  {
+    "name": "星神★阿哈",
+    "id": 1511,
+    "path": "欢愉",
+    "en": "Aeon ★ Aha",
+    "property": "量子",
+    "star": "5",
+    "isNew": 1
+  },
+  {
+    "name": "真珠",
+    "id": 1503,
+    "path": "欢愉",
+    "en": "Pearl",
+    "property": "冰",
+    "star": "5",
+    "isNew": 0
+  },
+  {
+    "name": "砂金•戏浪",
+    "id": 1513,
+    "path": "欢愉",
+    "en": "Aventurine • Waveflair",
+    "property": "量子",
+    "star": "5",
+    "isNew": 0
+  },
+  {
+    "name": "知更鸟•晴歌",
+    "id": 1512,
+    "path": "记忆",
+    "en": "Robin • Summeretto",
+    "property": "风",
+    "star": "5",
+    "isNew": 0
+  },
+  {
+    "name": "姬子•启行",
+    "id": 1510,
+    "path": "智识",
+    "en": "Himeko • Nova",
+    "property": "火",
+    "star": "5",
+    "isNew": 0
+  },
+  {
+    "name": "吉尔伽美什",
+    "id": 1509,
+    "path": "毁灭",
+    "en": "Gilgamesh",
+    "property": "雷",
+    "star": "5",
+    "isNew": 0
+  },
+  {
+    "name": "远坂凛",
+    "id": 1508,
+    "path": "智识",
+    "en": "Rin Tohsaka",
+    "property": "量子",
+    "star": "5",
+    "isNew": 0
+  },
+  {
+    "name": "千冶•刃",
+    "id": 1507,
+    "path": "虚无",
+    "en": "Mortenax Blade",
+    "property": "火",
+    "star": "5",
+    "isNew": 0
+  },
+  {
+    "name": "银狼LV.999",
+    "id": 1506,
+    "path": "欢愉",
+    "en": "Silver Wolf LV.<unbreak>999</unbreak>",
+    "property": "虚数",
+    "star": "5",
+    "isNew": 0
+  },
+  {
+    "name": "绯英",
+    "id": 1505,
+    "path": "欢愉",
+    "en": "Evanescia",
+    "property": "物理",
+    "star": "5",
+    "isNew": 0
+  },
+  {
+    "name": "不死途",
+    "id": 1504,
+    "path": "巡猎",
+    "en": "Ashveil",
+    "property": "雷",
+    "star": "5",
+    "isNew": 0
+  },
+  {
+    "name": "爻光",
+    "id": 1502,
+    "path": "欢愉",
+    "en": "Yao Guang",
+    "property": "物理",
+    "star": "5",
+    "isNew": 0
+  },
+  {
+    "name": "火花",
+    "id": 1501,
+    "path": "欢愉",
+    "en": "Sparxie",
+    "property": "火",
+    "star": "5",
+    "isNew": 0
+  },
+  {
+    "name": "大丽花",
+    "id": 1321,
+    "path": "虚无",
+    "en": "The Dahlia",
+    "property": "火",
+    "star": "5",
+    "isNew": 0
+  },
+  {
+    "name": "昔涟",
+    "id": 1415,
+    "path": "记忆",
+    "en": "Cyrene",
+    "property": "冰",
+    "star": "5",
+    "isNew": 0
+  },
+  {
+    "name": "丹恒•腾荒",
+    "id": 1414,
+    "path": "存护",
+    "en": "Dan Heng • Permansor Terrae",
+    "property": "物理",
+    "star": "5",
+    "isNew": 0
+  },
+  {
+    "name": "长夜月",
+    "id": 1413,
+    "path": "记忆",
+    "en": "Evernight",
+    "property": "冰",
+    "star": "5",
+    "isNew": 0
+  },
+  {
+    "name": "刻律德菈",
+    "id": 1412,
+    "path": "同谐",
+    "en": "Cerydra",
+    "property": "风",
+    "star": "5",
+    "isNew": 0
+  },
+  {
+    "name": "海瑟音",
+    "id": 1410,
+    "path": "虚无",
+    "en": "Hysilens",
+    "property": "物理",
+    "star": "5",
+    "isNew": 0
+  },
+  {
+    "name": "白厄",
+    "id": 1408,
+    "path": "毁灭",
+    "en": "Phainon",
+    "property": "物理",
+    "star": "5",
+    "isNew": 0
+  },
+  {
+    "name": "Archer",
+    "id": 1015,
+    "path": "巡猎",
+    "en": "Archer",
+    "property": "量子",
+    "star": "5",
+    "isNew": 0
+  },
+  {
+    "name": "Saber",
+    "id": 1014,
+    "path": "毁灭",
+    "en": "Saber",
+    "property": "风",
+    "star": "5",
+    "isNew": 0
+  },
+  {
+    "name": "风堇",
+    "id": 1409,
+    "path": "记忆",
+    "en": "Hyacine",
+    "property": "风",
+    "star": "5",
+    "isNew": 0
+  },
+  {
+    "name": "赛飞儿",
+    "id": 1406,
+    "path": "虚无",
+    "en": "Cipher",
+    "property": "量子",
+    "star": "5",
+    "isNew": 0
+  },
+  {
+    "name": "遐蝶",
+    "id": 1407,
+    "path": "记忆",
+    "en": "Castorice",
+    "property": "量子",
+    "star": "5",
+    "isNew": 0
+  },
+  {
+    "name": "那刻夏",
+    "id": 1405,
+    "path": "智识",
+    "en": "Anaxa",
+    "property": "风",
+    "star": "5",
+    "isNew": 0
+  },
+  {
+    "name": "万敌",
+    "id": 1404,
+    "path": "毁灭",
+    "en": "Mydei",
+    "property": "虚数",
+    "star": "5",
+    "isNew": 0
+  },
+  {
+    "name": "缇宝",
+    "id": 1403,
+    "path": "同谐",
+    "en": "Tribbie",
+    "property": "量子",
+    "star": "5",
+    "isNew": 0
+  },
+  {
+    "name": "阿格莱雅",
+    "id": 1402,
+    "path": "记忆",
+    "en": "Aglaea",
+    "property": "雷",
+    "star": "5",
+    "isNew": 0
+  },
+  {
+    "name": "大黑塔",
+    "id": 1401,
+    "path": "智识",
+    "en": "The Herta",
+    "property": "冰",
+    "star": "5",
+    "isNew": 0
+  },
+  {
+    "name": "星期日",
+    "id": 1313,
+    "path": "同谐",
+    "en": "Sunday",
+    "property": "虚数",
+    "star": "5",
+    "isNew": 0
+  },
+  {
+    "name": "忘归人",
+    "id": 1225,
+    "path": "虚无",
+    "en": "Fugue",
+    "property": "火",
+    "star": "5",
+    "isNew": 0
+  },
+  {
+    "name": "乱破",
+    "id": 1317,
+    "path": "智识",
+    "en": "Rappa",
+    "property": "虚数",
+    "star": "5",
+    "isNew": 0
+  },
+  {
+    "name": "波提欧",
+    "id": 1315,
+    "path": "巡猎",
+    "en": "Boothill",
+    "property": "物理",
+    "star": "5",
+    "isNew": 0
+  },
+  {
+    "name": "翡翠",
+    "id": 1314,
+    "path": "智识",
+    "en": "Jade",
+    "property": "量子",
+    "star": "5",
+    "isNew": 0
+  },
+  {
+    "name": "米沙",
+    "id": 1312,
+    "path": "毁灭",
+    "en": "Misha",
+    "property": "冰",
+    "star": "4",
+    "isNew": 0
+  },
+  {
+    "name": "流萤",
+    "id": 1310,
+    "path": "毁灭",
+    "en": "Firefly",
+    "property": "火",
+    "star": "5",
+    "isNew": 0
+  },
+  {
+    "name": "知更鸟",
+    "id": 1309,
+    "path": "同谐",
+    "en": "Robin",
+    "property": "物理",
+    "star": "5",
+    "isNew": 0
+  },
+  {
+    "name": "黄泉",
+    "id": 1308,
+    "path": "虚无",
+    "en": "Acheron",
+    "property": "雷",
+    "star": "5",
+    "isNew": 0
+  },
+  {
+    "name": "黑天鹅",
+    "id": 1307,
+    "path": "虚无",
+    "en": "Black Swan",
+    "property": "风",
+    "star": "5",
+    "isNew": 0
+  },
+  {
+    "name": "花火",
+    "id": 1306,
+    "path": "同谐",
+    "en": "Sparkle",
+    "property": "量子",
+    "star": "5",
+    "isNew": 0
+  },
+  {
+    "name": "真理医生",
+    "id": 1305,
+    "path": "巡猎",
+    "en": "Dr. Ratio",
+    "property": "虚数",
+    "star": "5",
+    "isNew": 0
+  },
+  {
+    "name": "砂金",
+    "id": 1304,
+    "path": "存护",
+    "en": "Aventurine",
+    "property": "虚数",
+    "star": "5",
+    "isNew": 0
+  },
+  {
+    "name": "阮•梅",
+    "id": 1303,
+    "path": "同谐",
+    "en": "Ruan Mei",
+    "property": "冰",
+    "star": "5",
+    "isNew": 0
+  },
+  {
+    "name": "银枝",
+    "id": 1302,
+    "path": "智识",
+    "en": "Argenti",
+    "property": "物理",
+    "star": "5",
+    "isNew": 0
+  },
+  {
+    "name": "加拉赫",
+    "id": 1301,
+    "path": "丰饶",
+    "en": "Gallagher",
+    "property": "火",
+    "star": "4",
+    "isNew": 0
+  },
+  {
+    "name": "三月七(虚数)",
+    "id": 1224,
+    "path": "巡猎",
+    "en": "March 7th",
+    "property": "虚数",
+    "star": "4",
+    "isNew": 0
+  },
+  {
+    "name": "貊泽",
+    "id": 1223,
+    "path": "巡猎",
+    "en": "Moze",
+    "property": "雷",
+    "star": "4",
+    "isNew": 0
+  },
+  {
+    "name": "灵砂",
+    "id": 1222,
+    "path": "丰饶",
+    "en": "Lingsha",
+    "property": "火",
+    "star": "5",
+    "isNew": 0
+  },
+  {
+    "name": "云璃",
+    "id": 1221,
+    "path": "毁灭",
+    "en": "Yunli",
+    "property": "物理",
+    "star": "5",
+    "isNew": 0
+  },
+  {
+    "name": "飞霄",
+    "id": 1220,
+    "path": "巡猎",
+    "en": "Feixiao",
+    "property": "风",
+    "star": "5",
+    "isNew": 0
+  },
+  {
+    "name": "椒丘",
+    "id": 1218,
+    "path": "虚无",
+    "en": "Jiaoqiu",
+    "property": "火",
+    "star": "5",
+    "isNew": 0
+  },
+  {
+    "name": "藿藿",
+    "id": 1217,
+    "path": "丰饶",
+    "en": "Huohuo",
+    "property": "风",
+    "star": "5",
+    "isNew": 0
+  },
+  {
+    "name": "寒鸦",
+    "id": 1215,
+    "path": "同谐",
+    "en": "Hanya",
+    "property": "物理",
+    "star": "4",
+    "isNew": 0
+  },
+  {
+    "name": "雪衣",
+    "id": 1214,
+    "path": "毁灭",
+    "en": "Xueyi",
+    "property": "量子",
+    "star": "4",
+    "isNew": 0
+  },
+  {
+    "name": "丹恒•饮月",
+    "id": 1213,
+    "path": "毁灭",
+    "en": "Dan Heng • Imbibitor Lunae",
+    "property": "虚数",
+    "star": "5",
+    "isNew": 0
+  },
+  {
+    "name": "镜流",
+    "id": 1212,
+    "path": "毁灭",
+    "en": "Jingliu",
+    "property": "冰",
+    "star": "5",
+    "isNew": 0
+  },
+  {
+    "name": "白露",
+    "id": 1211,
+    "path": "丰饶",
+    "en": "Bailu",
+    "property": "雷",
+    "star": "5",
+    "isNew": 0
+  },
+  {
+    "name": "桂乃芬",
+    "id": 1210,
+    "path": "虚无",
+    "en": "Guinaifen",
+    "property": "火",
+    "star": "4",
+    "isNew": 0
+  },
+  {
+    "name": "彦卿",
+    "id": 1209,
+    "path": "巡猎",
+    "en": "Yanqing",
+    "property": "冰",
+    "star": "5",
+    "isNew": 0
+  },
+  {
+    "name": "符玄",
+    "id": 1208,
+    "path": "存护",
+    "en": "Fu Xuan",
+    "property": "量子",
+    "star": "5",
+    "isNew": 0
+  },
+  {
+    "name": "驭空",
+    "id": 1207,
+    "path": "同谐",
+    "en": "Yukong",
+    "property": "虚数",
+    "star": "4",
+    "isNew": 0
+  },
+  {
+    "name": "素裳",
+    "id": 1206,
+    "path": "巡猎",
+    "en": "Sushang",
+    "property": "物理",
+    "star": "4",
+    "isNew": 0
+  },
+  {
+    "name": "刃",
+    "id": 1205,
+    "path": "毁灭",
+    "en": "Blade",
+    "property": "风",
+    "star": "5",
+    "isNew": 0
+  },
+  {
+    "name": "景元",
+    "id": 1204,
+    "path": "智识",
+    "en": "Jing Yuan",
+    "property": "雷",
+    "star": "5",
+    "isNew": 0
+  },
+  {
+    "name": "罗刹",
+    "id": 1203,
+    "path": "丰饶",
+    "en": "Luocha",
+    "property": "虚数",
+    "star": "5",
+    "isNew": 0
+  },
+  {
+    "name": "停云",
+    "id": 1202,
+    "path": "同谐",
+    "en": "Tingyun",
+    "property": "雷",
+    "star": "4",
+    "isNew": 0
+  },
+  {
+    "name": "青雀",
+    "id": 1201,
+    "path": "智识",
+    "en": "Qingque",
+    "property": "量子",
+    "star": "4",
+    "isNew": 0
+  },
+  {
+    "name": "托帕&账账",
+    "id": 1112,
+    "path": "巡猎",
+    "en": "Topaz & Numby",
+    "property": "火",
+    "star": "5",
+    "isNew": 0
+  },
+  {
+    "name": "卢卡",
+    "id": 1111,
+    "path": "虚无",
+    "en": "Luka",
+    "property": "物理",
+    "star": "4",
+    "isNew": 0
+  },
+  {
+    "name": "玲可",
+    "id": 1110,
+    "path": "丰饶",
+    "en": "Lynx",
+    "property": "量子",
+    "star": "4",
+    "isNew": 0
+  },
+  {
+    "name": "虎克",
+    "id": 1109,
+    "path": "毁灭",
+    "en": "Hook",
+    "property": "火",
+    "star": "4",
+    "isNew": 0
+  },
+  {
+    "name": "桑博",
+    "id": 1108,
+    "path": "虚无",
+    "en": "Sampo",
+    "property": "风",
+    "star": "4",
+    "isNew": 0
+  },
+  {
+    "name": "克拉拉",
+    "id": 1107,
+    "path": "毁灭",
+    "en": "Clara",
+    "property": "物理",
+    "star": "5",
+    "isNew": 0
+  },
+  {
+    "name": "佩拉",
+    "id": 1106,
+    "path": "虚无",
+    "en": "Pela",
+    "property": "冰",
+    "star": "4",
+    "isNew": 0
+  },
+  {
+    "name": "娜塔莎",
+    "id": 1105,
+    "path": "丰饶",
+    "en": "Natasha",
+    "property": "物理",
+    "star": "4",
+    "isNew": 0
+  },
+  {
+    "name": "杰帕德",
+    "id": 1104,
+    "path": "存护",
+    "en": "Gepard",
+    "property": "冰",
+    "star": "5",
+    "isNew": 0
+  },
+  {
+    "name": "希露瓦",
+    "id": 1103,
+    "path": "智识",
+    "en": "Serval",
+    "property": "雷",
+    "star": "4",
+    "isNew": 0
+  },
+  {
+    "name": "希儿",
+    "id": 1102,
+    "path": "巡猎",
+    "en": "Seele",
+    "property": "量子",
+    "star": "5",
+    "isNew": 0
+  },
+  {
+    "name": "布洛妮娅",
+    "id": 1101,
+    "path": "同谐",
+    "en": "Bronya",
+    "property": "风",
+    "star": "5",
+    "isNew": 0
+  },
+  {
+    "name": "黑塔",
+    "id": 1013,
+    "path": "智识",
+    "en": "Herta",
+    "property": "冰",
+    "star": "4",
+    "isNew": 0
+  },
+  {
+    "name": "艾丝妲",
+    "id": 1009,
+    "path": "同谐",
+    "en": "Asta",
+    "property": "火",
+    "star": "4",
+    "isNew": 0
+  },
+  {
+    "name": "阿兰",
+    "id": 1008,
+    "path": "毁灭",
+    "en": "Arlan",
+    "property": "雷",
+    "star": "4",
+    "isNew": 0
+  },
+  {
+    "name": "银狼",
+    "id": 1006,
+    "path": "虚无",
+    "en": "Silver Wolf",
+    "property": "量子",
+    "star": "5",
+    "isNew": 0
+  },
+  {
+    "name": "卡芙卡",
+    "id": 1005,
+    "path": "虚无",
+    "en": "Kafka",
+    "property": "雷",
+    "star": "5",
+    "isNew": 0
+  },
+  {
+    "name": "瓦尔特",
+    "id": 1004,
+    "path": "虚无",
+    "en": "Welt",
+    "property": "虚数",
+    "star": "5",
+    "isNew": 0
+  },
+  {
+    "name": "姬子",
+    "id": 1003,
+    "path": "智识",
+    "en": "Himeko",
+    "property": "火",
+    "star": "5",
+    "isNew": 0
+  },
+  {
+    "name": "丹恒",
+    "id": 1002,
+    "path": "巡猎",
+    "en": "Dan Heng",
+    "property": "风",
+    "star": "4",
+    "isNew": 0
+  },
+  {
+    "name": "三月七",
+    "id": 1001,
+    "path": "存护",
+    "en": "March 7th",
+    "property": "冰",
+    "star": "4",
+    "isNew": 0
+  },
+  {
+    "name": "开拓者(欢愉)",
+    "id": 8010,
+    "path": "欢愉",
+    "en": "Trailblazer",
+    "property": "雷",
+    "star": "5",
+    "isNew": 0
+  },
+  {
+    "name": "开拓者(欢愉)",
+    "id": 8009,
+    "path": "欢愉",
+    "en": "Trailblazer",
+    "property": "雷",
+    "star": "5",
+    "isNew": 0
+  },
+  {
+    "name": "开拓者(记忆)",
+    "id": 8008,
+    "path": "记忆",
+    "en": "Trailblazer",
+    "property": "冰",
+    "star": "5",
+    "isNew": 0
+  },
+  {
+    "name": "开拓者(记忆)",
+    "id": 8007,
+    "path": "记忆",
+    "en": "Trailblazer",
+    "property": "冰",
+    "star": "5",
+    "isNew": 0
+  },
+  {
+    "name": "开拓者(同谐)",
+    "id": 8006,
+    "path": "同谐",
+    "en": "Trailblazer",
+    "property": "虚数",
+    "star": "5",
+    "isNew": 0
+  },
+  {
+    "name": "开拓者(同谐)",
+    "id": 8005,
+    "path": "同谐",
+    "en": "Trailblazer",
+    "property": "虚数",
+    "star": "5",
+    "isNew": 0
+  },
+  {
+    "name": "开拓者(存护)",
+    "id": 8004,
+    "path": "存护",
+    "en": "Trailblazer",
+    "property": "火",
+    "star": "5",
+    "isNew": 0
+  },
+  {
+    "name": "开拓者(存护)",
+    "id": 8003,
+    "path": "存护",
+    "en": "Trailblazer",
+    "property": "火",
+    "star": "5",
+    "isNew": 0
+  },
+  {
+    "name": "开拓者(毁灭)",
+    "id": 8002,
+    "path": "毁灭",
+    "en": "Trailblazer",
+    "property": "物理",
+    "star": "5",
+    "isNew": 0
+  },
+  {
+    "name": "开拓者(毁灭)",
+    "id": 8001,
+    "path": "毁灭",
+    "en": "Trailblazer",
+    "property": "物理",
+    "star": "5",
+    "isNew": 0
+  }
+]

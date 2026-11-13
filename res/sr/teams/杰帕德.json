@@ -1,0 +1,173 @@
+{
+  "id": 1104,
+  "name": "杰帕德",
+  "property": "冰",
+  "path": "存护",
+  "star": "5",
+  "teams": [
+    {
+      "rank": "",
+      "usage": "",
+      "cycles": [
+        {
+          "e": 1,
+          "l": "1 命+",
+          "v": 12
+        }
+      ],
+      "mate": [
+        {
+          "id": 1104,
+          "name": "杰帕德",
+          "property": "冰",
+          "path": "存护",
+          "star": "5"
+        },
+        {
+          "id": 1506,
+          "name": "银狼LV.999",
+          "property": "虚数",
+          "path": "欢愉",
+          "star": "5"
+        },
+        {
+          "id": 1501,
+          "name": "火花",
+          "property": "火",
+          "path": "欢愉",
+          "star": "5"
+        },
+        {
+          "id": 8010,
+          "name": "开拓者(欢愉)",
+          "property": "雷",
+          "path": "欢愉",
+          "star": "5"
+        }
+      ]
+    },
+    {
+      "rank": "",
+      "usage": "",
+      "cycles": [
+        {
+          "e": 1,
+          "l": "1 命+",
+          "v": 6
+        }
+      ],
+      "mate": [
+        {
+          "id": 1104,
+          "name": "杰帕德",
+          "property": "冰",
+          "path": "存护",
+          "star": "5"
+        },
+        {
+          "id": 1321,
+          "name": "大丽花",
+          "property": "火",
+          "path": "虚无",
+          "star": "5"
+        },
+        {
+          "id": 1310,
+          "name": "流萤",
+          "property": "火",
+          "path": "毁灭",
+          "star": "5"
+        },
+        {
+          "id": 8006,
+          "name": "开拓者(同谐)",
+          "property": "虚数",
+          "path": "同谐",
+          "star": "5"
+        }
+      ]
+    },
+    {
+      "rank": "",
+      "usage": "",
+      "cycles": [
+        {
+          "e": 1,
+          "l": "1 命+",
+          "v": 10
+        }
+      ],
+      "mate": [
+        {
+          "id": 1104,
+          "name": "杰帕德",
+          "property": "冰",
+          "path": "存护",
+          "star": "5"
+        },
+        {
+          "id": 1506,
+          "name": "银狼LV.999",
+          "property": "虚数",
+          "path": "欢愉",
+          "star": "5"
+        },
+        {
+          "id": 1502,
+          "name": "爻光",
+          "property": "物理",
+          "path": "欢愉",
+          "star": "5"
+        },
+        {
+          "id": 8010,
+          "name": "开拓者(欢愉)",
+          "property": "雷",
+          "path": "欢愉",
+          "star": "5"
+        }
+      ]
+    },
+    {
+      "rank": "",
+      "usage": "",
+      "cycles": [
+        {
+          "e": 1,
+          "l": "1 命+",
+          "v": 9
+        }
+      ],
+      "mate": [
+        {
+          "id": 1104,
+          "name": "杰帕德",
+          "property": "冰",
+          "path": "存护",
+          "star": "5"
+        },
+        {
+          "id": 1505,
+          "name": "绯英",
+          "property": "物理",
+          "path": "欢愉",
+          "star": "5"
+        },
+        {
+          "id": 1502,
+          "name": "爻光",
+          "property": "物理",
+          "path": "欢愉",
+          "star": "5"
+        },
+        {
+          "id": 8010,
+          "name": "开拓者(欢愉)",
+          "property": "雷",
+          "path": "欢愉",
+          "star": "5"
+        }
+      ]
+    }
+  ]
+}

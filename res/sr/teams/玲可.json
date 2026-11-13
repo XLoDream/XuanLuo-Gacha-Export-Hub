@@ -1,0 +1,91 @@
+{
+  "id": 1110,
+  "name": "玲可",
+  "property": "量子",
+  "path": "丰饶",
+  "star": "4",
+  "teams": [
+    {
+      "rank": "724",
+      "usage": "0.01%",
+      "cycles": [
+        {
+          "e": 1,
+          "l": "1 命+",
+          "v": 10
+        }
+      ],
+      "mate": [
+        {
+          "id": 1110,
+          "name": "玲可",
+          "property": "量子",
+          "path": "丰饶",
+          "star": "4"
+        },
+        {
+          "id": 1412,
+          "name": "刻律德菈",
+          "property": "风",
+          "path": "同谐",
+          "star": "5"
+        },
+        {
+          "id": 1408,
+          "name": "白厄",
+          "property": "物理",
+          "path": "毁灭",
+          "star": "5"
+        },
+        {
+          "id": 1306,
+          "name": "花火",
+          "property": "量子",
+          "path": "同谐",
+          "star": "5"
+        }
+      ]
+    },
+    {
+      "rank": "724",
+      "usage": "0.01%",
+      "cycles": [
+        {
+          "e": 1,
+          "l": "1 命+",
+          "v": 10
+        }
+      ],
+      "mate": [
+        {
+          "id": 1110,
+          "name": "玲可",
+          "property": "量子",
+          "path": "丰饶",
+          "star": "4"
+        },
+        {
+          "id": 1015,
+          "name": "Archer",
+          "property": "量子",
+          "path": "巡猎",
+          "star": "5"
+        },
+        {
+          "id": 1403,
+          "name": "缇宝",
+          "property": "量子",
+          "path": "同谐",
+          "star": "5"
+        },
+        {
+          "id": 1306,
+          "name": "花火",
+          "property": "量子",
+          "path": "同谐",
+          "star": "5"
+        }
+      ]
+    }
+  ]
+}
