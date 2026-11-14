@@ -1214,10 +1214,12 @@ ipcMain.handle('app:checkUpdate', async () => {
     sourceIndex = 0;
     const res = await checkForUpdatesWithFallback();
     const latest = res?.updateInfo?.version || null;
+    const notes = res?.updateInfo?.releaseNotes || '';
     return {
       status: 'ok',
       current: app.getVersion(),
       latest,
+      notes,
       downloaded: !!latest && downloadedVersion === latest,
       sources: sourceList(),
     };
@@ -1281,7 +1283,7 @@ function setupAutoUpdate(win) {
   autoUpdater.on('update-available', (info) => {
     if (startingDownload) return; // 选源重检时不再弹询问
     downloadingUpdate = false;
-    sendUpdateEvent('available', { version: info.version, sources: sourceList() });
+    sendUpdateEvent('available', { version: info.version, notes: info.releaseNotes || '', sources: sourceList() });
   });
   autoUpdater.on('update-not-available', () => { downloadingUpdate = false; });
   autoUpdater.on('download-progress', (p) => sendUpdateEvent('progress', { percent: Math.round(p.percent || 0) }));

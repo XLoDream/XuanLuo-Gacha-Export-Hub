@@ -99,6 +99,8 @@ function setUpdateState(state, d = {}) {
   $('#updateIcon').dataset.state = state;
   $('#updateProgress').hidden = true;
   $('#updateSources').hidden = true;
+  const notesEl = $('#updateNotes');
+  if (notesEl) notesEl.hidden = true;
   $('#updateActions').innerHTML = '';
 
   if (state === 'checking') {
@@ -115,11 +117,21 @@ function setUpdateState(state, d = {}) {
   if (state === 'available') {
     $('#updateTitle').textContent = `发现新版本 v${d.version || ''}`;
     $('#updateDesc').textContent = '选择下载源后开始更新，下载完成将自动重启安装';
+    // 更新内容（release notes）
+    const notesEl = $('#updateNotes');
+    if (d.notes) {
+      notesEl.hidden = false;
+      notesEl.innerHTML = `<h4>更新内容</h4><pre>${String(d.notes).replace(/</g, '&lt;').replace(/>/g, '&gt;')}</pre>`;
+    } else {
+      notesEl.hidden = true;
+    }
     const sources = d.sources || [];
     if (sources.length) {
       $('#updateSources').hidden = false;
+      // 默认选中 gh-proxy.com
+      const defaultIdx = sources.findIndex((s) => s.name === 'gh-proxy.com');
       $('#updateSources').innerHTML = sources
-        .map((s, i) => `<label class="update-source"><input type="radio" name="updSource" value="${s.index}"${i === 0 ? ' checked' : ''}><span>${s.name}</span></label>`)
+        .map((s) => `<label class="update-source"><input type="radio" name="updSource" value="${s.index}"${s.index === defaultIdx ? ' checked' : ''}><span>${s.name}</span></label>`)
         .join('');
     }
     $('#updateActions').innerHTML =
@@ -169,7 +181,7 @@ if (api?.onUpdate) {
   api.onUpdate((e) => {
     if (e.type === 'available') {
       pendingVersion = e.version;
-      setUpdateState('available', { version: e.version, sources: e.sources });
+      setUpdateState('available', { version: e.version, notes: e.notes, sources: e.sources });
     } else if (e.type === 'source') {
       pendingSource = e.name || '';
     } else if (e.type === 'progress') {
@@ -1017,6 +1029,22 @@ async function renderHsrTeam() {
 
   const allItems = [...map.values()];
 
+  // 未拥有的角色/光锥也展示（从 infoMap 补全），排到最后；开拓者默认拥有，夹在中间
+  const ownedNames = new Set(allItems.map((i) => i.name));
+  Object.entries(infoMap).forEach(([name, info]) => {
+    if (ownedNames.has(name)) return;
+    const star = info.star;
+    if (star < 4) return; // 三星排除
+    const isTb = name.startsWith('开拓者');
+    allItems.push({
+      name, type: teamTab, rank: Number(star) || 0, count: isTb ? 1 : 0, time: '',
+      path: info.path || '', property: info.property || '', star, owned: isTb ? 'default' : false,
+    });
+  });
+
+  // 已拥有的标记
+  allItems.forEach((it) => { if (it.owned === undefined) it.owned = true; });
+
   // 渲染筛选栏：根据当前类型下所有可用物品生成命途/属性/星级选项
   const availPath = [...new Set(allItems.map((i) => i.path).filter(Boolean))].sort();
   const availProp = [...new Set(allItems.map((i) => i.property).filter(Boolean))].sort();
@@ -1060,9 +1088,17 @@ async function renderHsrTeam() {
       if (teamFilter.star && String(it.star) !== teamFilter.star) return false;
       return true;
     })
-    // 排序：首次获取时间从新到旧
+    // 排序：已拥有 → 开拓者默认拥有 → 未拥有
     .sort((a, b) => {
-      if (a.time !== b.time) return a.time < b.time ? 1 : -1;
+      const rank = (o) => o === true ? 0 : o === 'default' ? 1 : 2;
+      const ra = rank(a.owned), rb = rank(b.owned);
+      if (ra !== rb) return ra - rb;
+      if (a.owned === true) {
+        if (a.time !== b.time) return a.time < b.time ? 1 : -1;
+        return a.name < b.name ? -1 : 1;
+      }
+      // 开拓者 / 未拥有：按星级降序→名称升序
+      if (a.star !== b.star) return b.star - a.star;
       return a.name < b.name ? -1 : 1;
     });
 
@@ -1085,19 +1121,24 @@ async function renderHsrTeam() {
   grid.innerHTML = pageItems.map((it) => {
     const icon = itemIcon('hsr', it.name, it.type);
     const iconHtml = icon ? `<img class="five-item-icon" src="${icon}" alt="" onerror="this.style.display='none'">` : '';
-    // 命座/叠影 = 抽到个数 - 1，最高 6 命/叠；仅 1 个时不显示
-    const eidolon = Math.min(it.count - 1, 6);
+    // 命座/叠影 = 抽到个数 - 1，最高 6 命/叠；仅 1 个时不显示；未拥有不显示
+    const eidolon = Math.min(Math.max(it.count - 1, 0), 6);
     const copies = it.count > 1 ? `<span class="team-copies">${eidolon}${teamTab === '角色' ? '命' : '叠'}</span>` : '';
     const tags = [it.path, it.property].filter(Boolean).join(' · ');
     const clickable = teamTab === '角色' ? ' team-char' : '';
-    return `<div class="five-item${clickable}"${clickable ? ` data-name="${it.name.replace(/"/g, '&quot;')}"` : ''}>
+    const dimCls = it.owned === false ? ' not-owned' : '';
+    let timeLine;
+    if (it.owned === true) timeLine = `<div class="five-item-time">首获 ${it.time}</div>`;
+    else if (it.owned === 'default') timeLine = `<div class="five-item-time" style="color:var(--accent)">默认拥有</div>`;
+    else timeLine = `<div class="five-item-time" style="opacity:.6">未拥有</div>`;
+    return `<div class="five-item${clickable}${dimCls}"${clickable ? ` data-name="${it.name.replace(/"/g, '&quot;')}"` : ''}>
       <div class="team-icon-wrap">${iconHtml}${copies}</div>
       <div class="five-item-name" style="color:${nameColor(it.name)}">${it.name}</div>
       <div class="five-item-meta">
         <span class="five-item-type">${it.star}★</span>
         ${tags ? `<span class="five-item-pity">${tags}</span>` : ''}
       </div>
-      <div class="five-item-time">首获 ${it.time}</div>
+      ${timeLine}
     </div>`;
   }).join('');
 
@@ -2092,6 +2133,6 @@ async function checkUpdate() {
   }
   if (r.status === 'error') return setUpdateState('error', { message: r.error });
   if (r.downloaded) return setUpdateState('downloaded', { version: r.latest });
-  if (r.latest && r.latest !== r.current) return setUpdateState('available', { version: r.latest, sources: r.sources });
+  if (r.latest && r.latest !== r.current) return setUpdateState('available', { version: r.latest, notes: r.notes, sources: r.sources });
   setUpdateState('latest', { version: r.current });
 }

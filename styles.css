@@ -208,6 +208,7 @@ svg { fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round
 .content { flex: 1; overflow: hidden; padding: 20px 22px 32px; } /* 禁止页面垂直滚动 */
 .view { display: none; }
 .view.active { display: block; animation: fadeIn 0.18s ease; }
+#view-settings { height: 100%; overflow-y: auto; padding-right: 4px; }
 @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
 
 .view-head {
@@ -325,6 +326,8 @@ svg { fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round
   transition: border-color .15s, transform .1s;
 }
 .five-item:hover { border-color: var(--accent); transform: translateY(-1px); }
+.five-item.not-owned { opacity: .55; filter: grayscale(.7); }
+.five-item.not-owned:hover { opacity: .75; transform: translateY(-1px); }
 .five-item-icon {
   width: 100%; height: 96px; object-fit: contain;
   border-radius: 8px;
@@ -1148,6 +1151,9 @@ svg { fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round
 .update-card p { margin-top: 7px; font-size: 12.5px; line-height: 1.65; color: var(--muted); }
 
 .update-sources { display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; margin-top: 16px; }
+.update-notes { margin-top: 16px; text-align: left; background: var(--bg); border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; max-height: 260px; overflow-y: auto; }
+.update-notes h4 { margin: 0 0 8px; font-size: 13px; color: var(--accent); }
+.update-notes pre { margin: 0; white-space: pre-wrap; word-break: break-word; font-family: inherit; font-size: 13px; line-height: 1.6; color: var(--text); }
 .update-sources[hidden] { display: none; }
 .update-source { position: relative; }
 .update-source input { position: absolute; opacity: 0; pointer-events: none; }
