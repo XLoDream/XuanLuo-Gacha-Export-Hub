@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>璇洛抽卡祈愿工具 · 下载器</title>
+<style>
+  /* ===== 设计变量表 ===== */
+  :root {
+    --bg-1: #0f0f1a;
+    --bg-2: #1a1a2e;
+    --card-bg: rgba(30, 30, 46, 0.72);
+    --card-border: rgba(140, 140, 180, 0.12);
+    --text-primary: #f0f0f5;
+    --text-secondary: #9a9aae;
+    --text-muted: #6a6a80;
+    --primary-1: #6ea8ff;
+    --primary-2: #8b5cf6;
+    --primary-gradient: linear-gradient(135deg, #6ea8ff 0%, #8b5cf6 100%);
+    --primary-hover: linear-gradient(135deg, #7db4ff 0%, #9a6cff 100%);
+    --input-bg: rgba(20, 20, 32, 0.8);
+    --input-border: rgba(140, 140, 180, 0.18);
+    --success: #34d399;
+    --warning: #fbbf24;
+    --error: #f87171;
+    --radius-lg: 16px;
+    --radius-md: 10px;
+    --radius-sm: 6px;
+    --space-1: 4px;
+    --space-2: 8px;
+    --space-3: 12px;
+    --space-4: 16px;
+    --space-5: 20px;
+    --space-6: 24px;
+    --space-8: 32px;
+    --font: "Microsoft YaHei", "Segoe UI", system-ui, sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html, body {
+    height: 100%;
+    font-family: var(--font);
+    color: var(--text-primary);
+    overflow: hidden;
+    user-select: none;
+  }
+
+  body {
+    background:
+      radial-gradient(circle at 20% 0%, rgba(110, 168, 255, 0.15), transparent 50%),
+      radial-gradient(circle at 80% 100%, rgba(139, 92, 246, 0.15), transparent 50%),
+      linear-gradient(160deg, var(--bg-1), var(--bg-2));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-5);
+  }
+
+  /* ===== 主卡片 ===== */
+  .card {
+    width: 100%;
+    max-width: 440px;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius-lg);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5);
+    padding: var(--space-8) var(--space-6) var(--space-6);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-5);
+    animation: cardIn 0.5s ease;
+  }
+
+  @keyframes cardIn {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ===== Logo ===== */
+  .logo-wrap {
+    width: 72px;
+    height: 72px;
+    border-radius: 18px;
+    background: var(--primary-gradient);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 8px 24px rgba(110, 168, 255, 0.35);
+    position: relative;
+  }
+
+  .logo-wrap::after {
+    content: "";
+    position: absolute;
+    inset: -2px;
+    border-radius: 20px;
+    background: var(--primary-gradient);
+    opacity: 0.4;
+    filter: blur(12px);
+    z-index: -1;
+  }
+
+  .logo-wrap svg {
+    width: 38px;
+    height: 38px;
+    fill: white;
+  }
+
+  /* ===== 标题区 ===== */
+  .title-block {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-2);
+  }
+
+  .title {
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    background: linear-gradient(135deg, #ffffff, #c8c8e0);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .version-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: var(--text-secondary);
+    padding: 2px 10px;
+    border-radius: 999px;
+    background: rgba(110, 168, 255, 0.1);
+    border: 1px solid rgba(110, 168, 255, 0.2);
+    min-height: 20px;
+  }
+
+  .version-badge.hidden { visibility: hidden; }
+
+  /* ===== 状态提示 ===== */
+  .status {
+    font-size: 13px;
+    color: var(--text-secondary);
+    text-align: center;
+    min-height: 18px;
+    transition: color 0.25s;
+    line-height: 1.5;
+  }
+
+  .status.success { color: var(--success); }
+  .status.warning { color: var(--warning); }
+  .status.error { color: var(--error); }
+
+  /* ===== 安装目录 ===== */
+  .dir-group {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .dir-label {
+    font-size: 12px;
+    color: var(--text-muted);
+    padding-left: 2px;
+  }
+
+  .dir-row {
+    display: flex;
+    gap: var(--space-2);
+    align-items: stretch;
+  }
+
+  .dir-input {
+    flex: 1;
+    background: var(--input-bg);
+    border: 1px solid var(--input-border);
+    border-radius: var(--radius-md);
+    color: var(--text-primary);
+    font-size: 13px;
+    font-family: var(--font);
+    padding: 0 var(--space-3);
+    height: 38px;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+
+  .dir-input:focus {
+    border-color: var(--primary-1);
+    box-shadow: 0 0 0 3px rgba(110, 168, 255, 0.15);
+  }
+
+  .browse-btn {
+    height: 38px;
+    padding: 0 var(--space-4);
+    background: rgba(110, 168, 255, 0.1);
+    border: 1px solid rgba(110, 168, 255, 0.25);
+    border-radius: var(--radius-md);
+    color: var(--primary-1);
+    font-size: 13px;
+    font-family: var(--font);
+    cursor: pointer;
+    transition: background 0.2s;
+    white-space: nowrap;
+  }
+
+  .browse-btn:hover {
+    background: rgba(110, 168, 255, 0.2);
+  }
+
+  /* ===== 进度条 ===== */
+  .progress-group {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    opacity: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: opacity 0.3s, max-height 0.3s, margin 0.3s;
+  }
+
+  .progress-group.show {
+    opacity: 1;
+    max-height: 60px;
+    margin-top: var(--space-1);
+  }
+
+  .progress-meta {
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+    color: var(--text-muted);
+  }
+
+  .progress-track {
+    width: 100%;
+    height: 8px;
+    background: rgba(255, 255, 255, 0.06);
+    border-radius: 999px;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    width: 0%;
+    background: var(--primary-gradient);
+    border-radius: 999px;
+    transition: width 0.3s ease;
+    box-shadow: 0 0 8px rgba(110, 168, 255, 0.5);
+  }
+
+  /* ===== 主按钮 ===== */
+  .action-btn {
+    width: 100%;
+    height: 44px;
+    border: none;
+    border-radius: var(--radius-md);
+    background: var(--primary-gradient);
+    color: white;
+    font-size: 15px;
+    font-weight: 600;
+    font-family: var(--font);
+    cursor: pointer;
+    transition: transform 0.15s, box-shadow 0.2s, opacity 0.2s;
+    box-shadow: 0 6px 18px rgba(110, 168, 255, 0.3);
+    letter-spacing: 1px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .action-btn:hover:not(:disabled) {
+    background: var(--primary-hover);
+    transform: translateY(-1px);
+    box-shadow: 0 8px 22px rgba(110, 168, 255, 0.4);
+  }
+
+  .action-btn:active:not(:disabled) {
+    transform: translateY(0);
+  }
+
+  .action-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    box-shadow: none;
+  }
+
+  .action-btn .spinner {
+    display: none;
+    width: 16px;
+    height: 16px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-top-color: white;
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+    vertical-align: middle;
+    margin-right: 8px;
+  }
+
+  .action-btn.loading .spinner { display: inline-block; }
+
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* ===== 底部信息 ===== */
+  .footer {
+    font-size: 11px;
+    color: var(--text-muted);
+    text-align: center;
+    margin-top: var(--space-1);
+  }
+</style>
+</head>
+<body>
+  <div class="card">
+    <!-- Logo -->
+    <div class="logo-wrap">
+      <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+    </div>
+
+    <!-- 标题 -->
+    <div class="title-block">
+      <div class="title">璇洛抽卡祈愿工具</div>
+      <div class="version-badge hidden" id="versionBadge">
+        <span id="versionText">v0.0.0</span>
+      </div>
+    </div>
+
+    <!-- 状态 -->
+    <div class="status" id="status">正在检查最新版本…</div>
+
+    <!-- 安装目录 -->
+    <div class="dir-group">
+      <div class="dir-label">安装目录</div>
+      <div class="dir-row">
+        <input type="text" class="dir-input" id="dirInput" readonly>
+        <button class="browse-btn" id="browseBtn">浏览…</button>
+      </div>
+    </div>
+
+    <!-- 进度条 -->
+    <div class="progress-group" id="progressGroup">
+      <div class="progress-meta">
+        <span id="progressMirror">准备中</span>
+        <span id="progressPercent">0%</span>
+      </div>
+      <div class="progress-track">
+        <div class="progress-fill" id="progressFill"></div>
+      </div>
+    </div>
+
+    <!-- 主按钮 -->
+    <button class="action-btn" id="actionBtn" disabled>
+      <span class="spinner"></span><span id="actionText">检查中…</span>
+    </button>
+
+    <div class="footer">安全下载 · 自动安装</div>
+  </div>
+
+<script>
+(function () {
+  const $ = (id) => document.getElementById(id);
+  const versionBadge = $("versionBadge");
+  const versionText = $("versionText");
+  const statusEl = $("status");
+  const dirInput = $("dirInput");
+  const browseBtn = $("browseBtn");
+  const progressGroup = $("progressGroup");
+  const progressMirror = $("progressMirror");
+  const progressPercent = $("progressPercent");
+  const progressFill = $("progressFill");
+  const actionBtn = $("actionBtn");
+  const actionText = $("actionText");
+
+  let state = "checking"; // checking | ready | downloading | done
+
+  function setStatus(text, type) {
+    statusEl.textContent = text;
+    statusEl.className = "status" + (type ? " " + type : "");
+  }
+
+  function setVersion(v) {
+    if (!v) { versionBadge.classList.add("hidden"); return; }
+    versionText.textContent = v;
+    versionBadge.classList.remove("hidden");
+  }
+
+  function setDir(path) { dirInput.value = path || ""; }
+
+  function setProgress(percent, mirror) {
+    if (percent == null) {
+      progressGroup.classList.remove("show");
+      return;
+    }
+    progressGroup.classList.add("show");
+    progressFill.style.width = percent + "%";
+    progressPercent.textContent = Math.round(percent) + "%";
+    if (mirror) progressMirror.textContent = mirror;
+  }
+
+  function setAction(text, enabled, loading) {
+    actionText.textContent = text;
+    actionBtn.disabled = !enabled;
+    actionBtn.classList.toggle("loading", !!loading);
+  }
+
+  function post(type, data) {
+    const msg = JSON.stringify({ type: type, data: data || {} });
+    if (window.chrome && window.chrome.webview) {
+      window.chrome.webview.postMessage(msg);
+    }
+  }
+
+  // 接收 C# 消息
+  if (window.chrome && window.chrome.webview) {
+    window.chrome.webview.addEventListener("message", function (e) {
+      let msg;
+      try { msg = JSON.parse(e.data); } catch { return; }
+      switch (msg.type) {
+        case "init":
+          setDir(msg.data.dir);
+          break;
+        case "status":
+          setStatus(msg.data.text, msg.data.level);
+          break;
+        case "version":
+          setVersion(msg.data.text);
+          break;
+        case "dir":
+          setDir(msg.data.text);
+          break;
+        case "action":
+          setAction(msg.data.text, msg.data.enabled, msg.data.loading);
+          state = msg.data.state || state;
+          break;
+        case "progress":
+          setProgress(msg.data.percent, msg.data.mirror);
+          break;
+        case "progress-hide":
+          setProgress(null);
+          break;
+      }
+    });
+  }
+
+  // 浏览目录
+  browseBtn.addEventListener("click", function () {
+    post("browse", { dir: dirInput.value });
+  });
+
+  // 主按钮
+  actionBtn.addEventListener("click", function () {
+    if (actionBtn.disabled) return;
+    post("action", { state: state });
+  });
+})();
+</script>
+</body>
+</html>
