@@ -1,7 +1,7 @@
 {
   "name": "gacha-export-hub",
   "productName": "XuanLuo Gacha Export Hub",
-  "version": "1.5.3",
+  "version": "1.5.4",
   "description": "XuanLuo Gacha Export Hub",
   "main": "main.js",
   "repository": {
@@ -42,6 +42,9 @@
     },
     "directories": {
       "output": "dist"
+    },
+    "releaseInfo": {
+      "releaseNotesFile": "RELEASE_NOTES.md"
     },
     "publish": [
       {
