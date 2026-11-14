@@ -93,6 +93,48 @@ function toast(msg) {
 let pendingVersion = '';
 let pendingSource = '';
 
+// 轻量 Markdown 渲染（标题、列表、粗体、行内代码、段落、分割线）
+function renderMarkdown(src) {
+  const text = String(src || '').replace(/\r\n/g, '\n');
+  const escapeHtml = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  const inline = (s) => escapeHtml(s)
+    .replace(/`([^`]+)`/g, '<code>$1</code>')
+    .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
+    .replace(/\*([^*]+)\*/g, '<em>$1</em>');
+  const lines = text.split('\n');
+  let out = '';
+  let inList = false;
+  for (let i = 0; i < lines.length; i++) {
+    let line = lines[i].trimEnd();
+    if (!line.trim()) {
+      if (inList) { out += '</ul>'; inList = false; }
+      continue;
+    }
+    const h = line.match(/^(#{1,6})\s+(.*)$/);
+    if (h) {
+      if (inList) { out += '</ul>'; inList = false; }
+      const level = h[1].length;
+      out += `<h${level}>${inline(h[2])}</h${level}>`;
+      continue;
+    }
+    if (line.trim() === '---' || line.trim() === '***') {
+      if (inList) { out += '</ul>'; inList = false; }
+      out += '<hr>';
+      continue;
+    }
+    const li = line.match(/^[-*+]\s+(.*)$/);
+    if (li) {
+      if (!inList) { out += '<ul>'; inList = true; }
+      out += `<li>${inline(li[1])}</li>`;
+      continue;
+    }
+    if (inList) { out += '</ul>'; inList = false; }
+    out += `<p>${inline(line)}</p>`;
+  }
+  if (inList) out += '</ul>';
+  return out;
+}
+
 function setUpdateState(state, d = {}) {
   const mask = $('#updateMask');
   mask.hidden = false;
@@ -110,7 +152,14 @@ function setUpdateState(state, d = {}) {
   }
   if (state === 'latest') {
     $('#updateTitle').textContent = '已是最新版本';
-    $('#updateDesc').textContent = `当前版本 v${d.version || ''}`;
+    $('#updateDesc').textContent = `当前版本 v${d.version || ''}，以下为最近更新内容`;
+    const notesEl = $('#updateNotes');
+    if (d.notes) {
+      notesEl.hidden = false;
+      notesEl.innerHTML = renderMarkdown(d.notes);
+    } else {
+      notesEl.hidden = true;
+    }
     $('#updateActions').innerHTML = '<button class="btn-sm primary" data-act="closeUpdate">完成</button>';
     return;
   }
@@ -121,7 +170,7 @@ function setUpdateState(state, d = {}) {
     const notesEl = $('#updateNotes');
     if (d.notes) {
       notesEl.hidden = false;
-      notesEl.innerHTML = `<h4>更新内容</h4><pre>${String(d.notes).replace(/</g, '&lt;').replace(/>/g, '&gt;')}</pre>`;
+      notesEl.innerHTML = renderMarkdown(d.notes);
     } else {
       notesEl.hidden = true;
     }
@@ -2134,5 +2183,5 @@ async function checkUpdate() {
   if (r.status === 'error') return setUpdateState('error', { message: r.error });
   if (r.downloaded) return setUpdateState('downloaded', { version: r.latest });
   if (r.latest && r.latest !== r.current) return setUpdateState('available', { version: r.latest, notes: r.notes, sources: r.sources });
-  setUpdateState('latest', { version: r.current });
+  setUpdateState('latest', { version: r.current, notes: r.notes });
 }
