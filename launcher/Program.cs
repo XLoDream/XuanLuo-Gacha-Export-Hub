@@ -18,13 +18,13 @@ namespace GachaExportHubLauncher
         private const string RepoApi = "https://api.github.com/repos/XLoDream/XuanLuo-Gacha-Export-Hub/releases/latest";
         private static readonly string[] Mirrors = new[]
         {
-            "",                              // 直连
+            "https://gh-proxy.com/",
             "https://ghfast.top/",
             "https://ghproxy.net/",
             "https://mirror.ghproxy.com/",
-            "https://gh-proxy.com/",
             "https://ghps.cc/",
-            "https://gh.api.99988866.xyz/"
+            "https://gh.api.99988866.xyz/",
+            ""                               // 直连（最后）
         };
 
         private Label titleLabel;
@@ -41,6 +41,11 @@ namespace GachaExportHubLauncher
         private string fileName = null;
         private string tempPath = null;
         private WebClient client = null;
+
+        private System.Threading.Timer watchdog = null;
+        private DateTime lastProgressUpdate = DateTime.MinValue;
+        private const int NoProgressTimeoutMs = 5000;   // 进度 5 秒没动就切换下一个镜像
+        private const int AllFailedRetryDelayMs = 10000; // 全部失败后等待 10 秒再从头开始
 
         public MainForm()
         {
@@ -306,8 +311,16 @@ namespace GachaExportHubLauncher
         {
             if (mirrorIndex >= Mirrors.Length)
             {
-                SetStatus("所有镜像下载均失败，请检查网络");
-                Invoke(new Action(() => { actionButton.Enabled = true; actionButton.Text = "重试"; }));
+                SetStatus("所有镜像下载均失败，10 秒后从头重试…");
+                // 全部失败后等待 10 秒再从头开始，使用 UI 线程定时器避免阻塞界面
+                var retryTimer = new System.Windows.Forms.Timer { Interval = AllFailedRetryDelayMs };
+                retryTimer.Tick += (s, e) =>
+                {
+                    retryTimer.Stop();
+                    retryTimer.Dispose();
+                    TryDownload(0);
+                };
+                retryTimer.Start();
                 return;
             }
 
@@ -318,8 +331,16 @@ namespace GachaExportHubLauncher
             if (client != null) { try { client.Dispose(); } catch { } }
             client = new WebClient();
             client.Headers.Add("User-Agent", "GachaExportHubLauncher/1.0");
+
+            // 清理上次残留的部分文件，确保从头写入
+            if (File.Exists(tempPath)) { try { File.Delete(tempPath); } catch { } }
+
+            lastProgressUpdate = DateTime.Now;
+            StartWatchdog();
+
             client.DownloadProgressChanged += (s, e) =>
             {
+                lastProgressUpdate = DateTime.Now;
                 if (e.ProgressPercentage >= 0 && e.ProgressPercentage <= 100)
                 {
                     if (InvokeRequired) Invoke(new Action(() => { progressBar.Value = e.ProgressPercentage; }));
@@ -328,6 +349,7 @@ namespace GachaExportHubLauncher
             };
             client.DownloadFileCompleted += (s, e) =>
             {
+                StopWatchdog();
                 if (e.Error != null || e.Cancelled)
                 {
                     TryDownload(mirrorIndex + 1);
@@ -344,7 +366,37 @@ namespace GachaExportHubLauncher
             }
             catch
             {
+                StopWatchdog();
                 TryDownload(mirrorIndex + 1);
+            }
+        }
+
+        // 看门狗：进度超过 NoProgressTimeoutMs 没更新就取消当前下载，触发切换下一个镜像
+        private void StartWatchdog()
+        {
+            StopWatchdog();
+            watchdog = new System.Threading.Timer(_ =>
+            {
+                try
+                {
+                    if ((DateTime.Now - lastProgressUpdate).TotalMilliseconds >= NoProgressTimeoutMs)
+                    {
+                        if (client != null)
+                        {
+                            try { client.CancelAsync(); } catch { }
+                        }
+                    }
+                }
+                catch { }
+            }, null, 1000, 1000);
+        }
+
+        private void StopWatchdog()
+        {
+            if (watchdog != null)
+            {
+                try { watchdog.Dispose(); } catch { }
+                watchdog = null;
             }
         }
 
