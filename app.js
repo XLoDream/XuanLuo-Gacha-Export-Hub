@@ -1358,6 +1358,8 @@ function renderRecords(game) {
   if (!acc) return;
 
   const pad = padMap(acc);
+  // 5★ 出金时实际花了多少抽（1~保底），用于列表里 5★ 行的展示，替代清零的 0
+  const pity = pityMap(acc);
   const poolKey = viewMode[game];
   const { rank, type, q } = recFilter[game];
   const filtered = acc.records
@@ -1405,11 +1407,11 @@ function renderRecords(game) {
     const pool = poolOf(game, r.pool);
     return `<tr>
       <td class="cell-time">${r.time}</td>
-      <td class="cell-name">${r.name}</td>
+      <td class="cell-name r${r.rank}">${r.name}</td>
       <td>${stars(r.rank)}</td>
       <td>${r.type}</td>
       <td>${pool ? pool.label : r.pool}</td>
-      <td class="cell-pity${r.rank === 5 ? ' gold' : ''}">${pad.get(r.id) ?? '·'}</td>
+      <td class="cell-pity${r.rank === 5 ? ' gold' : ''}">${r.rank === 5 ? (pity.get(r.id) ?? '·') : (pad.get(r.id) ?? '·')}</td>
     </tr>`;
   }).join('');
 

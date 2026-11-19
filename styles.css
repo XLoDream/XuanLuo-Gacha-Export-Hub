@@ -907,6 +907,9 @@ svg { fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round
 .rec-table tbody tr:hover { background: var(--card-2); }
 .rec-table .cell-time { color: var(--muted); font-variant-numeric: tabular-nums; }
 .rec-table .cell-name { font-weight: 600; }
+.rec-table .cell-name.r5 { color: var(--r5); }
+.rec-table .cell-name.r4 { color: var(--r4); }
+.rec-table .cell-name.r3 { color: var(--r3); }
 .stars { letter-spacing: 1px; font-size: 12px; }
 .stars.s5 { color: var(--r5); }
 .stars.s4 { color: var(--r4); }
