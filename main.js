@@ -472,7 +472,7 @@ ipcMain.handle('genshin:openCacheDir', () => {
   return { ok: true };
 });
 
-// knownLatest: { [uid]: { [gachaType]: 本地最新记录id } }，命中即停止翻页（增量更新）
+// knownLatest: { [uid]: [已存记录id...] }，遇到任意已存 id 即停止翻页（增量更新）
 ipcMain.handle('genshin:fetch', async (e, knownLatest, link) => {
   const ctrl = beginOnlineFetch('genshin');
   const found = link ? { url: link } : readGenshinUrl();
@@ -488,6 +488,9 @@ ipcMain.handle('genshin:fetch', async (e, knownLatest, link) => {
   const qs = url.searchParams.toString();
 
   const byUid = new Map();
+  // 已存 id 集合：遇到任意已存 id 即停止翻页（同一接口可能返回多个 gacha_type，如原神 301 含 400）
+  const knownByUid = new Map();
+  for (const [uid, ids] of Object.entries(knownLatest || {})) knownByUid.set(uid, new Set(ids.map(String)));
   let total = 0;
   for (const [key, label] of GENSHIN_TYPES) {
     let page = 1;
@@ -510,12 +513,12 @@ ipcMain.handle('genshin:fetch', async (e, knownLatest, link) => {
       const uid = String(list[0].uid);
       if (!byUid.has(uid)) byUid.set(uid, []);
       const bucket = byUid.get(uid);
-      const known = knownLatest?.[uid]?.[key];
+      const knownSet = knownByUid.get(uid);
 
       let reached = false;
       const before = bucket.length;
       for (const item of list) {
-        if (known && String(item.id) === String(known)) { reached = true; break; }
+        if (knownSet && knownSet.has(String(item.id))) { reached = true; break; }
         bucket.push(item);
       }
       total += bucket.length - before;
@@ -611,6 +614,9 @@ ipcMain.handle('hsr:fetch', async (e, knownLatest, link) => {
   if (test.error) return { error: test.error };
 
   const byUid = new Map();
+  // 已存 id 集合：遇到任意已存 id 即停止翻页（同一接口可能返回多个 gacha_type）
+  const knownByUid = new Map();
+  for (const [uid, ids] of Object.entries(knownLatest || {})) knownByUid.set(uid, new Set(ids.map(String)));
   let total = 0;
   for (const [key, label] of HSR_TYPES) {
     const apiPath = ['21', '22'].includes(key) ? 'getLdGachaLog' : 'getGachaLog';
@@ -634,12 +640,12 @@ ipcMain.handle('hsr:fetch', async (e, knownLatest, link) => {
       const uid = String(list[0].uid);
       if (!byUid.has(uid)) byUid.set(uid, []);
       const bucket = byUid.get(uid);
-      const known = knownLatest?.[uid]?.[key];
+      const knownSet = knownByUid.get(uid);
 
       let reached = false;
       const before = bucket.length;
       for (const item of list) {
-        if (known && String(item.id) === String(known)) { reached = true; break; }
+        if (knownSet && knownSet.has(String(item.id))) { reached = true; break; }
         bucket.push(item);
       }
       total += bucket.length - before;
@@ -755,6 +761,9 @@ ipcMain.handle('zzz:fetch', async (e, knownLatest, link) => {
   const qs = url.searchParams.toString();
 
   const byUid = new Map();
+  // 已存 id 集合：遇到任意已存 id 即停止翻页（同一接口可能返回多个 gacha_type，如 102/103 重映回响）
+  const knownByUid = new Map();
+  for (const [uid, ids] of Object.entries(knownLatest || {})) knownByUid.set(uid, new Set(ids.map(String)));
   let total = 0;
   for (const [key, label] of ZZZ_TYPES) {
     let page = 1;
@@ -778,12 +787,12 @@ ipcMain.handle('zzz:fetch', async (e, knownLatest, link) => {
       const uid = String(list[0].uid);
       if (!byUid.has(uid)) byUid.set(uid, []);
       const bucket = byUid.get(uid);
-      const known = knownLatest?.[uid]?.[key];
+      const knownSet = knownByUid.get(uid);
 
       let reached = false;
       const before = bucket.length;
       for (const item of list) {
-        if (known && String(item.id) === String(known)) { reached = true; break; }
+        if (knownSet && knownSet.has(String(item.id))) { reached = true; break; }
         bucket.push(item);
       }
       total += bucket.length - before;

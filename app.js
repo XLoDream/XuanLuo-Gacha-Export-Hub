@@ -1899,18 +1899,18 @@ async function importData(game) {
 // 由 poolMap 反推：内部卡池 key → 原始 gacha_type（取每个 key 的首个 code）
 let API_KEY_OF = {};
 
-// 各账号各卡池本地最新记录 id（用于在线增量更新；按原始 gacha_type 分组，原神 301/400 分开记）
-function knownLatest(game) {
-  const keyOf = API_KEY_OF[game];
+// 各账号已存记录的 id 集合（用于在线增量更新）：
+// 主进程拉取时遇到任意已存 id 即停止翻页，避免同一接口返回多个 gacha_type
+// （如原神 301 接口同时返回 301/400）时，把已存记录误计为「新增」。
+function knownIdSet(game) {
   const map = {};
   accountsOf(game).forEach((acc) => {
-    const per = {};
+    const ids = [];
     acc.records.forEach((r) => {
-      const k = r.gt || keyOf[r.pool];
-      if (!k || !/^\d+$/.test(r.id)) return; // 鸣潮等为合成 id，不参与增量
-      if (!per[k] || BigInt(r.id) > BigInt(per[k])) per[k] = r.id;
+      if (!r.id || !/^\d+$/.test(r.id)) return; // 鸣潮等为合成 id，不参与增量
+      ids.push(String(r.id));
     });
-    map[acc.uid] = per;
+    map[acc.uid] = ids;
   });
   return map;
 }
@@ -1935,7 +1935,7 @@ const FETCH_API = {
   genshin: { call: (k, link) => api.fetchGenshin(k, link), on: (cb) => api.onFetchProgress(cb) },
   hsr: { call: (k, link) => api.fetchHsr(k, link), on: (cb) => api.onHsrProgress(cb) },
   zzz: { call: (k, link) => api.fetchZzz(k, link), on: (cb) => api.onZzzProgress(cb) },
-  // 鸣潮无官方 id，传已有记录指纹做增量；其余游戏传 knownLatest 用官方 id 做增量
+  // 鸣潮无官方 id，传已有记录指纹做增量；其余游戏传 knownIdSet（已存 id 集合）做增量
   wuwa: { call: (k, link, priority) => api.fetchWuwa(knownWuwaKeys(), link, priority !== 'auto'), on: (cb) => api.onWuwaProgress(cb) },
 };
 // 更新优先级：链接 > 手动 > 自动；更高优先级会强制打断正在进行的低优先级更新
@@ -2015,7 +2015,7 @@ async function fetchOnline(game, link, onProgress, onStage, priority = 'auto') {
     if (onProgress) onProgress(p);
   });
   try {
-    const res = await Promise.race([fetchApi.call(knownLatest(game), link, priority), timeoutPromise]);
+    const res = await Promise.race([fetchApi.call(knownIdSet(game), link, priority), timeoutPromise]);
     if (res === FETCH_TIMEOUT) {
       req.off?.();
       // 已被打断的旧请求即使计时器后触发，也不能改动新请求的按钮、提示与更新状态
